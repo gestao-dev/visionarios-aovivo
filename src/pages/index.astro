@@ -711,13 +711,15 @@ const vantagens = [
   .bento li {
     position: relative;
     grid-column: span 2;
-    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: clamp(1.1rem, 2.2vw, 1.5rem);
     padding: clamp(1.4rem, 2.6vw, 1.9rem);
     overflow: hidden;
-    transition: border-color 0.5s var(--ease);
+    transition:
+      transform 0.45s var(--ease),
+      box-shadow 0.45s var(--ease),
+      border-color 0.5s var(--ease);
   }
   /* Os dois de baixo ficam centrados sob os três de cima. */
   .bento li:nth-child(4) { grid-column: 2 / span 2; }
@@ -734,8 +736,14 @@ const vantagens = [
     transition: opacity 0.55s var(--ease);
     pointer-events: none;
   }
-  .bento li:hover { border-color: #fad49fa6; }
+  .bento li:hover {
+    border-color: #fad49fa6;
+    box-shadow: 0 26px 50px -22px #000000d9;
+  }
   .bento li:hover::after { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .bento li:hover { transform: translateY(-6px); }
+  }
 
   .bento p {
     position: relative;
@@ -755,7 +763,6 @@ const vantagens = [
   }
   @media (max-width: 40rem) {
     .bento { grid-template-columns: 1fr; }
-    .bento li { aspect-ratio: auto; min-height: 11rem; }
   }
 
   /* ── Lote ── */
