@@ -80,6 +80,7 @@ body {
 
 /* Trecho em ouro escovado, o mesmo gradiente do botão. */
 .grad {
+  display: inline-block;
   font-weight: 700;
   background-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%);
   -webkit-background-clip: text;

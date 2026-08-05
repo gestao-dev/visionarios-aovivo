@@ -102,7 +102,7 @@ const vantagens = [
 
     <div class="shell cross">
       <div class="cross__side">
-        <p class="cross__head"><Icon name="wall" size={16} /> Do lado de cá</p>
+        <p class="cross__head"><Icon name="wall" size={16} /> <span class="grad">Do lado de cá</span></p>
         <ul>{daqui.map((t) => <li>{t}</li>)}</ul>
       </div>
 
@@ -111,7 +111,7 @@ const vantagens = [
       </div>
 
       <div class="cross__side cross__side--to">
-        <p class="cross__head cross__head--to"><Icon name="key" size={16} /> Do outro lado</p>
+        <p class="cross__head cross__head--to"><Icon name="key" size={16} /> <span class="grad">Do outro lado</span></p>
         <ul>{dela.map((t) => <li>{t}</li>)}</ul>
       </div>
     </div>
@@ -190,11 +190,11 @@ const vantagens = [
   </section>
 
   <!-- ══ Palestrantes ══ -->
-  <section class="eyebrow-free" aria-labelledby="t-quem">
+  <section aria-labelledby="t-quem">
     <span class="glow glow--gold g-left" aria-hidden="true"></span>
     <div class="shell center measure-wide">
       <p class="over">Quem sobe ao palco</p>
-      <h2 id="t-quem">Os palestrantes</h2>
+      <h2 id="t-quem" class="grad">Os palestrantes</h2>
       <p class="sec-lede measure center">
         Viviane e Marcos conduzem o método. E, a cada semana, um novo nome de peso do
         mercado contábil é revelado.
@@ -202,25 +202,39 @@ const vantagens = [
     </div>
 
     <ul class="shell cast">
-      <li class="panel rise">
-        <div class="cast__pic"><Image src={viviane} alt="Viviane Araújo" width={420} height={420} quality={90} /></div>
-        <h3>Viviane Araújo</h3>
-        <p>Fundadora da Soluzzi · Mentora</p>
+      <li class="cast__card">
+        <div class="cast__pic">
+          <Image src={viviane} alt="Viviane Araújo" widths={[300, 520]} sizes="(max-width: 62rem) 45vw, 17rem" quality={90} />
+        </div>
+        <div class="cast__foot">
+          <h3>Viviane Araújo</h3>
+          <p>Fundadora da Soluzzi · Mentora</p>
+        </div>
       </li>
-      <li class="panel rise">
-        <div class="cast__pic"><Image src={marcos} alt="Marcos Paulo" width={354} height={354} quality={92} /></div>
-        <h3>Marcos Paulo</h3>
-        <p>Contadores Visionários</p>
+
+      <li class="cast__card">
+        <div class="cast__pic">
+          <Image src={marcos} alt="Marcos Paulo" widths={[300, 354]} sizes="(max-width: 62rem) 45vw, 17rem" quality={92} />
+        </div>
+        <div class="cast__foot">
+          <h3>Marcos Paulo</h3>
+          <p>Contadores Visionários</p>
+        </div>
       </li>
-      <li class="panel panel--lit rise cast__next">
-        <div class="cast__pic cast__pic--void"><Icon name="star" size={30} /></div>
-        <h3 class="lit">A revelar</h3>
-        <p>Anunciado no grupo</p>
-      </li>
+
+      {[0, 1].map(() => (
+        <li class="cast__card">
+          <div class="cast__pic cast__pic--tba"><span aria-hidden="true">?</span></div>
+          <div class="cast__foot">
+            <h3>A revelar</h3>
+            <p>Anunciado no grupo</p>
+          </div>
+        </li>
+      ))}
     </ul>
 
     <div class="shell">
-      <p class="aside">
+      <p class="aside aside--center">
         <Icon name="clapper" size={17} /> Os convidados são revelados um a um, sempre primeiro
         pra quem está na lista do Lote Zero.
       </p>
@@ -318,8 +332,9 @@ const vantagens = [
     margin-bottom: 1.1rem;
     font-size: 0.82rem;
     font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
   }
 
   /* ── Abertura: reconstruída a partir do arquivo do cliente ── */
@@ -422,6 +437,7 @@ const vantagens = [
     text-transform: uppercase;
     color: var(--gold);
   }
+  .cross__head .grad { font-weight: 600; }
   .cross__head :global(svg) { flex: none; }
 
   .cross__side ul { display: grid; }
@@ -451,7 +467,7 @@ const vantagens = [
     border: 1px solid var(--gold);
     border-radius: 50%;
     background: #05060f;
-    color: var(--gold);
+    color: var(--gold-flare);
   }
 
   @media (max-width: 56rem) {
@@ -477,6 +493,10 @@ const vantagens = [
   }
   .method__text { text-align: left; }
   .method__text .over { text-align: left; }
+  .method__text h2 {
+    font-size: clamp(2.1rem, 4.6vw, 4rem);
+    line-height: 1.08;
+  }
   .method__lede {
     margin-top: 1.35rem;
     max-width: 34ch;
@@ -664,28 +684,63 @@ const vantagens = [
     .reel__side { grid-template-columns: 1fr 1fr; }
   }
 
-  /* ── Elenco ── */
+  /* ── Elenco: cartões conforme o nó 2732:2789 ── */
   .cast {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: clamp(1rem, 2vw, 1.5rem); margin-top: 3.2rem;
-    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.85rem, 1.8vw, 1.6rem);
+    margin-top: clamp(3rem, 6vw, 4.5rem);
   }
+  .cast__card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #0b1030;
+  }
+
   .cast__pic {
     position: relative;
-    width: clamp(7rem, 16vw, 9.5rem); aspect-ratio: 1;
-    margin: 0 auto 1.4rem;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #c8a45c3d, 0 18px 40px -18px #000, inset 0 0 30px #00000059;
+    aspect-ratio: 254 / 315;
+    background: linear-gradient(180deg, #101744, #0a0f2c);
   }
-  .cast__pic :global(img) { width: 100%; height: 100%; object-fit: cover; }
-  .cast__pic--void {
-    display: grid; place-items: center;
-    color: var(--gold-lift);
-    background: linear-gradient(180deg, #c8a45c1f, #c8a45c08);
+  .cast__pic :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 22%;
   }
-  .cast h3 { font-size: 1.22rem; }
-  .cast p { margin-top: 0.45rem; color: var(--paper-faint); font-size: 0.9rem; }
+  .cast__pic--tba {
+    display: grid;
+    place-items: center;
+  }
+  .cast__pic--tba span {
+    font-family: 'ivypresto-display', Georgia, serif;
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    line-height: 1;
+    color: #c8a45c85;
+  }
+
+  .cast__foot { padding: clamp(0.9rem, 2vw, 1.35rem); }
+  .cast__foot h3 {
+    font-family: 'ivypresto-display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #fff;
+  }
+  .cast__foot p {
+    margin-top: 0.35rem;
+    font-size: clamp(0.76rem, 1.4vw, 0.84rem);
+    color: var(--paper-faint);
+  }
+
+  .aside--center { margin-inline: auto; }
+
+  @media (max-width: 62rem) {
+    .cast { grid-template-columns: repeat(2, 1fr); }
+  }
 
   /* ── Qualificação ── */
   .qual { margin-top: 3rem; max-width: 50rem; }
