@@ -57,7 +57,6 @@ body {
   line-height: 1.65;
   font-feature-settings: 'tnum' 1, 'ss01' 1;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 /* IvyPresto Display Light Italic, do kit Adobe do cliente. */
@@ -68,8 +67,17 @@ body {
   color: var(--gold-lift);
   letter-spacing: 0.005em;
 }
-/* Realce sólido — peso e cor, sem degradê em texto. */
+/* Realce sólido. */
 .lit { color: var(--gold-lift); }
+
+/* Trecho em ouro escovado, o mesmo gradiente do botão. */
+.grad {
+  font-weight: 700;
+  background-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
 
 h1, h2, h3 {
   margin: 0;
