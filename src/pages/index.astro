@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
 import Icon from '../components/Icon.astro';
 import LeadModal from '../components/LeadModal.astro';
 import sala from '../assets/sala.jpg';
@@ -20,10 +21,10 @@ const dela = [
   'Você no estratégico, com liberdade',
 ];
 const fases = [
-  'Mentalidade & Modelo',
-  'Equipe & Estrutura',
-  'Sistemas, Tech & IA',
-  'Receita & Faturamento',
+  { icon: 'mind',  nome: 'Mentalidade & Modelo' },
+  { icon: 'users', nome: 'Equipe & Estrutura' },
+  { icon: 'cpu',   nome: 'Sistemas, Tech & IA' },
+  { icon: 'chart', nome: 'Receita & Faturamento' },
 ];
 const linha = ['Evento 29–30/out', 'Novembro implementa', 'Dezembro consolida', '2027 estruturado'];
 const criterios = [
@@ -34,600 +35,483 @@ const criterios = [
   'Você quer entrar em 2027 com o escritório estruturado, não no mesmo caos',
 ];
 const vantagens = [
-  { icon: 'star', texto: 'O menor preço do evento — abre antes de todos os lotes, por 48h, e não volta.' },
-  { icon: 'gift', texto: 'Bônus físico exclusivo pra quem garantir nas primeiras 48h.' },
+  { icon: 'star',      texto: 'O menor preço do evento — abre antes de todos os lotes, por 48h, e não volta.' },
+  { icon: 'gift',      texto: 'Bônus físico exclusivo pra quem garantir nas primeiras 48h.' },
   { icon: 'stopwatch', texto: 'Prioridade na abertura — você é avisado primeiro, antes da lista pública.' },
-  { icon: 'clapper', texto: 'Bastidores e lineup — palestrantes e novidades em primeira mão.' },
+  { icon: 'clapper',   texto: 'Bastidores e lineup — palestrantes e novidades em primeira mão.' },
 ];
 ---
 
 <Base>
-  <header class="strip">
-    <div class="shell strip__in">
-      <span>1ª Edição</span><i></i>
-      <span>29 e 30 de Outubro</span><i></i>
-      <span>São Paulo</span><i></i>
-      <span class="strip__gold">Lista do Lote Zero</span>
-    </div>
-  </header>
+  <Header />
 
-  <!-- ── Abertura: a estampa encartada no campo pautado ── -->
-  <section class="open" aria-labelledby="t-open">
-    <div class="open__plate">
+  <!-- ══ Abertura ══ -->
+  <section class="hero" id="topo">
+    <div class="hero__plate">
       <Image
-        src={sala}
-        alt="Visionários ao Vivo — edição anterior, sala lotada de participantes"
-        widths={[720, 1200, 1600]}
-        sizes="100vw"
-        loading="eager"
-        fetchpriority="high"
-        quality={82}
+        src={sala} alt="Visionários ao Vivo — edição anterior, sala lotada de participantes"
+        widths={[720, 1200, 1600]} sizes="100vw" loading="eager" fetchpriority="high" quality={82}
       />
-      <div class="open__wash"></div>
-      <div class="open__rules" aria-hidden="true"></div>
+      <div class="hero__wash"></div>
     </div>
+    <span class="glow glow--gold hero__g1" aria-hidden="true"></span>
+    <span class="glow glow--navy hero__g2" aria-hidden="true"></span>
 
-    <div class="shell open__in ledger-row">
-      <div class="open__margin">
-        <p class="account">Contadores Visionários apresenta</p>
-        <p class="stamp">1ª Edição · Presencial · Vagas Limitadas</p>
-      </div>
+    <div class="shell hero__in">
+      <span class="badge"><i class="badge__live"></i> 1ª Edição · Presencial · Vagas Limitadas</span>
 
-      <div>
-      <h1 id="t-open">Visionários <span class="hand">ao Vivo</span> <span class="figure">2026</span></h1>
-      <p class="sub">Sua nova <span class="hand">visão</span> da contabilidade começa agora.</p>
+      <p class="hero__imprint">Contadores Visionários apresenta</p>
+
+      <h1>Visionários <span class="hand">ao Vivo</span> 2026</h1>
+      <p class="hero__sub">Sua nova <span class="hand">visão</span> da contabilidade começa agora.</p>
 
       <ul class="facts">
-        <li><Icon name="calendar" size={17} /> 29 e 30 de Outubro de 2026</li>
-        <li><Icon name="pin" size={17} /> São Paulo</li>
-        <li><Icon name="hourglass" size={17} /> 2 dias presenciais</li>
+        <li><Icon name="calendar" size={18} /> 29 e 30 de Outubro de 2026</li>
+        <li><Icon name="pin" size={18} /> São Paulo</li>
+        <li><Icon name="hourglass" size={18} /> 2 dias presenciais</li>
       </ul>
 
-      <p class="open__lede measure">
+      <p class="hero__lede">
         Dois dias de implementação mão na massa para o dono de escritório contábil
         reinventar o próprio negócio — e resolver 6 meses de estruturação em 2 dias.
       </p>
 
-      <!-- Saldo corrente: o regressivo como quantia que decresce no livro. -->
-      <div class="balance" role="timer" aria-live="off">
-        <span class="balance__tag">Saldo até o evento</span>
-        <dl id="clock">
-          <div><dd class="figure" data-u="d">—</dd><dt>dias</dt></div>
-          <div><dd class="figure" data-u="h">—</dd><dt>horas</dt></div>
-          <div><dd class="figure" data-u="m">—</dd><dt>min</dt></div>
-          <div><dd class="figure" data-u="s">—</dd><dt>seg</dt></div>
-        </dl>
-      </div>
-
-      <button class="post" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
-      <p class="fine">Grupo de WhatsApp · menor preço + bônus exclusivo pra quem entrar agora</p>
-      </div>
+      <button class="cta cta--wide" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
+      <p class="assure">
+        <Icon name="shield" size={16} /> Grupo de WhatsApp · menor preço + bônus exclusivo pra quem entrar agora
+      </p>
     </div>
   </section>
 
-  <!-- ── O muro: página dupla aberta, débito contra crédito ── -->
-  <section class="ruled" aria-labelledby="t-muro">
-    <div class="shell ledger-row">
-      <p class="account">Contador comum × Contador visionário</p>
-      <div>
-        <h2 id="t-muro">Existe um muro entre você e o escritório que você queria ter.</h2>
-        <p class="lede measure">
-          A diferença entre os dois lados nunca foi técnica — é <span class="hand">visão</span>.
-          O evento é o portal pra atravessar.
-        </p>
-
-        <div class="spread">
-          <div class="side">
-            <p class="side__head"><Icon name="wall" size={18} /> Do lado de cá</p>
-            <ul>
-              {daqui.map((t) => <li class="posting">{t}</li>)}
-            </ul>
-          </div>
-          <div class="spread__crease" aria-hidden="true"></div>
-          <div class="side side--credit">
-            <p class="side__head"><Icon name="key" size={18} /> Do outro lado</p>
-            <ul>
-              {dela.map((t) => <li class="posting">{t}</li>)}
-            </ul>
-          </div>
-        </div>
-      </div>
+  <!-- ══ O muro ══ -->
+  <section class="eyebrow-free" aria-labelledby="t-muro">
+    <span class="glow glow--navy g-left" aria-hidden="true"></span>
+    <div class="shell center measure-wide">
+      <p class="over">Contador comum × Contador visionário</p>
+      <h2 id="t-muro">Existe um muro entre você e o escritório que você queria ter.</h2>
+      <p class="sec-lede measure center">
+        A diferença entre os dois lados nunca foi técnica — é <span class="hand">visão</span>.
+        O evento é o portal pra atravessar.
+      </p>
     </div>
-  </section>
 
-  <!-- ── Plano de contas: as 4 fases como contas numeradas ── -->
-  <section aria-labelledby="t-metodo">
-    <div class="shell ledger-row">
-      <p class="account">Método Aceleração Visionária · exclusivo do evento</p>
-      <div>
-        <h2 id="t-metodo">2 dias. 6 meses de estruturação resolvidos.</h2>
-        <p class="lede measure">
-          4 fases, uma construída sobre a outra — cada bloco entrega uma ferramenta pronta
-          pra aplicar:
-        </p>
-
-        <ol class="chart">
-          {fases.map((f, i) => (
-            <li>
-              <span class="chart__n figure">{String(i + 1).padStart(2, '0')}</span>
-              <span class="chart__t">{f}</span>
-            </li>
-          ))}
-        </ol>
-
-        <p class="note">+ Reforma tributária como tema transversal nos dois dias.</p>
-
-        <p class="lede measure lede--tight">
-          Você sai com um Sprint de 60 dias pra chegar em 2027 estruturado
-        </p>
-        <ol class="run">
-          {linha.map((p) => <li>{p}</li>)}
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Palestrantes: estampas pequenas encartadas, ao tamanho que o arquivo aguenta ── -->
-  <section class="ruled" aria-labelledby="t-quem">
-    <div class="shell ledger-row">
-      <p class="account">Quem sobe ao palco</p>
-      <div>
-        <h2 id="t-quem">Os palestrantes</h2>
-        <p class="lede measure">
-          Viviane e Marcos conduzem o método. E, a cada semana, um novo nome de peso do
-          mercado contábil é revelado.
-        </p>
-
-        <ul class="cast">
-          <li>
-            <Image src={viviane} alt="Viviane Araújo" width={112} height={112} quality={88} />
-            <div><h3>Viviane Araújo</h3><p>Fundadora da Soluzzi · Mentora</p></div>
-          </li>
-          <li>
-            <Image src={marcos} alt="Marcos Paulo" width={112} height={112} quality={88} />
-            <div><h3>Marcos Paulo</h3><p>Contadores Visionários</p></div>
-          </li>
-          <li class="cast--open">
-            <span class="cast__void" aria-hidden="true"></span>
-            <div><h3>A revelar</h3><p>Anunciado no grupo</p></div>
-          </li>
+    <div class="shell duo">
+      <div class="panel rise">
+        <span class="medal medal--mute"><Icon name="wall" size={22} /></span>
+        <h3>Do lado de cá</h3>
+        <ul class="items">
+          {daqui.map((t) => <li><span class="dot" aria-hidden="true"></span>{t}</li>)}
         </ul>
-
-        <p class="note">
-          Os convidados são revelados um a um — sempre primeiro pra quem está na lista do
-          Lote Zero.
-        </p>
       </div>
-    </div>
-  </section>
-
-  <!-- ── Conciliação: os critérios como linhas conferidas ── -->
-  <section aria-labelledby="t-pra">
-    <div class="shell ledger-row">
-      <p class="account">Antes de entrar</p>
-      <div>
-        <h2 id="t-pra">É pra você se…</h2>
-        <ul class="tally">
-          {criterios.map((c) => (
-            <li><Icon name="check" size={16} /><span>{c}</span></li>
-          ))}
+      <div class="panel panel--lit rise">
+        <span class="medal"><Icon name="key" size={22} /></span>
+        <h3 class="lit">Do outro lado</h3>
+        <ul class="items items--lit">
+          {dela.map((t) => <li><Icon name="check" size={16} />{t}</li>)}
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- ── O lançamento do Lote Zero ── -->
-  <section class="ruled" aria-labelledby="t-vant">
-    <div class="shell ledger-row">
-      <p class="account">Por que entrar agora</p>
-      <div>
-        <h2 id="t-vant">A vantagem de estar na lista</h2>
+  <!-- ══ Método ══ -->
+  <section class="eyebrow-free" aria-labelledby="t-metodo">
+    <span class="glow glow--gold g-right" aria-hidden="true"></span>
+    <div class="shell center measure-wide">
+      <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
+      <h2 id="t-metodo">2 dias. 6 meses de estruturação resolvidos.</h2>
+      <p class="sec-lede measure center">
+        4 fases, uma construída sobre a outra — cada bloco entrega uma ferramenta pronta
+        pra aplicar:
+      </p>
+    </div>
 
-        <div class="entry">
-          <div class="entry__id">
-            <span>Lote</span>
-            <strong class="hand">Zero</strong>
-            <span class="figure entry__date">22 · 08</span>
+    <ol class="shell phases">
+      {fases.map((f, i) => (
+        <li class="panel rise">
+          <span class="medal"><Icon name={f.icon} size={24} /></span>
+          <span class="phases__n">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{f.nome}</h3>
+        </li>
+      ))}
+    </ol>
+
+    <div class="shell">
+      <p class="aside">
+        <Icon name="star" size={17} /> + Reforma tributária como tema transversal nos dois dias.
+      </p>
+    </div>
+
+    <div class="shell center sprint">
+      <p class="sec-lede measure center">
+        Você sai com um Sprint de 60 dias pra chegar em 2027 estruturado
+      </p>
+      <ol class="track">
+        {linha.map((p, i) => (
+          <li class={i === linha.length - 1 ? 'track__end' : ''}>
+            <span class="track__pip" aria-hidden="true"></span>{p}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══ Trailer — placeholder para o vídeo 1:1 ══ -->
+  <section class="eyebrow-free" aria-labelledby="t-video">
+    <div class="shell center measure-wide">
+      <h2 id="t-video">O que acontece na sala</h2>
+    </div>
+    <div class="shell reel">
+      <!-- PLACEHOLDER: suba o trailer 1:1 e troque este bloco por <video poster>. -->
+      <div class="reel__box panel rise">
+        <span class="reel__play"><Icon name="play" size={30} /></span>
+        <p>Trailer do evento · 1:1</p>
+        <small>Espaço reservado — envie o arquivo e eu ligo aqui com poster e clique‑para‑tocar.</small>
+      </div>
+      <div class="reel__side">
+        <!-- PLACEHOLDER: foto vertical da edição anterior (palco, plateia ou bastidor). -->
+        <div class="shot panel rise"><span>Foto vertical<br /><small>a enviar</small></span></div>
+        <div class="shot panel rise"><span>Foto vertical<br /><small>a enviar</small></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Palestrantes ══ -->
+  <section class="eyebrow-free" aria-labelledby="t-quem">
+    <span class="glow glow--gold g-left" aria-hidden="true"></span>
+    <div class="shell center measure-wide">
+      <p class="over">Quem sobe ao palco</p>
+      <h2 id="t-quem">Os palestrantes</h2>
+      <p class="sec-lede measure center">
+        Viviane e Marcos conduzem o método. E, a cada semana, um novo nome de peso do
+        mercado contábil é revelado.
+      </p>
+    </div>
+
+    <ul class="shell cast">
+      <li class="panel rise">
+        <div class="cast__pic"><Image src={viviane} alt="Viviane Araújo" width={420} height={420} quality={90} /></div>
+        <h3>Viviane Araújo</h3>
+        <p>Fundadora da Soluzzi · Mentora</p>
+      </li>
+      <li class="panel rise">
+        <div class="cast__pic"><Image src={marcos} alt="Marcos Paulo" width={354} height={354} quality={92} /></div>
+        <h3>Marcos Paulo</h3>
+        <p>Contadores Visionários</p>
+      </li>
+      <li class="panel panel--lit rise cast__next">
+        <div class="cast__pic cast__pic--void"><Icon name="star" size={30} /></div>
+        <h3 class="lit">A revelar</h3>
+        <p>Anunciado no grupo</p>
+      </li>
+    </ul>
+
+    <div class="shell">
+      <p class="aside">
+        <Icon name="clapper" size={17} /> Os convidados são revelados um a um — sempre primeiro
+        pra quem está na lista do Lote Zero.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ Qualificação ══ -->
+  <section class="eyebrow-free" aria-labelledby="t-pra">
+    <div class="shell center measure-wide">
+      <p class="over">Antes de entrar</p>
+      <h2 id="t-pra">É pra você se…</h2>
+    </div>
+    <div class="shell qual">
+      <ul class="panel panel--lit rise">
+        {criterios.map((c) => (
+          <li><span class="tick"><Icon name="check" size={15} /></span><span>{c}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ Lote Zero ══ -->
+  <section class="eyebrow-free" aria-labelledby="t-vant">
+    <span class="glow glow--gold g-center" aria-hidden="true"></span>
+    <div class="shell center measure-wide">
+      <p class="over">Por que entrar agora</p>
+      <h2 id="t-vant">A vantagem de estar na lista</h2>
+    </div>
+
+    <div class="shell lote">
+      <div class="panel panel--lit rise">
+        <div class="lote__head">
+          <div>
+            <p class="lote__kind">Lote</p>
+            <p class="lote__name hand">Zero</p>
           </div>
-          <p class="entry__scope">Exclusivo pra quem está no grupo</p>
+          <div class="lote__when">
+            <span>Abre em</span>
+            <strong>22 · 08</strong>
+          </div>
         </div>
+        <p class="lote__scope">Exclusivo pra quem está no grupo</p>
 
         <ul class="perks">
           {vantagens.map((v) => (
-            <li>
-              <Icon name={v.icon} size={19} />
-              <span>{v.texto}</span>
-            </li>
+            <li><span class="medal medal--sm"><Icon name={v.icon} size={19} /></span><span>{v.texto}</span></li>
           ))}
         </ul>
 
-        <button class="post" type="button" data-open-lead>
-          Quero o Lote Zero + bônus <Icon name="arrow" size={18} />
-        </button>
-        <p class="fine">Vagas presenciais limitadas · 1ª edição · sala fechada</p>
+        <div class="lote__act">
+          <button class="cta cta--wide" type="button" data-open-lead>
+            Quero o Lote Zero + bônus <Icon name="arrow" size={18} />
+          </button>
+          <p class="assure"><Icon name="shield" size={16} /> Vagas presenciais limitadas · 1ª edição · sala fechada</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Fechamento ── -->
-  <section class="close" aria-labelledby="t-fim">
-    <div class="shell ledger-row">
-      <p class="account">A decisão</p>
-      <div>
-        <h2 id="t-fim">Você pode entrar em 2027 igual. Ou <span class="hand">atravessar o muro</span> agora.</h2>
-        <p class="lede measure">
-          Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição do
-          Visionários ao Vivo — pelo menor preço, com bônus exclusivo.
-        </p>
-        <button class="post" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
-      </div>
+  <!-- ══ Fechamento ══ -->
+  <section class="close eyebrow-free" aria-labelledby="t-fim">
+    <span class="glow glow--navy g-center" aria-hidden="true"></span>
+    <div class="shell center measure-wide">
+      <p class="over">A decisão</p>
+      <h2 id="t-fim">Você pode entrar em 2027 igual.<br />Ou <span class="hand">atravessar o muro</span> agora.</h2>
+      <p class="sec-lede measure center">
+        Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição do
+        Visionários ao Vivo — pelo menor preço, com bônus exclusivo.
+      </p>
+      <button class="cta cta--wide" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
     </div>
   </section>
 
   <footer class="foot">
-    <div class="shell">
-      <p>Visionários ao Vivo 2026 · Contadores Visionários</p>
-    </div>
+    <div class="shell">Visionários ao Vivo 2026 · Contadores Visionários</div>
   </footer>
 
   <LeadModal />
 </Base>
 
 <style>
-  /* ── Faixa superior ── */
-  .strip {
-    border-bottom: 1px solid var(--rule);
-    background: #00010999;
-    backdrop-filter: blur(10px);
-    position: relative;
-    z-index: 20;
-  }
-  .strip__in {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-    padding-block: 0.8rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--paper-dim);
-  }
-  .strip__in i { width: 3px; height: 3px; border-radius: 50%; background: var(--gold-deep); }
-  .strip__gold { color: var(--gold); }
+  .measure-wide { max-width: 46rem; }
 
-  /* ── Abertura ── */
-  .open {
-    position: relative;
-    padding-block: clamp(4rem, 11vh, 8rem) clamp(3.5rem, 9vh, 6.5rem);
-    isolation: isolate;
-    overflow: hidden;
-  }
-  .open__plate { position: absolute; inset: 0; z-index: -2; isolation: isolate; }
-  .open__plate :global(img) {
-    position: relative;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Sobe o enquadramento: tira a marca d'água do canto inferior e traz o
-       corredor e as luzes erguidas para o centro óptico. */
-    object-position: 50% 32%;
-    transform: scale(1.12);
-    filter: saturate(0.72) contrast(1.06) brightness(0.88);
-  }
-  /* A estampa recua para o fundo do livro: o texto é que carrega o primeiro
-     plano. Véu forte à esquerda, onde a coluna de leitura assenta. */
-  .open__wash {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background:
-      linear-gradient(90deg, #000107f7 0%, #000208e0 32%, #00020899 56%, #0002084d 80%, #00020826 100%),
-      linear-gradient(180deg, #000107cc 0%, #00010759 20%, #00020899 72%, var(--ground) 100%),
-      linear-gradient(180deg, transparent 58%, #00054780 100%);
-  }
-  /* O pautado atravessa a estampa: a foto está dentro do livro. */
-  .open__rules {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background-image: repeating-linear-gradient(
-      to bottom, #c8a45c33 0 1px, transparent 1px 2.75rem
-    );
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-            mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-  }
-
-  .open__in { position: relative; }
-  .open__margin { display: grid; gap: 1.1rem; justify-items: start; }
-  .open__margin .account { width: 100%; }
-
-  .stamp {
-    display: inline-block;
-    padding: 0.42rem 1rem;
-    border: 1px solid var(--rule-strong);
-    border-radius: 2px;
-    font-size: 0.78rem;
+  /* Linha curta acima do título: centralizada e destacada como rótulo do bloco,
+     não empilhada como rótulo de formulário. */
+  .over {
+    margin-bottom: 1.1rem;
+    font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: 0.04em;
-    color: var(--gold-lift);
-    background: #0004147a;
-  }
-  h1 {
-    font-size: clamp(2.5rem, 7.4vw, 5.2rem);
-    letter-spacing: -0.042em;
-  }
-  h1 .hand { letter-spacing: -0.005em; }
-  .sub {
-    margin-top: 1.15rem;
-    font-size: clamp(1.05rem, 2.4vw, 1.4rem);
-    color: var(--paper-dim);
+    color: var(--gold);
   }
 
+  /* ── Abertura ── */
+  .hero {
+    position: relative;
+    padding-block: clamp(3.5rem, 9vh, 6rem) clamp(4rem, 10vh, 7rem);
+    isolation: isolate;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero__plate { position: absolute; inset: 0; z-index: -2; isolation: isolate; }
+  .hero__plate :global(img) {
+    position: relative; z-index: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 50% 30%;
+    transform: scale(1.08);
+    filter: saturate(0.72) contrast(1.05) brightness(0.78);
+  }
+  .hero__wash {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      radial-gradient(112% 78% at 50% 42%, #01020a26 12%, #01020ae0 62%, var(--ground) 100%),
+      linear-gradient(180deg, #04050fd9 0%, #04050f4d 26%, #02030ce6 78%, var(--ground) 100%);
+  }
+  .hero__g1 { width: 46rem; height: 30rem; top: 12%; left: 50%; transform: translateX(-50%); opacity: 0.4; }
+  .hero__g2 { width: 38rem; height: 26rem; bottom: -8%; left: 50%; transform: translateX(-50%); opacity: 0.55; }
+
+  .hero__in { position: relative; z-index: 2; }
+  .hero__imprint {
+    margin-top: 1.9rem;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    color: var(--paper-dim);
+  }
+  h1 {
+    margin-top: 0.9rem;
+    font-size: clamp(2.6rem, 8vw, 5.4rem);
+    letter-spacing: -0.038em;
+    text-shadow: 0 2px 40px #000000a6;
+  }
+  .hero__sub {
+    margin-top: 1.2rem;
+    font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+    color: var(--paper-dim);
+  }
   .facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem 2rem;
-    margin-top: 2.1rem;
-    font-size: 0.9rem;
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 0.7rem 2.2rem;
+    margin-top: 2.2rem;
+    font-size: 0.94rem;
     color: var(--paper-dim);
   }
   .facts li { display: inline-flex; align-items: center; gap: 0.5rem; }
   .facts :global(svg) { color: var(--gold); flex: none; }
-
-  .open__lede {
-    margin-top: 1.9rem;
-    color: var(--paper-dim);
-  }
-
-  /* Saldo corrente */
-  .balance {
-    margin: 2.6rem 0 2.4rem;
-    padding: 1.15rem 1.4rem 1.05rem;
-    width: fit-content;
-    max-width: 100%;
-    border: 1px solid var(--rule);
-    border-top-color: var(--rule-strong);
-    border-radius: 2px;
-    background: #00030f8f;
-  }
-  .balance__tag {
-    display: block;
-    margin-bottom: 0.85rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--paper-dim);
-  }
-  .balance dl { display: flex; gap: clamp(1.1rem, 4vw, 2.6rem); margin: 0; }
-  .balance div { text-align: center; }
-  .balance dd {
-    margin: 0;
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
-    font-weight: 300;
-    line-height: 1;
-    color: var(--gold-lift);
-  }
-  .balance dt {
-    margin-top: 0.45rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--paper-dim);
-  }
-
-  .fine { max-width: var(--measure); margin-top: 1.1rem; font-size: 0.83rem; color: var(--paper-faint); }
-
-  /* ── Tipografia de seção ── */
-  h2 {
-    font-size: clamp(1.8rem, 4.4vw, 2.9rem);
-  }
-  .lede { margin-top: 1.2rem; color: var(--paper-dim); }
-  .lede--tight { margin-top: 2.6rem; }
-  .note {
+  .hero__lede {
     max-width: var(--measure);
-    margin-top: 1.6rem;
-    font-size: 0.9rem;
-    color: var(--paper-faint);
-    padding-left: 1rem;
-    border-left: 1px solid var(--rule-strong);
-  }
-
-  /* ── Página dupla ── */
-  .spread {
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr;
-    gap: clamp(1.5rem, 4vw, 3.25rem);
-    margin-top: 2.8rem;
-  }
-  .spread__crease {
-    background: linear-gradient(180deg, transparent, var(--gold-deep) 18%, var(--gold) 50%, var(--gold-deep) 82%, transparent);
-  }
-  .side__head {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    padding-bottom: 0.9rem;
-    margin-bottom: 0.4rem;
-    border-bottom: 1px solid var(--rule);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--paper-faint);
-  }
-  .side li {
-    padding-block: 0.95rem;
-    border-bottom: 1px solid var(--rule-faint);
+    margin: 1.9rem auto 2.6rem;
     color: var(--paper-dim);
   }
-  .side--credit .side__head { color: var(--gold); }
-  /* O crédito é lançado do lado oposto: as duas colunas se encontram no vinco. */
-  .side--credit li { color: var(--paper); --from: 0.75rem; }
-  @media (max-width: 46rem) {
-    .spread { grid-template-columns: 1fr; gap: 2.25rem; }
-    .spread__crease { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+  /* ── Muro ── */
+  .duo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: clamp(1rem, 2.4vw, 1.6rem);
+    margin-top: 3.2rem;
+  }
+  .duo h3 { margin-top: 1.15rem; font-size: 1.3rem; }
+  .medal--mute { color: var(--paper-faint); background: #ffffff0d; box-shadow: inset 0 1px 0 #ffffff14; }
+  .items { margin-top: 1.4rem; display: grid; gap: 0.9rem; }
+  .items li {
+    display: grid; grid-template-columns: 1.15rem 1fr; gap: 0.85rem;
+    align-items: start; color: var(--paper-dim);
+  }
+  .items :global(svg) { color: var(--gold); margin-top: 0.34rem; }
+  .items--lit li { color: var(--paper); }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--paper-faint); margin-top: 0.62rem; margin-left: 0.25rem;
   }
 
-  /* ── Plano de contas ── */
-  .chart { margin-top: 2.6rem; border-top: 1px solid var(--rule); }
-  .chart li {
+  /* ── Fases ── */
+  .phases {
     display: grid;
-    grid-template-columns: 4.5rem 1fr;
-    align-items: baseline;
-    gap: 1rem;
-    padding-block: 1.15rem;
-    border-bottom: 1px solid var(--rule-faint);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: clamp(1rem, 2vw, 1.4rem);
+    margin-top: 3.2rem;
   }
-  .chart__n { color: var(--gold-deep); font-size: 0.95rem; letter-spacing: 0.08em; }
-  .chart__t { font-size: clamp(1.1rem, 2.6vw, 1.45rem); letter-spacing: -0.02em; }
+  .phases li { position: relative; }
+  .phases__n {
+    position: absolute; top: clamp(1.5rem, 3.4vw, 2.4rem); right: clamp(1.5rem, 3.4vw, 2.4rem);
+    font-size: 1.5rem; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #ffffff14;
+  }
+  .phases h3 { margin-top: 2rem; font-size: 1.18rem; }
 
-  /* ── Corrida de lançamentos ── */
-  .run {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    gap: 1px;
-    margin-top: 1.5rem;
-    background: var(--rule-faint);
-    border: 1px solid var(--rule-faint);
+  .aside {
+    display: flex; align-items: flex-start; gap: 0.7rem;
+    max-width: var(--measure); margin: 2.6rem auto 0;
+    color: var(--paper-faint); font-size: 0.95rem;
   }
-  .run li {
-    padding: 1.15rem 1.1rem;
-    background: var(--ground);
-    font-size: 0.92rem;
-    color: var(--paper-dim);
+  .aside :global(svg) { color: var(--gold); flex: none; margin-top: 0.28rem; }
+
+  /* ── Sprint ── */
+  .sprint { margin-top: 3.4rem; }
+  .track {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1rem; margin-top: 1.8rem;
   }
-  .run li:last-child { color: var(--gold-lift); }
+  .track li {
+    display: flex; align-items: center; gap: 0.65rem;
+    padding: 0.95rem 1.15rem;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #ffffff0d, #ffffff03);
+    box-shadow: inset 0 1px 0 #ffffff12;
+    font-size: 0.92rem; color: var(--paper-dim);
+  }
+  .track__pip { width: 7px; height: 7px; border-radius: 50%; background: var(--gold-deep); flex: none; }
+  .track__end { color: var(--gold-lift); box-shadow: inset 0 1px 0 #e6cd9130, 0 0 0 1px #c8a45c33; }
+  .track__end .track__pip { background: var(--gold-lift); }
+
+  /* ── Trailer + fotos ── */
+  .reel {
+    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: clamp(1rem, 2vw, 1.4rem); margin-top: 2.8rem;
+  }
+  .reel__box {
+    display: grid; place-content: center; justify-items: center; gap: 0.6rem;
+    aspect-ratio: 16 / 10; text-align: center; color: var(--paper-faint);
+  }
+  .reel__play {
+    display: grid; place-items: center;
+    width: 4.5rem; height: 4.5rem; border-radius: 50%;
+    color: var(--gold-lift);
+    background: linear-gradient(180deg, #c8a45c2b, #c8a45c0d);
+    box-shadow: inset 0 1px 0 #e6cd9130;
+  }
+  .reel__box p { color: var(--paper-dim); font-weight: 500; }
+  .reel__box small { max-width: 26ch; font-size: 0.8rem; line-height: 1.5; }
+  .reel__side { display: grid; gap: clamp(1rem, 2vw, 1.4rem); }
+  .shot {
+    display: grid; place-items: center; text-align: center;
+    min-height: 8rem; color: var(--paper-faint); font-size: 0.86rem;
+  }
+  .shot small { opacity: 0.7; }
+  @media (max-width: 52rem) {
+    .reel { grid-template-columns: 1fr; }
+    .reel__side { grid-template-columns: 1fr 1fr; }
+  }
 
   /* ── Elenco ── */
   .cast {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 1px;
-    margin-top: 2.6rem;
-    background: var(--rule-faint);
-    border-block: 1px solid var(--rule);
-  }
-  .cast li {
-    display: flex;
-    align-items: center;
-    gap: 1.1rem;
-    padding: 1.5rem 1.25rem;
-    background: var(--ground);
-  }
-  .cast :global(img) {
-    width: 56px;
-    height: 56px;
-    flex: none;
-    object-fit: cover;
-    border-radius: 2px;
-    border: 1px solid var(--rule-strong);
-    filter: grayscale(0.28) contrast(1.04);
-  }
-  .cast__void {
-    width: 56px;
-    height: 56px;
-    flex: none;
-    border: 1px dashed var(--rule-strong);
-    border-radius: 2px;
-  }
-  .cast h3 { font-size: 1.05rem; letter-spacing: -0.02em; }
-  .cast p { margin-top: 0.3rem; font-size: 0.83rem; color: var(--paper-faint); }
-  .cast--open h3 { color: var(--gold); }
-
-  /* ── Conciliação ── */
-  .tally { margin-top: 2.4rem; border-top: 1px solid var(--rule); }
-  .tally li {
-    display: grid;
-    grid-template-columns: 1.5rem 1fr;
-    gap: 1rem;
-    align-items: start;
-    padding-block: 1.15rem;
-    border-bottom: 1px solid var(--rule-faint);
-    color: var(--paper-dim);
-  }
-  .tally :global(svg) { color: var(--gold); margin-top: 0.28rem; }
-
-  /* ── Lançamento do lote ── */
-  .entry {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 2.4rem;
-    padding-bottom: 1.15rem;
-    border-bottom: 1px solid var(--rule-strong);
-  }
-  .entry__id { display: flex; align-items: baseline; gap: 0.6rem; }
-  .entry__id span:first-child {
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--paper-faint);
-  }
-  .entry__id strong { font-size: clamp(1.9rem, 5vw, 2.6rem); font-weight: 300; }
-  .entry__date {
-    font-size: 0.95rem;
-    color: var(--gold);
-    padding-left: 0.7rem;
-    border-left: 1px solid var(--rule-strong);
-  }
-  .entry__scope { font-size: 0.85rem; color: var(--paper-faint); }
-
-  .perks { margin-top: 0.4rem; }
-  .perks li {
-    display: grid;
-    grid-template-columns: 1.6rem 1fr;
-    gap: 1rem;
-    align-items: start;
-    padding-block: 1.2rem;
-    border-bottom: 1px solid var(--rule-faint);
-    color: var(--paper-dim);
-  }
-  .perks :global(svg) { color: var(--gold); margin-top: 0.2rem; }
-  .perks li:first-child { color: var(--paper); }
-  .perks + .post { margin-top: 2.4rem; }
-
-  /* ── Fechamento ── */
-  .close { padding-bottom: clamp(5rem, 10vw, 8rem); }
-  .close .post { margin-top: 2.4rem; }
-
-  .foot {
-    padding-block: 2.25rem;
-    border-top: 1px solid var(--rule);
-    font-size: 0.8rem;
-    color: var(--paper-faint);
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem); margin-top: 3.2rem;
     text-align: center;
   }
-</style>
+  .cast__pic {
+    position: relative;
+    width: clamp(7rem, 16vw, 9.5rem); aspect-ratio: 1;
+    margin: 0 auto 1.4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #c8a45c3d, 0 18px 40px -18px #000, inset 0 0 30px #00000059;
+  }
+  .cast__pic :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .cast__pic--void {
+    display: grid; place-items: center;
+    color: var(--gold-lift);
+    background: linear-gradient(180deg, #c8a45c1f, #c8a45c08);
+  }
+  .cast h3 { font-size: 1.22rem; }
+  .cast p { margin-top: 0.45rem; color: var(--paper-faint); font-size: 0.9rem; }
 
-<script>
-  // Saldo corrente até 29/10/2026, 09:00 (horário de Brasília).
-  const alvo = new Date('2026-10-29T09:00:00-03:00').getTime();
-  const campos = {
-    d: document.querySelector('[data-u="d"]'),
-    h: document.querySelector('[data-u="h"]'),
-    m: document.querySelector('[data-u="m"]'),
-    s: document.querySelector('[data-u="s"]'),
-  };
-
-  function tick() {
-    const resto = alvo - Date.now();
-    if (resto <= 0) {
-      Object.values(campos).forEach((el) => el && (el.textContent = '00'));
-      return;
-    }
-    const seg = Math.floor(resto / 1000);
-    const pad = (n: number) => String(n).padStart(2, '0');
-    if (campos.d) campos.d.textContent = String(Math.floor(seg / 86400));
-    if (campos.h) campos.h.textContent = pad(Math.floor(seg / 3600) % 24);
-    if (campos.m) campos.m.textContent = pad(Math.floor(seg / 60) % 60);
-    if (campos.s) campos.s.textContent = pad(seg % 60);
+  /* ── Qualificação ── */
+  .qual { margin-top: 3rem; max-width: 50rem; }
+  .qual ul { display: grid; gap: 1.15rem; }
+  .qual li { display: grid; grid-template-columns: 1.7rem 1fr; gap: 1rem; align-items: start; color: var(--paper-dim); }
+  .tick {
+    display: grid; place-items: center;
+    width: 1.7rem; height: 1.7rem; border-radius: 50%;
+    color: var(--gold-lift);
+    background: linear-gradient(180deg, #c8a45c33, #c8a45c0f);
+    box-shadow: inset 0 1px 0 #e6cd9130;
   }
 
-  tick();
-  setInterval(tick, 1000);
-</script>
+  /* ── Lote ── */
+  .lote { margin-top: 3rem; max-width: 52rem; }
+  .lote__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .lote__kind { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--paper-faint); }
+  .lote__name { font-size: clamp(2.6rem, 7vw, 4rem); line-height: 1; }
+  .lote__when { text-align: right; }
+  .lote__when span { display: block; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper-faint); }
+  .lote__when strong { font-size: 1.7rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--gold-lift); }
+  .lote__scope { margin-top: 0.6rem; color: var(--paper-faint); font-size: 0.9rem; }
+  .perks { margin-top: 2.2rem; display: grid; gap: 1.35rem; }
+  .perks li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; color: var(--paper-dim); }
+  .perks li:first-child { color: var(--paper); }
+  .medal--sm { width: 2.4rem; height: 2.4rem; border-radius: 10px; }
+  .lote__act { margin-top: 2.6rem; text-align: center; }
+
+  /* ── Fechamento ── */
+  .close { padding-bottom: clamp(5.5rem, 11vw, 9rem); }
+  .close h2 { font-size: clamp(2rem, 5.2vw, 3.4rem); }
+  .close .cta { margin-top: 2.6rem; }
+
+  /* Halos de seção */
+  .g-left   { width: 34rem; height: 24rem; top: 6%; left: -14rem; opacity: 0.32; }
+  .g-right  { width: 34rem; height: 24rem; top: 10%; right: -14rem; opacity: 0.28; }
+  .g-center { width: 42rem; height: 26rem; top: 18%; left: 50%; transform: translateX(-50%); opacity: 0.3; }
+
+  .foot {
+    padding-block: 2.4rem;
+    color: var(--paper-faint); font-size: 0.82rem; text-align: center;
+    box-shadow: inset 0 1px 0 #ffffff0d;
+  }
+</style>
