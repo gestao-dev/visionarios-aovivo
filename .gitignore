@@ -1,0 +1,5 @@
+# Machine-local Claude Code overrides (absolute paths, per-developer state).
+# The shared impeccable hook lives in .claude/settings.json instead.
+.claude/settings.local.json
+
+node_modules/
