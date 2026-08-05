@@ -31,16 +31,16 @@ const fases = [
 const linha = ['Evento 29–30/out', 'Novembro implementa', 'Dezembro consolida', '2027 estruturado'];
 const criterios = [
   'Você é dono de escritório contábil (não estudante, não iniciante)',
-  'A empresa não anda sem você — e isso já te esgotou',
+  'A empresa não anda sem você, e isso já te esgotou',
   'Você tem técnica de sobra, mas gestão de menos',
   'Você prefere implementar a acumular mais um curso na estante',
   'Você quer entrar em 2027 com o escritório estruturado, não no mesmo caos',
 ];
 const vantagens = [
-  { icon: 'star',      texto: 'O menor preço do evento — abre antes de todos os lotes, por 48h, e não volta.' },
+  { icon: 'star',      texto: 'O menor preço do evento: abre antes de todos os lotes, por 48h, e não volta.' },
   { icon: 'gift',      texto: 'Bônus físico exclusivo pra quem garantir nas primeiras 48h.' },
-  { icon: 'stopwatch', texto: 'Prioridade na abertura — você é avisado primeiro, antes da lista pública.' },
-  { icon: 'clapper',   texto: 'Bastidores e lineup — palestrantes e novidades em primeira mão.' },
+  { icon: 'stopwatch', texto: 'Prioridade na abertura: você é avisado primeiro, antes da lista pública.' },
+  { icon: 'clapper',   texto: 'Bastidores e lineup: palestrantes e novidades em primeira mão.' },
 ];
 ---
 
@@ -51,7 +51,7 @@ const vantagens = [
   <section class="hero" id="topo">
     <div class="hero__plate">
       <Image
-        src={sala} alt="Visionários ao Vivo — edição anterior, sala lotada de participantes"
+        src={sala} alt="Visionários ao Vivo, edição anterior, sala lotada de participantes"
         widths={[720, 1200, 1600]} sizes="100vw" loading="eager" fetchpriority="high" quality={82}
       />
       <div class="hero__wash"></div>
@@ -90,25 +90,29 @@ const vantagens = [
       <p class="over">Contador comum × Contador visionário</p>
       <h2 id="t-muro">Existe um muro entre você e o escritório que você queria ter.</h2>
       <p class="sec-lede measure center">
-        A diferença entre os dois lados nunca foi técnica — é <span class="hand">visão</span>.
+        A diferença entre os dois lados nunca foi técnica: é visão.
         O evento é o portal pra atravessar.
       </p>
     </div>
 
-    <div class="shell duo">
-      <div class="panel rise">
-        <span class="medal medal--mute"><Icon name="wall" size={22} /></span>
-        <h3>Do lado de cá</h3>
-        <ul class="items">
-          {daqui.map((t) => <li><span class="dot" aria-hidden="true"></span>{t}</li>)}
-        </ul>
+    <div class="shell cross">
+      <div class="cross__side">
+        <p class="cross__head"><Icon name="wall" size={16} /> Do lado de cá</p>
+        <ul>{daqui.map((t) => <li>{t}</li>)}</ul>
       </div>
-      <div class="panel panel--lit rise">
-        <span class="medal"><Icon name="key" size={22} /></span>
-        <h3 class="lit">Do outro lado</h3>
-        <ul class="items items--lit">
-          {dela.map((t) => <li><Icon name="check" size={16} />{t}</li>)}
-        </ul>
+
+      <div class="cross__seam" aria-hidden="true">
+        <span class="cross__gate"><Icon name="arrow" size={20} /></span>
+      </div>
+
+      <div class="cross__side cross__side--to">
+        <!-- A sala aparece só deste lado: o outro lado do muro é o destino,
+             não decoração. Some ao chegar na divisa. -->
+        <div class="cross__room" aria-hidden="true">
+          <Image src={sala} alt="" widths={[560, 900]} sizes="(max-width: 56rem) 100vw, 40rem" quality={70} />
+        </div>
+        <p class="cross__head cross__head--to"><Icon name="key" size={16} /> Do outro lado</p>
+        <ul>{dela.map((t) => <li>{t}</li>)}</ul>
       </div>
     </div>
   </section>
@@ -120,7 +124,7 @@ const vantagens = [
       <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
       <h2 id="t-metodo">2 dias. 6 meses de estruturação resolvidos.</h2>
       <p class="sec-lede measure center">
-        4 fases, uma construída sobre a outra — cada bloco entrega uma ferramenta pronta
+        4 fases, uma construída sobre a outra, e cada bloco entrega uma ferramenta pronta
         pra aplicar:
       </p>
     </div>
@@ -155,7 +159,7 @@ const vantagens = [
     </div>
   </section>
 
-  <!-- ══ Trailer — placeholder para o vídeo 1:1 ══ -->
+  <!-- ══ Trailer: placeholder para o vídeo 1:1 ══ -->
   <section class="eyebrow-free" aria-labelledby="t-video">
     <div class="shell center measure-wide">
       <h2 id="t-video">O que acontece na sala</h2>
@@ -165,7 +169,7 @@ const vantagens = [
       <div class="reel__box panel rise">
         <span class="reel__play"><Icon name="play" size={30} /></span>
         <p>Trailer do evento · 1:1</p>
-        <small>Espaço reservado — envie o arquivo e eu ligo aqui com poster e clique‑para‑tocar.</small>
+        <small>Espaço reservado. Envie o arquivo e eu ligo aqui com poster e clique‑para‑tocar.</small>
       </div>
       <div class="reel__side">
         <!-- PLACEHOLDER: foto vertical da edição anterior (palco, plateia ou bastidor). -->
@@ -207,7 +211,7 @@ const vantagens = [
 
     <div class="shell">
       <p class="aside">
-        <Icon name="clapper" size={17} /> Os convidados são revelados um a um — sempre primeiro
+        <Icon name="clapper" size={17} /> Os convidados são revelados um a um, sempre primeiro
         pra quem está na lista do Lote Zero.
       </p>
     </div>
@@ -274,7 +278,7 @@ const vantagens = [
       <h2 id="t-fim">Você pode entrar em 2027 igual.<br />Ou <span class="hand">atravessar o muro</span> agora.</h2>
       <p class="sec-lede measure center">
         Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição do
-        Visionários ao Vivo — pelo menor preço, com bônus exclusivo.
+        Visionários ao Vivo, pelo menor preço, com bônus exclusivo.
       </p>
       <button class="cta cta--wide" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
     </div>
@@ -381,25 +385,104 @@ const vantagens = [
   .facts li { display: inline-flex; align-items: center; gap: 5px; }
   .facts :global(svg) { color: var(--gold); flex: none; }
 
-  /* ── Muro ── */
-  .duo {
+  /* ── Muro: tabela de travessia, conforme o nó 2722:2080 ── */
+  .cross {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
-    gap: clamp(1rem, 2.4vw, 1.6rem);
-    margin-top: 3.2rem;
+    grid-template-columns: 1fr auto 1fr;
+    gap: clamp(1.5rem, 5vw, 4.5rem);
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    align-items: stretch;
   }
-  .duo h3 { margin-top: 1.15rem; font-size: 1.3rem; }
-  .medal--mute { color: var(--paper-faint); background: #ffffff0d; box-shadow: inset 0 1px 0 #ffffff14; }
-  .items { margin-top: 1.4rem; display: grid; gap: 0.9rem; }
-  .items li {
-    display: grid; grid-template-columns: 1.15rem 1fr; gap: 0.85rem;
-    align-items: start; color: var(--paper-dim);
+
+  .cross__side { position: relative; min-width: 0; isolation: isolate; }
+  .cross__side > :not(.cross__room) { position: relative; z-index: 1; }
+
+  .cross__head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: var(--gold);
   }
-  .items :global(svg) { color: var(--gold); margin-top: 0.34rem; }
-  .items--lit li { color: var(--paper); }
-  .dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--paper-faint); margin-top: 0.62rem; margin-left: 0.25rem;
+  .cross__head :global(svg) { flex: none; }
+
+  .cross__side ul { display: grid; }
+  .cross__side li {
+    padding-block: clamp(1rem, 2.2vw, 1.45rem);
+    border-bottom: 1px solid #ffffff1c;
+    font-size: clamp(0.98rem, 1.9vw, 1.14rem);
+    color: #8b8f9e;
+  }
+  .cross__side--to li { color: #fff; }
+
+  /* A sala sangra atrás da coluna de destino e se apaga na divisa. */
+  .cross__room {
+    position: absolute;
+    inset: -1.5rem -3rem -1.5rem -1.5rem;
+    z-index: 0;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .cross__room :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 34%;
+    opacity: 0.42;
+    filter: saturate(0.75) contrast(1.05) brightness(0.85);
+    /* Desvanece nos quatro lados: sem isso o retângulo se denuncia. */
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 2%, #000 44%, #000 72%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(90deg, transparent 2%, #000 44%, #000 72%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  /* A divisa: filete vertical com o portal no meio. */
+  .cross__seam {
+    position: relative;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--gold-deep) 12%, var(--gold) 50%, var(--gold-deep) 88%, transparent);
+  }
+  .cross__gate {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    background: #05060f;
+    color: var(--gold);
+  }
+
+  @media (max-width: 56rem) {
+    .cross { grid-template-columns: 1fr; gap: 0; }
+    .cross__seam {
+      width: auto;
+      height: 4.5rem;
+      background: linear-gradient(90deg, transparent, var(--gold-deep) 20%, var(--gold) 50%, var(--gold-deep) 80%, transparent);
+      background-size: 100% 1px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .cross__gate { rotate: 90deg; }
+    .cross__side--to { padding-top: 0.5rem; }
+    .cross__room { inset: -1rem -1.25rem; }
+    .cross__room :global(img) {
+      -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 76%, transparent);
+              mask-image: linear-gradient(180deg, transparent, #000 30%, #000 76%, transparent);
+    }
   }
 
   /* ── Fases ── */
