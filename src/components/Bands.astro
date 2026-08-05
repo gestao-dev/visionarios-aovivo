@@ -9,7 +9,8 @@ const baixo = ['2 dias', 'São Paulo', 'Ao vivo'];
 const repetir = (xs: string[], n = 8) => Array.from({ length: n }, () => xs).flat();
 ---
 
-<div class="bands" aria-hidden="true">
+<div class="bands-clip" aria-hidden="true">
+  <div class="bands">
   <div class="band band--up">
     <div class="band__track">
       {repetir(cima).map((t) => (
@@ -25,20 +26,28 @@ const repetir = (xs: string[], n = 8) => Array.from({ length: n }, () => xs).fla
       ))}
     </div>
   </div>
+  </div>
 </div>
 
 <style>
+  /* As faixas passam da largura da tela de propósito. O corte é local:
+     overflow-x no body viraria contêiner de rolagem e quebraria o header fixo. */
+  .bands-clip {
+    position: relative;
+    z-index: 5;
+    overflow-x: clip;
+    overflow-y: visible;
+    margin-top: clamp(-9rem, -15vw, -5rem);
+    margin-bottom: clamp(3rem, 7vw, 6rem);
+    pointer-events: none;
+  }
+
   /* As duas faixas dividem a mesma célula: mesmo centro, rotações opostas,
      cruzamento no meio da tela. Ficam fora da hero porque, no arquivo original,
      atravessam a fronteira entre as seções. */
   .bands {
-    position: relative;
-    z-index: 5;
     display: grid;
     margin-inline: -14%;
-    margin-top: clamp(-9rem, -15vw, -5rem);
-    margin-bottom: clamp(3rem, 7vw, 6rem);
-    pointer-events: none;
   }
 
   .band {

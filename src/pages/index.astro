@@ -28,7 +28,12 @@ const fases = [
   { icon: 'cpu',   nome: 'Sistemas, Tech & IA' },
   { icon: 'chart', nome: 'Receita & Faturamento' },
 ];
-const linha = ['Evento 29–30/out', 'Novembro implementa', 'Dezembro consolida', '2027 estruturado'];
+const sprint = [
+  { quando: 'Evento',    oque: '29–30/out' },
+  { quando: 'Novembro',  oque: 'implementa' },
+  { quando: 'Dezembro',  oque: 'consolida' },
+  { quando: '2027',      oque: 'estruturado' },
+];
 const criterios = [
   'Você é dono de escritório contábil (não estudante, não iniciante)',
   'A empresa não anda sem você, e isso já te esgotou',
@@ -113,44 +118,54 @@ const vantagens = [
   </section>
 
   <!-- ══ Método ══ -->
-  <section class="eyebrow-free" aria-labelledby="t-metodo">
+  <section aria-labelledby="t-metodo">
     <span class="glow glow--gold g-right" aria-hidden="true"></span>
-    <div class="shell center measure-wide">
-      <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
-      <h2 id="t-metodo">2 dias. 6 meses de estruturação resolvidos.</h2>
-      <p class="sec-lede measure center">
-        4 fases, uma construída sobre a outra, e cada bloco entrega uma ferramenta pronta
-        pra aplicar:
-      </p>
-    </div>
 
-    <ol class="shell phases">
-      {fases.map((f, i) => (
-        <li class="panel rise">
-          <span class="medal"><Icon name={f.icon} size={24} /></span>
-          <span class="phases__n">{String(i + 1).padStart(2, '0')}</span>
-          <h3>{f.nome}</h3>
-        </li>
-      ))}
-    </ol>
+    <div class="shell method">
+      <div class="method__text">
+        <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
+        <h2 id="t-metodo">2 dias. 6 meses de estruturação resolvidos.</h2>
+        <p class="method__lede">
+          4 fases, uma construída sobre a outra, e cada bloco entrega uma ferramenta pronta
+          pra aplicar:
+        </p>
+        <p class="aside">
+          <Icon name="star" size={17} /> + Reforma tributária como tema transversal nos dois dias.
+        </p>
+      </div>
 
-    <div class="shell">
-      <p class="aside">
-        <Icon name="star" size={17} /> + Reforma tributária como tema transversal nos dois dias.
-      </p>
-    </div>
-
-    <div class="shell center sprint">
-      <p class="sec-lede measure center">
-        Você sai com um Sprint de 60 dias pra chegar em 2027 estruturado
-      </p>
-      <ol class="track">
-        {linha.map((p, i) => (
-          <li class={i === linha.length - 1 ? 'track__end' : ''}>
-            <span class="track__pip" aria-hidden="true"></span>{p}
+      <!-- As quatro fases como degraus: cada uma se apoia na anterior. -->
+      <ol class="steps">
+        {fases.map((f, i) => (
+          <li style={`--h:${52 + i * 16}%`}>
+            <div class="steps__slot">
+              <div class="steps__bar">
+                <span class="steps__n">{i + 1}</span>
+                <Icon name={f.icon} size={26} />
+              </div>
+            </div>
+            <p class="steps__label">{f.nome}</p>
           </li>
         ))}
       </ol>
+    </div>
+
+    <div class="shell">
+      <div class="sprint">
+        <h3>
+          Você sai com um <span class="hand">Sprint de 60 dias</span><br class="turn" />
+          pra chegar em 2027 estruturado
+        </h3>
+        <ol class="rail">
+          {sprint.map((e, i) => (
+            <li class={i === sprint.length - 1 ? 'rail--now' : ''}>
+              <span class="rail__dot" aria-hidden="true"></span>
+              <b>{e.quando}</b>
+              <span>{e.oque}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -453,46 +468,172 @@ const vantagens = [
     .cross__side--to { padding-top: 0.5rem; }
   }
 
-  /* ── Fases ── */
-  .phases {
+  /* ── Método: texto à esquerda, degraus à direita ── */
+  .method {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: clamp(1rem, 2vw, 1.4rem);
-    margin-top: 3.2rem;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
   }
-  .phases li { position: relative; }
-  .phases__n {
-    position: absolute; top: clamp(1.5rem, 3.4vw, 2.4rem); right: clamp(1.5rem, 3.4vw, 2.4rem);
-    font-size: 1.5rem; font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    color: #ffffff14;
+  .method__text { text-align: left; }
+  .method__text .over { text-align: left; }
+  .method__lede {
+    margin-top: 1.35rem;
+    max-width: 34ch;
+    color: var(--paper-dim);
+    font-size: clamp(1rem, 2.2vw, 1.12rem);
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
   }
-  .phases h3 { margin-top: 2rem; font-size: 1.18rem; }
 
   .aside {
-    display: flex; align-items: flex-start; gap: 0.7rem;
-    max-width: var(--measure); margin: 2.6rem auto 0;
-    color: var(--paper-faint); font-size: 0.95rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    max-width: 34ch;
+    margin-top: 2.2rem;
+    color: var(--paper-faint);
+    font-size: 0.95rem;
   }
   .aside :global(svg) { color: var(--gold); flex: none; margin-top: 0.28rem; }
 
-  /* ── Sprint ── */
-  .sprint { margin-top: 3.4rem; }
-  .track {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    gap: 1rem; margin-top: 1.8rem;
+  /* Degraus: a barra cresce a cada fase, e a altura vem do índice. */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.6rem, 1.4vw, 1.1rem);
+    align-items: stretch;
+    min-height: clamp(17rem, 30vw, 23rem);
   }
-  .track li {
-    display: flex; align-items: center; gap: 0.65rem;
-    padding: 0.95rem 1.15rem;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #ffffff0d, #ffffff03);
-    box-shadow: inset 0 1px 0 #ffffff12;
-    font-size: 0.92rem; color: var(--paper-dim);
+  /* As colunas têm a mesma altura e o conteúdo desce até o pé; com o rótulo
+     reservando duas linhas, as barras assentam todas na mesma base. */
+  .steps li { display: flex; flex-direction: column; }
+  /* A altura da barra é porcentagem DESTE espaço, não da coluna inteira: assim
+     a de 100% chega ao topo em vez de bater no teto junto com a de 86%. */
+  .steps__slot { flex: 1; display: flex; align-items: flex-end; }
+
+  .steps__bar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    height: var(--h);
+    padding-top: clamp(1rem, 2.4vw, 1.6rem);
+    border-radius: 14px 14px 4px 4px;
+    color: var(--navy);
+    background-image:
+      linear-gradient(180deg, #ffffff40, transparent 34%),
+      linear-gradient(168deg, var(--gold-flare) 0%, var(--gold) 46%, #a8863f 100%);
+    box-shadow:
+      inset 0 1px 0 #fff8e6cc,
+      0 18px 40px -22px #d7b35666;
   }
-  .track__pip { width: 7px; height: 7px; border-radius: 50%; background: var(--gold-deep); flex: none; }
-  .track__end { color: var(--gold-lift); box-shadow: inset 0 1px 0 #e6cd9130, 0 0 0 1px #c8a45c33; }
-  .track__end .track__pip { background: var(--gold-lift); }
+  .steps__n {
+    font-family: 'ivypresto-display', Georgia, serif;
+    font-size: clamp(1.5rem, 3.4vw, 2.15rem);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .steps__label {
+    min-height: 2.6em;
+    margin-top: 1.1rem;
+    font-size: clamp(0.82rem, 1.5vw, 0.95rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: #fff;
+    text-align: center;
+  }
+
+  @media (max-width: 60rem) {
+    .method { grid-template-columns: 1fr; }
+    .steps { min-height: 15rem; }
+  }
+  @media (max-width: 34rem) {
+    .steps { grid-template-columns: repeat(2, 1fr); gap: 1.6rem 0.8rem; min-height: 0; }
+    .steps__slot { flex: none; }
+    .steps__bar { height: auto; padding-bottom: 1.1rem; }
+    .steps__label { min-height: 0; }
+  }
+
+  /* ── Sprint: painel com borda em movimento ── */
+  .sprint {
+    position: relative;
+    margin-top: clamp(4rem, 8vw, 6.5rem);
+    padding: clamp(1.75rem, 4vw, 3rem);
+    border-radius: 20px;
+    background: linear-gradient(180deg, #080b23, #04050f);
+    overflow: hidden;
+  }
+  /* A borda é um facho que dá a volta no painel. Fica na moldura, não no fundo. */
+  .sprint::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background:
+      conic-gradient(from var(--turn, 0deg),
+        #c8a45c1f 0deg 200deg,
+        var(--gold) 268deg,
+        var(--gold-flare) 292deg,
+        var(--gold) 316deg,
+        #c8a45c1f 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sprint::before { animation: turn 7s linear infinite; }
+  }
+  @keyframes turn { to { --turn: 360deg; } }
+
+  .sprint h3 {
+    max-width: 30ch;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .sprint h3 .hand { font-size: 1.08em; }
+
+  .rail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+  .rail li { position: relative; padding-top: 1.4rem; }
+  .rail li::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #ffffff1f;
+  }
+  .rail__dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--gold-deep);
+  }
+  .rail b { display: block; font-size: 1rem; font-weight: 600; color: #fff; }
+  .rail span { display: block; margin-top: 0.3rem; font-size: 0.92rem; color: var(--paper-faint); }
+  .rail--now .rail__dot { background: var(--gold-flare); box-shadow: 0 0 0 4px #d7b35630; }
+  .rail--now span { color: var(--gold-lift); }
+
+  @media (max-width: 46rem) {
+    .rail { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1.25rem; }
+  }
 
   /* ── Trailer + fotos ── */
   .reel {
