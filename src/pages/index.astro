@@ -1,0 +1,633 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import LeadModal from '../components/LeadModal.astro';
+import sala from '../assets/sala.jpg';
+import viviane from '../assets/viviane.jpg';
+import marcos from '../assets/marcos.png';
+
+const daqui = [
+  'Faturamento travado no teto',
+  'Cliente que entra e sai',
+  'Equipe que não anda sem você',
+  'Você fazendo tudo, o dia todo',
+];
+const dela = [
+  'Escritório lucrativo e previsível',
+  'Cliente que fica e indica',
+  'Time que roda sem você',
+  'Você no estratégico, com liberdade',
+];
+const fases = [
+  'Mentalidade & Modelo',
+  'Equipe & Estrutura',
+  'Sistemas, Tech & IA',
+  'Receita & Faturamento',
+];
+const linha = ['Evento 29–30/out', 'Novembro implementa', 'Dezembro consolida', '2027 estruturado'];
+const criterios = [
+  'Você é dono de escritório contábil (não estudante, não iniciante)',
+  'A empresa não anda sem você — e isso já te esgotou',
+  'Você tem técnica de sobra, mas gestão de menos',
+  'Você prefere implementar a acumular mais um curso na estante',
+  'Você quer entrar em 2027 com o escritório estruturado, não no mesmo caos',
+];
+const vantagens = [
+  { icon: 'star', texto: 'O menor preço do evento — abre antes de todos os lotes, por 48h, e não volta.' },
+  { icon: 'gift', texto: 'Bônus físico exclusivo pra quem garantir nas primeiras 48h.' },
+  { icon: 'stopwatch', texto: 'Prioridade na abertura — você é avisado primeiro, antes da lista pública.' },
+  { icon: 'clapper', texto: 'Bastidores e lineup — palestrantes e novidades em primeira mão.' },
+];
+---
+
+<Base>
+  <header class="strip">
+    <div class="shell strip__in">
+      <span>1ª Edição</span><i></i>
+      <span>29 e 30 de Outubro</span><i></i>
+      <span>São Paulo</span><i></i>
+      <span class="strip__gold">Lista do Lote Zero</span>
+    </div>
+  </header>
+
+  <!-- ── Abertura: a estampa encartada no campo pautado ── -->
+  <section class="open" aria-labelledby="t-open">
+    <div class="open__plate">
+      <Image
+        src={sala}
+        alt="Visionários ao Vivo — edição anterior, sala lotada de participantes"
+        widths={[720, 1200, 1600]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        quality={82}
+      />
+      <div class="open__wash"></div>
+      <div class="open__rules" aria-hidden="true"></div>
+    </div>
+
+    <div class="shell open__in ledger-row">
+      <div class="open__margin">
+        <p class="account">Contadores Visionários apresenta</p>
+        <p class="stamp">1ª Edição · Presencial · Vagas Limitadas</p>
+      </div>
+
+      <div>
+      <h1 id="t-open">Visionários <span class="hand">ao Vivo</span> <span class="figure">2026</span></h1>
+      <p class="sub">Sua nova <span class="hand">visão</span> da contabilidade começa agora.</p>
+
+      <ul class="facts">
+        <li><Icon name="calendar" size={17} /> 29 e 30 de Outubro de 2026</li>
+        <li><Icon name="pin" size={17} /> São Paulo</li>
+        <li><Icon name="hourglass" size={17} /> 2 dias presenciais</li>
+      </ul>
+
+      <p class="open__lede measure">
+        Dois dias de implementação mão na massa para o dono de escritório contábil
+        reinventar o próprio negócio — e resolver 6 meses de estruturação em 2 dias.
+      </p>
+
+      <!-- Saldo corrente: o regressivo como quantia que decresce no livro. -->
+      <div class="balance" role="timer" aria-live="off">
+        <span class="balance__tag">Saldo até o evento</span>
+        <dl id="clock">
+          <div><dd class="figure" data-u="d">—</dd><dt>dias</dt></div>
+          <div><dd class="figure" data-u="h">—</dd><dt>horas</dt></div>
+          <div><dd class="figure" data-u="m">—</dd><dt>min</dt></div>
+          <div><dd class="figure" data-u="s">—</dd><dt>seg</dt></div>
+        </dl>
+      </div>
+
+      <button class="post" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
+      <p class="fine">Grupo de WhatsApp · menor preço + bônus exclusivo pra quem entrar agora</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── O muro: página dupla aberta, débito contra crédito ── -->
+  <section class="ruled" aria-labelledby="t-muro">
+    <div class="shell ledger-row">
+      <p class="account">Contador comum × Contador visionário</p>
+      <div>
+        <h2 id="t-muro">Existe um muro entre você e o escritório que você queria ter.</h2>
+        <p class="lede measure">
+          A diferença entre os dois lados nunca foi técnica — é <span class="hand">visão</span>.
+          O evento é o portal pra atravessar.
+        </p>
+
+        <div class="spread">
+          <div class="side">
+            <p class="side__head"><Icon name="wall" size={18} /> Do lado de cá</p>
+            <ul>
+              {daqui.map((t) => <li class="posting">{t}</li>)}
+            </ul>
+          </div>
+          <div class="spread__crease" aria-hidden="true"></div>
+          <div class="side side--credit">
+            <p class="side__head"><Icon name="key" size={18} /> Do outro lado</p>
+            <ul>
+              {dela.map((t) => <li class="posting">{t}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Plano de contas: as 4 fases como contas numeradas ── -->
+  <section aria-labelledby="t-metodo">
+    <div class="shell ledger-row">
+      <p class="account">Método Aceleração Visionária · exclusivo do evento</p>
+      <div>
+        <h2 id="t-metodo">2 dias. 6 meses de estruturação resolvidos.</h2>
+        <p class="lede measure">
+          4 fases, uma construída sobre a outra — cada bloco entrega uma ferramenta pronta
+          pra aplicar:
+        </p>
+
+        <ol class="chart">
+          {fases.map((f, i) => (
+            <li>
+              <span class="chart__n figure">{String(i + 1).padStart(2, '0')}</span>
+              <span class="chart__t">{f}</span>
+            </li>
+          ))}
+        </ol>
+
+        <p class="note">+ Reforma tributária como tema transversal nos dois dias.</p>
+
+        <p class="lede measure lede--tight">
+          Você sai com um Sprint de 60 dias pra chegar em 2027 estruturado
+        </p>
+        <ol class="run">
+          {linha.map((p) => <li>{p}</li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Palestrantes: estampas pequenas encartadas, ao tamanho que o arquivo aguenta ── -->
+  <section class="ruled" aria-labelledby="t-quem">
+    <div class="shell ledger-row">
+      <p class="account">Quem sobe ao palco</p>
+      <div>
+        <h2 id="t-quem">Os palestrantes</h2>
+        <p class="lede measure">
+          Viviane e Marcos conduzem o método. E, a cada semana, um novo nome de peso do
+          mercado contábil é revelado.
+        </p>
+
+        <ul class="cast">
+          <li>
+            <Image src={viviane} alt="Viviane Araújo" width={112} height={112} quality={88} />
+            <div><h3>Viviane Araújo</h3><p>Fundadora da Soluzzi · Mentora</p></div>
+          </li>
+          <li>
+            <Image src={marcos} alt="Marcos Paulo" width={112} height={112} quality={88} />
+            <div><h3>Marcos Paulo</h3><p>Contadores Visionários</p></div>
+          </li>
+          <li class="cast--open">
+            <span class="cast__void" aria-hidden="true"></span>
+            <div><h3>A revelar</h3><p>Anunciado no grupo</p></div>
+          </li>
+        </ul>
+
+        <p class="note">
+          Os convidados são revelados um a um — sempre primeiro pra quem está na lista do
+          Lote Zero.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Conciliação: os critérios como linhas conferidas ── -->
+  <section aria-labelledby="t-pra">
+    <div class="shell ledger-row">
+      <p class="account">Antes de entrar</p>
+      <div>
+        <h2 id="t-pra">É pra você se…</h2>
+        <ul class="tally">
+          {criterios.map((c) => (
+            <li><Icon name="check" size={16} /><span>{c}</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── O lançamento do Lote Zero ── -->
+  <section class="ruled" aria-labelledby="t-vant">
+    <div class="shell ledger-row">
+      <p class="account">Por que entrar agora</p>
+      <div>
+        <h2 id="t-vant">A vantagem de estar na lista</h2>
+
+        <div class="entry">
+          <div class="entry__id">
+            <span>Lote</span>
+            <strong class="hand">Zero</strong>
+            <span class="figure entry__date">22 · 08</span>
+          </div>
+          <p class="entry__scope">Exclusivo pra quem está no grupo</p>
+        </div>
+
+        <ul class="perks">
+          {vantagens.map((v) => (
+            <li>
+              <Icon name={v.icon} size={19} />
+              <span>{v.texto}</span>
+            </li>
+          ))}
+        </ul>
+
+        <button class="post" type="button" data-open-lead>
+          Quero o Lote Zero + bônus <Icon name="arrow" size={18} />
+        </button>
+        <p class="fine">Vagas presenciais limitadas · 1ª edição · sala fechada</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Fechamento ── -->
+  <section class="close" aria-labelledby="t-fim">
+    <div class="shell ledger-row">
+      <p class="account">A decisão</p>
+      <div>
+        <h2 id="t-fim">Você pode entrar em 2027 igual. Ou <span class="hand">atravessar o muro</span> agora.</h2>
+        <p class="lede measure">
+          Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição do
+          Visionários ao Vivo — pelo menor preço, com bônus exclusivo.
+        </p>
+        <button class="post" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="shell">
+      <p>Visionários ao Vivo 2026 · Contadores Visionários</p>
+    </div>
+  </footer>
+
+  <LeadModal />
+</Base>
+
+<style>
+  /* ── Faixa superior ── */
+  .strip {
+    border-bottom: 1px solid var(--rule);
+    background: #00010999;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 20;
+  }
+  .strip__in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    padding-block: 0.8rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+  .strip__in i { width: 3px; height: 3px; border-radius: 50%; background: var(--gold-deep); }
+  .strip__gold { color: var(--gold); }
+
+  /* ── Abertura ── */
+  .open {
+    position: relative;
+    padding-block: clamp(4rem, 11vh, 8rem) clamp(3.5rem, 9vh, 6.5rem);
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .open__plate { position: absolute; inset: 0; z-index: -2; isolation: isolate; }
+  .open__plate :global(img) {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Sobe o enquadramento: tira a marca d'água do canto inferior e traz o
+       corredor e as luzes erguidas para o centro óptico. */
+    object-position: 50% 32%;
+    transform: scale(1.12);
+    filter: saturate(0.72) contrast(1.06) brightness(0.88);
+  }
+  /* A estampa recua para o fundo do livro: o texto é que carrega o primeiro
+     plano. Véu forte à esquerda, onde a coluna de leitura assenta. */
+  .open__wash {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(90deg, #000107f7 0%, #000208e0 32%, #00020899 56%, #0002084d 80%, #00020826 100%),
+      linear-gradient(180deg, #000107cc 0%, #00010759 20%, #00020899 72%, var(--ground) 100%),
+      linear-gradient(180deg, transparent 58%, #00054780 100%);
+  }
+  /* O pautado atravessa a estampa: a foto está dentro do livro. */
+  .open__rules {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background-image: repeating-linear-gradient(
+      to bottom, #c8a45c33 0 1px, transparent 1px 2.75rem
+    );
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .open__in { position: relative; }
+  .open__margin { display: grid; gap: 1.1rem; justify-items: start; }
+  .open__margin .account { width: 100%; }
+
+  .stamp {
+    display: inline-block;
+    padding: 0.42rem 1rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 2px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--gold-lift);
+    background: #0004147a;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 7.4vw, 5.2rem);
+    letter-spacing: -0.042em;
+  }
+  h1 .hand { letter-spacing: -0.005em; }
+  .sub {
+    margin-top: 1.15rem;
+    font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+    color: var(--paper-dim);
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem 2rem;
+    margin-top: 2.1rem;
+    font-size: 0.9rem;
+    color: var(--paper-dim);
+  }
+  .facts li { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .facts :global(svg) { color: var(--gold); flex: none; }
+
+  .open__lede {
+    margin-top: 1.9rem;
+    color: var(--paper-dim);
+  }
+
+  /* Saldo corrente */
+  .balance {
+    margin: 2.6rem 0 2.4rem;
+    padding: 1.15rem 1.4rem 1.05rem;
+    width: fit-content;
+    max-width: 100%;
+    border: 1px solid var(--rule);
+    border-top-color: var(--rule-strong);
+    border-radius: 2px;
+    background: #00030f8f;
+  }
+  .balance__tag {
+    display: block;
+    margin-bottom: 0.85rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+  .balance dl { display: flex; gap: clamp(1.1rem, 4vw, 2.6rem); margin: 0; }
+  .balance div { text-align: center; }
+  .balance dd {
+    margin: 0;
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--gold-lift);
+  }
+  .balance dt {
+    margin-top: 0.45rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+
+  .fine { max-width: var(--measure); margin-top: 1.1rem; font-size: 0.83rem; color: var(--paper-faint); }
+
+  /* ── Tipografia de seção ── */
+  h2 {
+    font-size: clamp(1.8rem, 4.4vw, 2.9rem);
+  }
+  .lede { margin-top: 1.2rem; color: var(--paper-dim); }
+  .lede--tight { margin-top: 2.6rem; }
+  .note {
+    max-width: var(--measure);
+    margin-top: 1.6rem;
+    font-size: 0.9rem;
+    color: var(--paper-faint);
+    padding-left: 1rem;
+    border-left: 1px solid var(--rule-strong);
+  }
+
+  /* ── Página dupla ── */
+  .spread {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: clamp(1.5rem, 4vw, 3.25rem);
+    margin-top: 2.8rem;
+  }
+  .spread__crease {
+    background: linear-gradient(180deg, transparent, var(--gold-deep) 18%, var(--gold) 50%, var(--gold-deep) 82%, transparent);
+  }
+  .side__head {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding-bottom: 0.9rem;
+    margin-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+  }
+  .side li {
+    padding-block: 0.95rem;
+    border-bottom: 1px solid var(--rule-faint);
+    color: var(--paper-dim);
+  }
+  .side--credit .side__head { color: var(--gold); }
+  /* O crédito é lançado do lado oposto: as duas colunas se encontram no vinco. */
+  .side--credit li { color: var(--paper); --from: 0.75rem; }
+  @media (max-width: 46rem) {
+    .spread { grid-template-columns: 1fr; gap: 2.25rem; }
+    .spread__crease { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  }
+
+  /* ── Plano de contas ── */
+  .chart { margin-top: 2.6rem; border-top: 1px solid var(--rule); }
+  .chart li {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 1.15rem;
+    border-bottom: 1px solid var(--rule-faint);
+  }
+  .chart__n { color: var(--gold-deep); font-size: 0.95rem; letter-spacing: 0.08em; }
+  .chart__t { font-size: clamp(1.1rem, 2.6vw, 1.45rem); letter-spacing: -0.02em; }
+
+  /* ── Corrida de lançamentos ── */
+  .run {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1px;
+    margin-top: 1.5rem;
+    background: var(--rule-faint);
+    border: 1px solid var(--rule-faint);
+  }
+  .run li {
+    padding: 1.15rem 1.1rem;
+    background: var(--ground);
+    font-size: 0.92rem;
+    color: var(--paper-dim);
+  }
+  .run li:last-child { color: var(--gold-lift); }
+
+  /* ── Elenco ── */
+  .cast {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1px;
+    margin-top: 2.6rem;
+    background: var(--rule-faint);
+    border-block: 1px solid var(--rule);
+  }
+  .cast li {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1.5rem 1.25rem;
+    background: var(--ground);
+  }
+  .cast :global(img) {
+    width: 56px;
+    height: 56px;
+    flex: none;
+    object-fit: cover;
+    border-radius: 2px;
+    border: 1px solid var(--rule-strong);
+    filter: grayscale(0.28) contrast(1.04);
+  }
+  .cast__void {
+    width: 56px;
+    height: 56px;
+    flex: none;
+    border: 1px dashed var(--rule-strong);
+    border-radius: 2px;
+  }
+  .cast h3 { font-size: 1.05rem; letter-spacing: -0.02em; }
+  .cast p { margin-top: 0.3rem; font-size: 0.83rem; color: var(--paper-faint); }
+  .cast--open h3 { color: var(--gold); }
+
+  /* ── Conciliação ── */
+  .tally { margin-top: 2.4rem; border-top: 1px solid var(--rule); }
+  .tally li {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding-block: 1.15rem;
+    border-bottom: 1px solid var(--rule-faint);
+    color: var(--paper-dim);
+  }
+  .tally :global(svg) { color: var(--gold); margin-top: 0.28rem; }
+
+  /* ── Lançamento do lote ── */
+  .entry {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.4rem;
+    padding-bottom: 1.15rem;
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  .entry__id { display: flex; align-items: baseline; gap: 0.6rem; }
+  .entry__id span:first-child {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+  }
+  .entry__id strong { font-size: clamp(1.9rem, 5vw, 2.6rem); font-weight: 300; }
+  .entry__date {
+    font-size: 0.95rem;
+    color: var(--gold);
+    padding-left: 0.7rem;
+    border-left: 1px solid var(--rule-strong);
+  }
+  .entry__scope { font-size: 0.85rem; color: var(--paper-faint); }
+
+  .perks { margin-top: 0.4rem; }
+  .perks li {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding-block: 1.2rem;
+    border-bottom: 1px solid var(--rule-faint);
+    color: var(--paper-dim);
+  }
+  .perks :global(svg) { color: var(--gold); margin-top: 0.2rem; }
+  .perks li:first-child { color: var(--paper); }
+  .perks + .post { margin-top: 2.4rem; }
+
+  /* ── Fechamento ── */
+  .close { padding-bottom: clamp(5rem, 10vw, 8rem); }
+  .close .post { margin-top: 2.4rem; }
+
+  .foot {
+    padding-block: 2.25rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.8rem;
+    color: var(--paper-faint);
+    text-align: center;
+  }
+</style>
+
+<script>
+  // Saldo corrente até 29/10/2026, 09:00 (horário de Brasília).
+  const alvo = new Date('2026-10-29T09:00:00-03:00').getTime();
+  const campos = {
+    d: document.querySelector('[data-u="d"]'),
+    h: document.querySelector('[data-u="h"]'),
+    m: document.querySelector('[data-u="m"]'),
+    s: document.querySelector('[data-u="s"]'),
+  };
+
+  function tick() {
+    const resto = alvo - Date.now();
+    if (resto <= 0) {
+      Object.values(campos).forEach((el) => el && (el.textContent = '00'));
+      return;
+    }
+    const seg = Math.floor(resto / 1000);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    if (campos.d) campos.d.textContent = String(Math.floor(seg / 86400));
+    if (campos.h) campos.h.textContent = pad(Math.floor(seg / 3600) % 24);
+    if (campos.m) campos.m.textContent = pad(Math.floor(seg / 60) % 60);
+    if (campos.s) campos.s.textContent = pad(seg % 60);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>

@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+
+const {
+  title = 'Visionários ao Vivo 2026 — Lista do Lote Zero',
+  description = '2 dias presenciais para o dono de escritório contábil reinventar o negócio. Entre na lista do Lote Zero.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="theme-color" content="#01020c" />
+    <link rel="canonical" href="https://www.visionariosaovivo.com.br/" />
+
+    <link rel="preload" href="/fonts/geist-var.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- IvyOra Display (Adobe Fonts). <link> em vez de @import: @import serializa o
+         download e adia o first paint, custo que uma página de lançamento não paga. -->
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="preconnect" href="https://p.typekit.net" crossorigin />
+    <link rel="stylesheet" href="https://use.typekit.net/rzo8edw.css" />
+  </head>
+
+  <body>
+    <!--
+    THESIS: Esta página é um livro-razão, não uma landing de evento. A copy já é
+    partida dobrada — "do lado de cá" contra "do outro lado" — e o muro que ela
+    descreve é o vinco central de um razão aberto. Recusa o arranjo padrão da
+    categoria: regressivo de neon, selo de urgência, palestrante em círculo, cards
+    iguais em grade.
+    OWN-WORLD: Chapa gravada em marinho quase preto, filete de ouro a baixa
+    opacidade como pautado, rubrica de conta na margem, numeral tabular, Geist
+    impressa contra IvyOra itálica como a mão do escriturário. Ouro é tinta de
+    filete e de crédito, nunca fundo.
+    STORY: Ele reconhece o próprio lado do livro, vê a contrapartida existir, e
+    lança o nome na lista.
+    FIRST VIEWPORT: Foto da sala em sangria dentro do campo pautado, filetes
+    atravessando a imagem; título em Geist com uma palavra em IvyOra dourada;
+    saldo corrente e ação primária ancorados sobre régua, acima da dobra.
+    FORM: livro-razão, candidato 3 da lista aterrada, seed 24508d42.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
+    <slot />
+  </body>
+</html>
