@@ -221,6 +221,14 @@ section { padding-block: var(--rhythm); position: relative; overflow: clip; }
   100% { box-shadow: 0 0 0 0 #e0483c00; }
 }
 
+/* Superfície padrão de caixa: mesmo fundo do bloco do sprint e a borda
+   dourada a 40%, que vale para toda borda da página. */
+.card {
+  border: 1px solid var(--edge-lit);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #080b23, #04050f);
+}
+
 /* ── Painel: a superfície de conteúdo, com matéria e não filete ── */
 .panel {
   position: relative;

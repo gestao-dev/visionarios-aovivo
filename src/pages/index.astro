@@ -151,7 +151,7 @@ const vantagens = [
     </div>
 
     <div class="shell">
-      <div class="sprint">
+      <div class="sprint card">
         <h3>
           Você sai com um <span class="hand">Sprint de 60 dias</span><br class="turn" />
           pra chegar em 2027 estruturado
@@ -242,18 +242,19 @@ const vantagens = [
   </section>
 
   <!-- ══ Qualificação ══ -->
-  <section class="eyebrow-free" aria-labelledby="t-pra">
+  <section aria-labelledby="t-pra">
     <div class="shell center measure-wide">
       <p class="over">Antes de entrar</p>
-      <h2 id="t-pra">É pra você se…</h2>
+      <h2 id="t-pra" class="h-lg">É pra você se…</h2>
     </div>
-    <div class="shell qual">
-      <ul class="panel panel--lit rise">
-        {criterios.map((c) => (
-          <li><span class="tick"><Icon name="check" size={15} /></span><span>{c}</span></li>
-        ))}
-      </ul>
-    </div>
+    <ul class="shell bento">
+      {criterios.map((c) => (
+        <li class="card">
+          <span class="medal medal--sm"><Icon name="check" size={18} /></span>
+          <p>{c}</p>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <!-- ══ Lote Zero ══ -->
@@ -584,8 +585,6 @@ const vantagens = [
     position: relative;
     margin-top: clamp(4rem, 8vw, 6.5rem);
     padding: clamp(1.75rem, 4vw, 3rem);
-    border-radius: 20px;
-    background: linear-gradient(180deg, #080b23, #04050f);
     overflow: hidden;
   }
   /* A borda é um facho que dá a volta no painel. Fica na moldura, não no fundo. */
@@ -699,6 +698,7 @@ const vantagens = [
   .cast__card {
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--edge-lit);
     border-radius: 10px;
     overflow: hidden;
     background: #0b1030;
@@ -747,16 +747,39 @@ const vantagens = [
     .cast { grid-template-columns: repeat(2, 1fr); }
   }
 
-  /* ── Qualificação ── */
-  .qual { margin-top: 3rem; max-width: 50rem; }
-  .qual ul { display: grid; gap: 1.15rem; }
-  .qual li { display: grid; grid-template-columns: 1.7rem 1fr; gap: 1rem; align-items: start; color: var(--paper-dim); }
-  .tick {
-    display: grid; place-items: center;
-    width: 1.7rem; height: 1.7rem; border-radius: 50%;
-    color: var(--gold-lift);
-    background: linear-gradient(180deg, #c8a45c33, #c8a45c0f);
-    box-shadow: inset 0 1px 0 #e6cd9130;
+  /* ── Qualificação: bento de 5, três em cima e dois embaixo ── */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(0.85rem, 1.8vw, 1.4rem);
+    width: min(100%, 64rem);
+    margin: clamp(3rem, 6vw, 4.5rem) auto 0;
+  }
+  .bento li {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    padding: clamp(1.4rem, 2.6vw, 1.9rem);
+  }
+  /* Os dois últimos dividem a faixa de baixo em metades. */
+  .bento li:nth-child(4),
+  .bento li:nth-child(5) { grid-column: span 3; }
+
+  .bento p {
+    font-size: clamp(0.98rem, 1.9vw, 1.08rem);
+    line-height: 1.45;
+    color: var(--paper-dim);
+  }
+
+  @media (max-width: 62rem) {
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .bento li,
+    .bento li:nth-child(4),
+    .bento li:nth-child(5) { grid-column: span 1; }
+  }
+  @media (max-width: 40rem) {
+    .bento { grid-template-columns: 1fr; }
   }
 
   /* ── Lote ── */
