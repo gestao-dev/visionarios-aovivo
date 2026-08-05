@@ -158,8 +158,9 @@ const vantagens = [
     <div class="shell">
       <div class="sprint card">
         <h3>
-          Você sai com um <span class="hand">Sprint de 60 dias</span><br class="turn" />
-          pra chegar em 2027 estruturado
+          Você sai com um<br class="turn" />
+          <span class="hand">Sprint de 60 dias</span> pra chegar<br class="turn" />
+          em 2027 estruturado
         </h3>
         <ol class="rail">
           {sprint.map((e, i) => (
@@ -565,7 +566,8 @@ const vantagens = [
   /* ── Sprint: painel com borda em movimento ── */
   .sprint {
     position: relative;
-    margin-top: clamp(4rem, 8vw, 6.5rem);
+    width: min(100%, 60rem);
+    margin: clamp(4rem, 8vw, 6.5rem) auto 0;
     padding: clamp(1.75rem, 4vw, 3rem);
     overflow: hidden;
   }
@@ -595,7 +597,6 @@ const vantagens = [
   @keyframes turn { to { --turn: 360deg; } }
 
   .sprint h3 {
-    max-width: 24ch;
     margin-inline: auto;
     text-align: center;
     font-size: clamp(2.1rem, 4.6vw, 4rem);
@@ -609,8 +610,9 @@ const vantagens = [
   .rail {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: clamp(1rem, 3vw, 2.5rem);
-    margin-top: clamp(2rem, 4vw, 3rem);
+    gap: clamp(0.8rem, 2vw, 1.5rem);
+    width: min(100%, 40rem);
+    margin: clamp(2rem, 4vw, 3rem) auto 0;
   }
   .rail { position: relative; }
   .rail::before {
