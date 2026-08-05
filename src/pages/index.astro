@@ -700,39 +700,62 @@ const vantagens = [
     .cast { grid-template-columns: repeat(2, 1fr); }
   }
 
-  /* ── Qualificação: bento de 5, três em cima e dois embaixo ── */
+  /* ── Qualificação: cinco quadrados iguais, 3 + 2 ── */
   .bento {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: clamp(0.85rem, 1.8vw, 1.4rem);
-    width: min(100%, 64rem);
+    width: min(100%, 60rem);
     margin: clamp(3rem, 6vw, 4.5rem) auto 0;
   }
   .bento li {
+    position: relative;
     grid-column: span 2;
+    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.15rem;
+    justify-content: space-between;
     padding: clamp(1.4rem, 2.6vw, 1.9rem);
+    overflow: hidden;
+    transition: border-color 0.5s var(--ease);
   }
-  /* Os dois últimos dividem a faixa de baixo em metades. */
-  .bento li:nth-child(4),
-  .bento li:nth-child(5) { grid-column: span 3; }
+  /* Os dois de baixo ficam centrados sob os três de cima. */
+  .bento li:nth-child(4) { grid-column: 2 / span 2; }
+  .bento li:nth-child(5) { grid-column: 4 / span 2; }
+
+  /* Luz que sobe do pé da caixa ao passar o mouse. */
+  .bento li::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(115% 72% at 50% 116%, #d7b3564d, #d7b35614 38%, transparent 66%);
+    opacity: 0;
+    transition: opacity 0.55s var(--ease);
+    pointer-events: none;
+  }
+  .bento li:hover { border-color: #fad49fa6; }
+  .bento li:hover::after { opacity: 1; }
 
   .bento p {
+    position: relative;
+    z-index: 1;
     font-size: clamp(0.98rem, 1.9vw, 1.08rem);
     line-height: 1.45;
     color: var(--paper-dim);
   }
+  .bento .medal { position: relative; z-index: 1; }
 
   @media (max-width: 62rem) {
     .bento { grid-template-columns: repeat(2, 1fr); }
     .bento li,
-    .bento li:nth-child(4),
+    .bento li:nth-child(4) { grid-column: span 1; }
+    /* Sobrando um, ele fica centrado na última fileira. */
     .bento li:nth-child(5) { grid-column: span 1; }
   }
   @media (max-width: 40rem) {
     .bento { grid-template-columns: 1fr; }
+    .bento li { aspect-ratio: auto; min-height: 11rem; }
   }
 
   /* ── Lote ── */
