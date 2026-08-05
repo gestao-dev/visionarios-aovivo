@@ -4,10 +4,13 @@
     "ignoreFiles": [],
     "ignoreValues": [
       {
-        "rule": "overused-font",
-        "value": "geist",
-        "createdAt": "2026-08-05T15:12:15.377Z",
-        "reason": "Usuário escolheu Geist explicitamente e forneceu os arquivos da fonte; pareada com IvyOra Display Italic (Adobe Fonts) como face de display"
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/styles/global.css"
+        ],
+        "createdAt": "2026-08-05T19:26:05.900Z",
+        "reason": "Cliente pediu explicitamente o gradiente dourado do botao no trecho destacado da headline; o proprio arquivo Figma do cliente usa gradient text nos fragmentos enfatizados"
       }
     ]
   }
