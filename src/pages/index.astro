@@ -124,7 +124,7 @@ const vantagens = [
     <div class="shell method">
       <div class="method__text">
         <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
-        <h2 id="t-metodo">2 dias. 6 meses de estruturação resolvidos.</h2>
+        <h2 id="t-metodo" class="h-lg">2 dias. 6 meses de <span class="hand grad">estruturação resolvidos.</span></h2>
         <p class="method__lede">
           4 fases, uma construída sobre a outra, e cada bloco entrega uma ferramenta pronta
           pra aplicar:
@@ -194,7 +194,7 @@ const vantagens = [
     <span class="glow glow--gold g-left" aria-hidden="true"></span>
     <div class="shell center measure-wide">
       <p class="over">Quem sobe ao palco</p>
-      <h2 id="t-quem" class="grad">Os palestrantes</h2>
+      <h2 id="t-quem" class="grad h-lg">Os palestrantes</h2>
       <p class="sec-lede measure center">
         Viviane e Marcos conduzem o método. E, a cada semana, um novo nome de peso do
         mercado contábil é revelado.
@@ -493,9 +493,11 @@ const vantagens = [
   }
   .method__text { text-align: left; }
   .method__text .over { text-align: left; }
-  .method__text h2 {
-    font-size: clamp(2.1rem, 4.6vw, 4rem);
-    line-height: 1.08;
+  /* Itálica de display em regular; o .grad traz 700 e aqui ele não serve. */
+  .method__text h2 .hand {
+    font-weight: 400;
+    font-size: 1.04em;
+    letter-spacing: -0.02em;
   }
   .method__lede {
     margin-top: 1.35rem;

@@ -134,6 +134,11 @@ section { padding-block: var(--rhythm); position: relative; overflow: clip; }
 .eyebrow-free h2 {
   font-size: clamp(1.9rem, 4.6vw, 3.1rem);
 }
+/* Título grande: 64px no desktop, descendo com a tela. */
+.h-lg {
+  font-size: clamp(2.1rem, 4.6vw, 4rem);
+  line-height: 1.08;
+}
 .sec-lede {
   margin-top: 1.25rem;
   color: var(--paper-dim);
