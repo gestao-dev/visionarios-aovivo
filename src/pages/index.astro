@@ -613,6 +613,8 @@ const vantagens = [
 
   .sprint h3 {
     max-width: 30ch;
+    margin-inline: auto;
+    text-align: center;
     font-size: clamp(1.35rem, 3vw, 2rem);
     font-weight: 500;
     line-height: 1.25;
@@ -627,8 +629,8 @@ const vantagens = [
     gap: clamp(1rem, 3vw, 2.5rem);
     margin-top: clamp(2rem, 4vw, 3rem);
   }
-  .rail li { position: relative; padding-top: 1.4rem; }
-  .rail li::before {
+  .rail { position: relative; }
+  .rail::before {
     content: '';
     position: absolute;
     top: 4px;
@@ -637,6 +639,7 @@ const vantagens = [
     height: 1px;
     background: #ffffff1f;
   }
+  .rail li { position: relative; padding-top: 1.4rem; }
   .rail__dot {
     position: absolute;
     top: 0;
