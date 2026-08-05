@@ -106,11 +106,6 @@ const vantagens = [
       </div>
 
       <div class="cross__side cross__side--to">
-        <!-- A sala aparece só deste lado: o outro lado do muro é o destino,
-             não decoração. Some ao chegar na divisa. -->
-        <div class="cross__room" aria-hidden="true">
-          <Image src={sala} alt="" widths={[560, 900]} sizes="(max-width: 56rem) 100vw, 40rem" quality={70} />
-        </div>
         <p class="cross__head cross__head--to"><Icon name="key" size={16} /> Do outro lado</p>
         <ul>{dela.map((t) => <li>{t}</li>)}</ul>
       </div>
@@ -394,8 +389,7 @@ const vantagens = [
     align-items: stretch;
   }
 
-  .cross__side { position: relative; min-width: 0; isolation: isolate; }
-  .cross__side > :not(.cross__room) { position: relative; z-index: 1; }
+  .cross__side { position: relative; min-width: 0; }
 
   .cross__head {
     display: flex;
@@ -418,32 +412,6 @@ const vantagens = [
     color: #8b8f9e;
   }
   .cross__side--to li { color: #fff; }
-
-  /* A sala sangra atrás da coluna de destino e se apaga na divisa. */
-  .cross__room {
-    position: absolute;
-    inset: -1.5rem -3rem -1.5rem -1.5rem;
-    z-index: 0;
-    overflow: hidden;
-    border-radius: 4px;
-  }
-  .cross__room :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 34%;
-    opacity: 0.42;
-    filter: saturate(0.75) contrast(1.05) brightness(0.85);
-    /* Desvanece nos quatro lados: sem isso o retângulo se denuncia. */
-    -webkit-mask-image:
-      linear-gradient(90deg, transparent 2%, #000 44%, #000 72%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(90deg, transparent 2%, #000 44%, #000 72%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
-    mask-composite: intersect;
-  }
 
   /* A divisa: filete vertical com o portal no meio. */
   .cross__seam {
@@ -478,11 +446,6 @@ const vantagens = [
     }
     .cross__gate { rotate: 90deg; }
     .cross__side--to { padding-top: 0.5rem; }
-    .cross__room { inset: -1rem -1.25rem; }
-    .cross__room :global(img) {
-      -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 76%, transparent);
-              mask-image: linear-gradient(180deg, transparent, #000 30%, #000 76%, transparent);
-    }
   }
 
   /* ── Fases ── */
