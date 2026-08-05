@@ -1,26 +1,19 @@
 ---
-// Duas faixas douradas cruzadas no pé da hero (nós 2722:1942 e 2722:2015).
-// O conteúdo corre horizontalmente conforme a rolagem: a de cima para a
-// esquerda, a de baixo para a direita.
+import Mono from './Mono.astro';
+
+// Duas faixas douradas em X (nós 2722:1942 e 2722:2015). Concêntricas e com
+// rotações opostas e simétricas: assim o cruzamento cai no centro da tela, não
+// perto da borda. Cada lista é repetida o bastante para não sobrar vão.
 const cima = ['Vagas limitadas', 'Primeira edição', 'Presencial'];
 const baixo = ['2 dias', 'São Paulo', 'Ao vivo'];
-// Repetido para o laço fechar sem emenda visível.
-const repetir = (xs: string[], n = 4) => Array.from({ length: n }, () => xs).flat();
+const repetir = (xs: string[], n = 8) => Array.from({ length: n }, () => xs).flat();
 ---
 
 <div class="bands" aria-hidden="true">
   <div class="band band--up">
     <div class="band__track">
       {repetir(cima).map((t) => (
-        <span class="band__item">
-          {t}
-          <svg class="band__sep" viewBox="0 0 28 30" fill="none" aria-hidden="true">
-            <path d="M14 1.5 26.5 9v12L14 28.5 1.5 21V9Z" stroke="currentColor" stroke-width="1.6"
-                  stroke-linejoin="round" opacity="0.55" />
-            <path d="M9.6 11.2 14 20.4l4.4-9.2" stroke="currentColor" stroke-width="1.9"
-                  stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </span>
+        <span class="band__item">{t}<Mono size={26} class="band__sep" /></span>
       ))}
     </div>
   </div>
@@ -28,40 +21,35 @@ const repetir = (xs: string[], n = 4) => Array.from({ length: n }, () => xs).fla
   <div class="band band--down">
     <div class="band__track band__track--rev">
       {repetir(baixo).map((t) => (
-        <span class="band__item">
-          {t}
-          <svg class="band__sep" viewBox="0 0 28 30" fill="none" aria-hidden="true">
-            <path d="M14 1.5 26.5 9v12L14 28.5 1.5 21V9Z" stroke="currentColor" stroke-width="1.6"
-                  stroke-linejoin="round" opacity="0.55" />
-            <path d="M9.6 11.2 14 20.4l4.4-9.2" stroke="currentColor" stroke-width="1.9"
-                  stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </span>
+        <span class="band__item">{t}<Mono size={26} class="band__sep" /></span>
       ))}
     </div>
   </div>
 </div>
 
 <style>
-  /* Fora da hero: elas cruzam a fronteira entre as duas seções, como no arquivo. */
+  /* As duas faixas dividem a mesma célula: mesmo centro, rotações opostas,
+     cruzamento no meio da tela. Ficam fora da hero porque, no arquivo original,
+     atravessam a fronteira entre as seções. */
   .bands {
     position: relative;
     z-index: 5;
-    margin-inline: -12%;
-    margin-top: clamp(-11rem, -19vw, -7rem);
-    margin-bottom: clamp(2rem, 5vw, 4rem);
+    display: grid;
+    margin-inline: -14%;
+    margin-top: clamp(-9rem, -15vw, -5rem);
+    margin-bottom: clamp(3rem, 7vw, 6rem);
     pointer-events: none;
   }
 
   .band {
-    position: relative;
+    grid-area: 1 / 1;
     overflow: hidden;
-    padding-block: clamp(0.55rem, 1.4vw, 0.95rem);
+    padding-block: clamp(0.5rem, 1.3vw, 0.9rem);
     background: linear-gradient(97deg, #b58f3c 0%, var(--gold) 18%, var(--gold-flare) 52%, var(--gold) 82%, #b58f3c 100%);
     box-shadow: 0 14px 40px -14px #00000099;
   }
-  .band--up   { transform: rotate(-3.4deg); }
-  .band--down { transform: rotate(2.9deg); margin-top: -0.4rem; }
+  .band--up   { transform: rotate(-3.2deg); }
+  .band--down { transform: rotate(3.2deg); z-index: 1; }
 
   .band__track {
     display: flex;
@@ -73,17 +61,17 @@ const repetir = (xs: string[], n = 4) => Array.from({ length: n }, () => xs).fla
   .band__item {
     display: inline-flex;
     align-items: center;
-    gap: clamp(1.4rem, 3vw, 2.6rem);
-    padding-right: clamp(1.4rem, 3vw, 2.6rem);
+    gap: clamp(1.2rem, 2.6vw, 2.2rem);
+    padding-right: clamp(1.2rem, 2.6vw, 2.2rem);
     color: var(--navy);
-    font-size: clamp(1.1rem, 2.8vw, 2.6rem);
+    font-size: clamp(1.05rem, 2.6vw, 2.4rem);
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.15;
     text-transform: uppercase;
     white-space: nowrap;
   }
-  .band__sep { width: 0.72em; height: 0.77em; flex: none; }
+  .band__sep { flex: none; opacity: 0.85; }
 
   /* O movimento é ligado à rolagem da página, não ao relógio. */
   @media (prefers-reduced-motion: no-preference) {
@@ -96,8 +84,8 @@ const repetir = (xs: string[], n = 4) => Array.from({ length: n }, () => xs).fla
     /* Sem timeline de rolagem, o laço roda no tempo — mesma leitura, sem depender
        de um recurso que nem todo navegador tem. */
     @supports not (animation-timeline: scroll(root block)) {
-      .band__track { animation: run-left 26s linear infinite; }
-      .band__track--rev { animation: run-right 26s linear infinite; }
+      .band__track { animation: run-left 34s linear infinite; }
+      .band__track--rev { animation: run-right 34s linear infinite; }
     }
   }
 

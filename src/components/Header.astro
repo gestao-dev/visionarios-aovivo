@@ -19,6 +19,8 @@
         <div class="box"><b data-u="s">00</b><span>SEG</span></div>
       </div>
     </div>
+
+    <button class="cta bar__cta" type="button" data-open-lead>Garantir meu ingresso</button>
   </div>
 </header>
 
@@ -33,15 +35,19 @@
     -webkit-backdrop-filter: blur(2.4px);
     border-bottom: 1px solid var(--edge-lit);
   }
+  /* Três colunas iguais nas pontas: o regressivo fica no centro óptico da tela,
+     não no centro do espaço que sobra. */
   .bar__in {
     height: 100%;
-    width: min(100% - 2.5rem, 84rem);
+    width: min(100% - 2.5rem, 88rem);
     margin-inline: auto;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     gap: 1.5rem;
   }
+  .count { justify-self: center; }
+  .bar__cta { justify-self: end; }
 
   /* ── Marca ── */
   .mark { display: inline-flex; text-decoration: none; }
@@ -79,8 +85,22 @@
   }
   .box span { font-size: 0.68rem; font-weight: 400; line-height: 1.2; }
 
-  @media (max-width: 64rem) {
+  .bar__cta {
+    padding: 0.9rem 1.7rem;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 78rem) {
     .count__tag { display: none; }
+  }
+  @media (max-width: 60rem) {
+    .bar__in { grid-template-columns: auto 1fr; }
+    .bar__cta { display: none; }
+    .count { justify-self: end; }
   }
   @media (max-width: 44rem) {
     .bar { height: 76px; }

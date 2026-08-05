@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Icon from '../components/Icon.astro';
 import LeadModal from '../components/LeadModal.astro';
 import Bands from '../components/Bands.astro';
+import Mono from '../components/Mono.astro';
 import sala from '../assets/sala.jpg';
 import viviane from '../assets/viviane.jpg';
 import marcos from '../assets/marcos.png';
@@ -59,15 +60,7 @@ const vantagens = [
     <span class="glow glow--navy hero__g2" aria-hidden="true"></span>
 
     <div class="shell hero__in">
-      <span class="badge">
-        <svg class="badge__mark" viewBox="0 0 28 30" fill="none" aria-hidden="true">
-          <path d="M14 1.5 26.5 9v12L14 28.5 1.5 21V9Z" stroke="currentColor" stroke-width="1.6"
-                stroke-linejoin="round" opacity="0.55" />
-          <path d="M9.6 11.2 14 20.4l4.4-9.2" stroke="currentColor" stroke-width="1.9"
-                stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        Visionários ao vivo 2026
-      </span>
+      <span class="badge"><Mono size={15} class="badge__mark" /> Visionários ao vivo 2026</span>
 
       <h1>Sua nova visão da contabilidade <span class="hand">começa agora.</span></h1>
 
@@ -76,7 +69,7 @@ const vantagens = [
         reinventar o próprio negócio e <b>resolver 6 meses de estruturação em 2 dias.</b>
       </p>
 
-      <button class="cta" type="button" data-open-lead>Garantir minha vaga agora!</button>
+      <button class="cta" type="button" data-open-lead>Garantir meu ingresso agora.</button>
 
       <ul class="facts">
         <li><Icon name="calendar" size={15} /> 29 e 30 de Outubro de 2026</li>
@@ -89,6 +82,7 @@ const vantagens = [
 
   <Bands />
 
+  <div class="tail">
   <!-- ══ O muro ══ -->
   <section class="eyebrow-free" aria-labelledby="t-muro">
     <span class="glow glow--navy g-left" aria-hidden="true"></span>
@@ -289,12 +283,20 @@ const vantagens = [
   <footer class="foot">
     <div class="shell">Visionários ao Vivo 2026 · Contadores Visionários</div>
   </footer>
+  </div>
 
   <LeadModal />
 </Base>
 
 <style>
   .measure-wide { max-width: 46rem; }
+
+  /* A hero termina em preto; a dobra seguinte nasce nesse mesmo preto e só
+     então caminha para o azul da página. Sem isso fica a emenda visível. */
+  .tail {
+    background: linear-gradient(180deg, #000001 0, #01020a 14rem, var(--ground) 34rem);
+    background-repeat: no-repeat;
+  }
 
   /* Linha curta acima do título: centralizada e destacada como rótulo do bloco,
      não empilhada como rótulo de formulário. */
@@ -309,7 +311,7 @@ const vantagens = [
   /* ── Abertura: reconstruída a partir do arquivo do cliente ── */
   .hero {
     position: relative;
-    padding-block: clamp(4.5rem, 12vh, 8.5rem) clamp(7rem, 14vw, 12rem);
+    padding-block: clamp(8rem, 22vh, 15rem) clamp(11rem, 22vw, 19rem);
     isolation: isolate;
     overflow: clip;
     text-align: center;
@@ -333,7 +335,7 @@ const vantagens = [
 
   .hero__in { position: relative; z-index: 2; }
 
-  .badge__mark { width: 15px; height: 15px; flex: none; color: var(--gold); }
+  .badge__mark { flex: none; color: var(--gold-flare); }
 
   h1 {
     margin-top: 2.6rem;
