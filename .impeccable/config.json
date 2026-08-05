@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "geist",
+        "createdAt": "2026-08-05T15:12:15.377Z",
+        "reason": "Usuário escolheu Geist explicitamente e forneceu os arquivos da fonte; pareada com IvyOra Display Italic (Adobe Fonts) como face de display"
+      }
+    ]
+  }
+}

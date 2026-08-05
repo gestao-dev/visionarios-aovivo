@@ -1,0 +1,359 @@
+---
+import Icon from './Icon.astro';
+
+// Endpoint do webhook. Definido em .env como PUBLIC_LEAD_WEBHOOK.
+// Sem valor, o formulário bloqueia o envio e avisa — em vez de engolir o lead.
+const webhook = import.meta.env.PUBLIC_LEAD_WEBHOOK ?? '';
+const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
+---
+
+<div class="veil" id="lead" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="lead-title">
+    <button class="shut" type="button" data-close aria-label="Fechar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="m6 6 12 12M18 6 6 18" />
+      </svg>
+    </button>
+
+    <form id="lead-form" novalidate data-webhook={webhook} data-grupo={grupo}>
+      <p class="account account--center">Lista do Lote Zero</p>
+      <h2 id="lead-title">Garanta seu lugar na lista</h2>
+      <p class="lede">
+        Preencha e entre no grupo: <em>menor preço + bônus exclusivo</em>, antes de todo mundo.
+      </p>
+
+      <div class="field">
+        <label for="f-nome">Nome completo</label>
+        <input id="f-nome" name="nome" type="text" autocomplete="name"
+               placeholder="Seu nome e sobrenome" required />
+        <p class="fault" data-fault-for="nome" hidden>Informe seu nome.</p>
+      </div>
+
+      <div class="field">
+        <label for="f-email">E-mail</label>
+        <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email"
+               placeholder="voce@escritorio.com.br" required />
+        <p class="fault" data-fault-for="email" hidden>Informe um e-mail válido.</p>
+      </div>
+
+      <div class="field">
+        <label for="f-tel">WhatsApp (com DDD)</label>
+        <input id="f-tel" name="telefone" type="tel" autocomplete="tel" inputmode="tel"
+               placeholder="(11) 99999-9999" required />
+        <p class="fault" data-fault-for="telefone" hidden>Informe seu WhatsApp com DDD.</p>
+      </div>
+
+      <button class="post" type="submit" data-submit>
+        <span data-label>Entrar na lista do Lote Zero</span>
+      </button>
+
+      <p class="fault fault--form" data-fault-form hidden></p>
+      <p class="fine">Seus dados são usados apenas para avisar sobre o evento. Sem spam.</p>
+    </form>
+
+    <div id="lead-done" hidden>
+      <span class="seal" aria-hidden="true"><Icon name="check" size={26} /></span>
+      <h2>Pronto, você está na lista!</h2>
+      <p class="lede">
+        Falta <em>1 passo</em>: entrar no grupo de WhatsApp. É lá que o Lote Zero abre
+        primeiro e o bônus é liberado.
+      </p>
+      <a class="post" href={grupo} data-grupo-link>
+        Entrar no grupo agora <Icon name="arrow" size={18} />
+      </a>
+      <p class="fine" data-tick>Abrindo o grupo em 5 s…</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .veil {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    padding: 1.25rem;
+    background: #00010799;
+    backdrop-filter: blur(6px) saturate(0.7);
+    overflow-y: auto;
+  }
+  .veil[hidden] { display: none; }
+
+  .sheet {
+    position: relative;
+    width: min(100%, 34rem);
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    background:
+      radial-gradient(120% 90% at 50% -10%, #0a1150, transparent 62%),
+      linear-gradient(180deg, #05082a, #01030f);
+    border: 0;
+    border-radius: 3px;
+    box-shadow: 0 40px 90px -20px #000000d9;
+    animation: sheet-in 0.5s var(--ease) both;
+  }
+  @keyframes sheet-in {
+    from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  }
+
+  /* Filete superior: a régua do livro atravessa a folha. */
+  .sheet::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .shut {
+    position: absolute;
+    top: 0.85rem;
+    inset-inline-end: 0.85rem;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    background: transparent;
+    color: var(--paper-faint);
+    cursor: pointer;
+    transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .shut:hover { color: var(--gold-lift); border-color: var(--rule-strong); }
+
+  .account--center { justify-content: center; }
+  .account--center::after, .account--center::before { display: none; }
+
+  h2 {
+    margin-block: 0.9rem 0.65rem;
+    font-size: clamp(1.65rem, 4.5vw, 2.15rem);
+    text-align: center;
+  }
+
+  .lede {
+    margin-bottom: 1.9rem;
+    color: var(--paper-dim);
+    text-align: center;
+    font-size: 0.975rem;
+  }
+  .lede em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--gold-lift);
+  }
+
+  .field { margin-bottom: 1.15rem; }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+
+  /* Campo como linha do razão: régua embaixo, não caixa arredondada. */
+  input {
+    width: 100%;
+    padding: 0.9rem 0.95rem;
+    background: #00030f8c;
+    border: 1px solid #c8a45c2e;
+    border-bottom-color: var(--rule-strong);
+    border-radius: 2px 2px 0 0;
+    color: var(--paper);
+    font: inherit;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  input::placeholder { color: #8a91ad; }
+  input:hover { border-bottom-color: var(--gold); }
+  input:focus {
+    outline: none;
+    background: #000517b3;
+    border-color: var(--gold);
+    box-shadow: 0 1px 0 var(--gold);
+  }
+  input[aria-invalid='true'] { border-color: #e08a7a; border-bottom-color: #e08a7a; }
+
+  .fault {
+    margin-top: 0.45rem;
+    font-size: 0.85rem;
+    color: #f0a496;
+  }
+  .fault--form { text-align: center; margin-top: 0.9rem; }
+
+  .post { width: 100%; margin-top: 0.6rem; }
+  .post[aria-busy='true'] { opacity: 0.72; cursor: progress; }
+
+  .fine {
+    margin-top: 1.1rem;
+    color: var(--paper-faint);
+    font-size: 0.8125rem;
+    text-align: center;
+  }
+
+  #lead-done { text-align: center; }
+  #lead-done[hidden] { display: none; }
+  .seal {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto 0.4rem;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold-lift);
+  }
+  #lead-done .post { margin-top: 1.4rem; width: auto; }
+</style>
+
+<script>
+  const veil = document.getElementById('lead');
+  const sheet = veil?.querySelector('.sheet');
+  const form = document.getElementById('lead-form') as HTMLFormElement | null;
+  const done = document.getElementById('lead-done');
+  if (!veil || !sheet || !form || !done) throw new Error('lead modal incompleto');
+
+  const btn = form.querySelector('[data-submit]') as HTMLButtonElement;
+  const label = form.querySelector('[data-label]') as HTMLElement;
+  const formFault = form.querySelector('[data-fault-form]') as HTMLElement;
+  let restoreTo: HTMLElement | null = null;
+  let timer: number | undefined;
+
+  const focusables = () =>
+    Array.from(
+      sheet.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => el.offsetParent !== null);
+
+  function open(trigger: HTMLElement) {
+    restoreTo = trigger;
+    veil.hidden = false;
+    document.body.style.overflow = 'hidden';
+    focusables()[1]?.focus();
+  }
+
+  function close() {
+    veil.hidden = true;
+    document.body.style.overflow = '';
+    window.clearInterval(timer);
+    restoreTo?.focus();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-open-lead]').forEach((el) =>
+    el.addEventListener('click', () => open(el))
+  );
+  veil.addEventListener('click', (e) => { if (e.target === veil) close(); });
+  sheet.querySelector('[data-close]')?.addEventListener('click', close);
+
+  document.addEventListener('keydown', (e) => {
+    if (veil.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  const rules: Record<string, (v: string) => boolean> = {
+    nome: (v) => v.trim().length >= 2,
+    email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
+    telefone: (v) => v.replace(/\D/g, '').length >= 10,
+  };
+
+  function check(input: HTMLInputElement) {
+    const ok = rules[input.name]?.(input.value) ?? true;
+    const fault = form!.querySelector<HTMLElement>(`[data-fault-for="${input.name}"]`);
+    input.setAttribute('aria-invalid', String(!ok));
+    if (fault) fault.hidden = ok;
+    return ok;
+  }
+
+  form.querySelectorAll('input').forEach((input) => {
+    input.addEventListener('blur', () => check(input as HTMLInputElement));
+    input.addEventListener('input', () => {
+      if ((input as HTMLInputElement).getAttribute('aria-invalid') === 'true') {
+        check(input as HTMLInputElement);
+      }
+    });
+  });
+
+  // Máscara de telefone no padrão brasileiro, sem biblioteca.
+  const tel = form.querySelector('#f-tel') as HTMLInputElement;
+  tel.addEventListener('input', () => {
+    const d = tel.value.replace(/\D/g, '').slice(0, 11);
+    tel.value = d.length <= 10
+      ? d.replace(/(\d{0,2})(\d{0,4})(\d{0,4})/, (_, a, b, c) =>
+          [a && `(${a}`, a.length === 2 ? ') ' : '', b, c && `-${c}`].filter(Boolean).join(''))
+      : d.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+  });
+
+  function toDone() {
+    form!.hidden = true;
+    done!.hidden = false;
+    const link = done!.querySelector<HTMLAnchorElement>('[data-grupo-link]');
+    const tick = done!.querySelector<HTMLElement>('[data-tick]');
+    link?.focus();
+    let left = 5;
+    timer = window.setInterval(() => {
+      left -= 1;
+      if (tick) tick.textContent = `Abrindo o grupo em ${left} s…`;
+      if (left <= 0) {
+        window.clearInterval(timer);
+        if (link) window.location.href = link.href;
+      }
+    }, 1000);
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formFault.hidden = true;
+
+    const inputs = Array.from(form.querySelectorAll('input')) as HTMLInputElement[];
+    const bad = inputs.filter((i) => !check(i));
+    if (bad.length) { bad[0].focus(); return; }
+
+    const endpoint = form.dataset.webhook;
+    if (!endpoint) {
+      formFault.textContent =
+        'O envio ainda não está configurado. Defina PUBLIC_LEAD_WEBHOOK antes de publicar.';
+      formFault.hidden = false;
+      return;
+    }
+
+    btn.setAttribute('aria-busy', 'true');
+    btn.disabled = true;
+    label.textContent = 'Enviando…';
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: (form.elements.namedItem('nome') as HTMLInputElement).value.trim(),
+          email: (form.elements.namedItem('email') as HTMLInputElement).value.trim(),
+          telefone: (form.elements.namedItem('telefone') as HTMLInputElement).value.trim(),
+          origem: 'lista-lote-zero',
+          url: window.location.href,
+        }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      toDone();
+    } catch {
+      formFault.textContent = 'Não conseguimos enviar agora. Tente de novo em alguns segundos.';
+      formFault.hidden = false;
+      btn.removeAttribute('aria-busy');
+      btn.disabled = false;
+      label.textContent = 'Entrar na lista do Lote Zero';
+    }
+  });
+</script>

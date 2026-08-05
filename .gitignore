@@ -3,3 +3,7 @@
 .claude/settings.local.json
 
 node_modules/
+dist/
+.astro/
+.env
+public/fonts/geist-var.woff2

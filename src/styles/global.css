@@ -1,0 +1,232 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Visionários ao Vivo 2026 — livro-razão
+   Partida dobrada: o marinho é o papel, o ouro é a tinta do filete.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-var.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Terra — a chapa gravada, não papel envelhecido */
+  --ground:        #01020c;
+  --ground-deep:   #000208;
+  --plate:         #04072048;
+  --navy:          #000547;
+  --navy-lift:     #060c3a;
+
+  /* Tinta */
+  --paper:         #f0f0f0;
+  --paper-dim:     #b9bed4;
+  --paper-faint:   #7a819e;
+
+  /* Ouro — folha metálica: sombra, corpo, brilho */
+  --gold-deep:     #7c6127;
+  --gold:          #c8a45c;
+  --gold-lift:     #e6cd91;
+
+  /* Filetes do pautado */
+  --rule:          #c8a45c26;
+  --rule-strong:   #c8a45c4d;
+  --rule-faint:    #c8a45c14;
+
+  --measure: 56ch;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --rhythm: clamp(4.5rem, 9vw, 8.5rem);
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--paper);
+  font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  line-height: 1.65;
+  font-feature-settings: 'tnum' 1, 'ss01' 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* A mão do escriturário: itálica de apoio dentro da headline impressa. */
+.hand {
+  font-family: 'ivyora-display', 'Geist', serif;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 0.005em;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+}
+p { margin: 0; text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+/* ── Superfícies do navegador: nada fica no default ── */
+::selection { background: var(--gold); color: var(--ground-deep); }
+:focus-visible {
+  outline: 2px solid var(--gold-lift);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+html { scrollbar-color: var(--gold-deep) var(--ground-deep); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--ground-deep); }
+::-webkit-scrollbar-thumb {
+  background: var(--gold-deep);
+  border: 3px solid var(--ground-deep);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+a { color: var(--gold); text-decoration-thickness: 1px; text-underline-offset: 0.25em; }
+
+/* ── Estrutura do razão ── */
+.shell {
+  width: min(100% - (var(--gutter) * 2), 78rem);
+  margin-inline: auto;
+}
+.measure { max-width: var(--measure); }
+
+/* Rubrica de conta: o texto curto que na página antiga era kicker.
+   Aqui ele volta ao lugar de origem — a margem esquerda do livro. */
+.account {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+.account::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--rule-strong), transparent);
+}
+
+.ledger-row {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+}
+/* Sem isto, o min-width:auto padrão de item de grid deixa o conteúdo mais
+   largo empurrar a faixa e estourar o viewport no celular. */
+.ledger-row > * { min-width: 0; }
+@media (max-width: 60rem) {
+  .ledger-row { grid-template-columns: 1fr; gap: 1.5rem; }
+  .account::after { display: none; }
+}
+
+section { padding-block: var(--rhythm); position: relative; }
+
+/* O pautado: filetes horizontais finíssimos, como a régua impressa do livro. */
+.ruled {
+  position: relative;
+}
+.ruled::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom, var(--rule-faint) 0 1px, transparent 1px 2.75rem
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  pointer-events: none;
+}
+
+/* ── Ação primária: chapa de ouro gravada ── */
+.post {
+  --lift: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.125rem 2.25rem;
+  border: 0;
+  border-radius: 2px;
+  background-color: var(--gold);
+  background-image:
+    linear-gradient(180deg, #ffffff10, transparent 42%),
+    linear-gradient(180deg, var(--gold-lift), var(--gold) 52%, var(--gold-deep));
+  color: #100d02;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  cursor: pointer;
+  transform: translateY(calc(var(--lift) * -2px));
+  box-shadow:
+    0 1px 0 #ffffff40 inset,
+    0 calc(6px + var(--lift) * 6px) calc(22px + var(--lift) * 18px) #00000073,
+    0 2px 4px #0000004d;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), filter 0.4s var(--ease);
+}
+.post:hover { --lift: 1; filter: brightness(1.06); }
+.post:active { --lift: 0; filter: brightness(0.97); }
+
+/* Ação secundária: só o filete */
+.post--ghost {
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid var(--rule-strong);
+  color: var(--gold-lift);
+  border-color: var(--rule-strong);
+  box-shadow: none;
+  font-weight: 500;
+}
+.post--ghost:hover { border-color: var(--gold); background: #c8a45c0f; filter: none; }
+
+/* Números do razão: tabulares, sempre alinhados na coluna. */
+.figure {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -0.02em;
+}
+
+/* Momento autoral único, e só um: no muro, débito e crédito são lançados um
+   contra o outro e se encontram no vinco. Parte de um estado JÁ VISÍVEL —
+   nenhum conteúdo fica escondido esperando scroll. */
+@media (prefers-reduced-motion: no-preference) {
+  .posting {
+    animation: post-line 0.8s var(--ease) both;
+    animation-timeline: view();
+    animation-range: entry 12% cover 34%;
+  }
+}
+@keyframes post-line {
+  from { transform: translateX(var(--from, -0.75rem)); }
+  to   { transform: none; }
+}

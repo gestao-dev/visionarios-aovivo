@@ -1,0 +1,28 @@
+{
+  "name": "contadores-visionarios",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "prebuild": "node scripts/fonts.mjs",
+    "predev": "node scripts/fonts.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RonaldoAP/contadores-visionarios.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RonaldoAP/contadores-visionarios/issues"
+  },
+  "homepage": "https://github.com/RonaldoAP/contadores-visionarios#readme",
+  "dependencies": {
+    "astro": "^5.18.2",
+    "geist": "^1.7.2"
+  },
+  "type": "module"
+}
