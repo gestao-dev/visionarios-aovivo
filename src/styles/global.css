@@ -26,7 +26,7 @@
   --gold-flare:  #f4edd0;   /* fim do gradiente do cliente */
 
   --edge:        #c8a45c2e;
-  --edge-lit:    #fad49f66; /* borda dourada translúcida do Figma */
+  --edge-lit:    #fad49f33; /* borda dourada, 20% */
 
   --measure: 56ch;
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
