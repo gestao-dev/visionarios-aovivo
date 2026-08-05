@@ -1,0 +1,106 @@
+---
+// Duas faixas douradas cruzadas no pé da hero (nós 2722:1942 e 2722:2015).
+// O conteúdo corre horizontalmente conforme a rolagem: a de cima para a
+// esquerda, a de baixo para a direita.
+const cima = ['Vagas limitadas', 'Primeira edição', 'Presencial'];
+const baixo = ['2 dias', 'São Paulo', 'Ao vivo'];
+// Repetido para o laço fechar sem emenda visível.
+const repetir = (xs: string[], n = 4) => Array.from({ length: n }, () => xs).flat();
+---
+
+<div class="bands" aria-hidden="true">
+  <div class="band band--up">
+    <div class="band__track">
+      {repetir(cima).map((t) => (
+        <span class="band__item">
+          {t}
+          <svg class="band__sep" viewBox="0 0 28 30" fill="none" aria-hidden="true">
+            <path d="M14 1.5 26.5 9v12L14 28.5 1.5 21V9Z" stroke="currentColor" stroke-width="1.6"
+                  stroke-linejoin="round" opacity="0.55" />
+            <path d="M9.6 11.2 14 20.4l4.4-9.2" stroke="currentColor" stroke-width="1.9"
+                  stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <div class="band band--down">
+    <div class="band__track band__track--rev">
+      {repetir(baixo).map((t) => (
+        <span class="band__item">
+          {t}
+          <svg class="band__sep" viewBox="0 0 28 30" fill="none" aria-hidden="true">
+            <path d="M14 1.5 26.5 9v12L14 28.5 1.5 21V9Z" stroke="currentColor" stroke-width="1.6"
+                  stroke-linejoin="round" opacity="0.55" />
+            <path d="M9.6 11.2 14 20.4l4.4-9.2" stroke="currentColor" stroke-width="1.9"
+                  stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Fora da hero: elas cruzam a fronteira entre as duas seções, como no arquivo. */
+  .bands {
+    position: relative;
+    z-index: 5;
+    margin-inline: -12%;
+    margin-top: clamp(-11rem, -19vw, -7rem);
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+    pointer-events: none;
+  }
+
+  .band {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(0.55rem, 1.4vw, 0.95rem);
+    background: linear-gradient(97deg, #b58f3c 0%, var(--gold) 18%, var(--gold-flare) 52%, var(--gold) 82%, #b58f3c 100%);
+    box-shadow: 0 14px 40px -14px #00000099;
+  }
+  .band--up   { transform: rotate(-3.4deg); }
+  .band--down { transform: rotate(2.9deg); margin-top: -0.4rem; }
+
+  .band__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .band__item {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(1.4rem, 3vw, 2.6rem);
+    padding-right: clamp(1.4rem, 3vw, 2.6rem);
+    color: var(--navy);
+    font-size: clamp(1.1rem, 2.8vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .band__sep { width: 0.72em; height: 0.77em; flex: none; }
+
+  /* O movimento é ligado à rolagem da página, não ao relógio. */
+  @media (prefers-reduced-motion: no-preference) {
+    .band__track {
+      animation: run-left linear both;
+      animation-timeline: scroll(root block);
+    }
+    .band__track--rev { animation-name: run-right; }
+
+    /* Sem timeline de rolagem, o laço roda no tempo — mesma leitura, sem depender
+       de um recurso que nem todo navegador tem. */
+    @supports not (animation-timeline: scroll(root block)) {
+      .band__track { animation: run-left 26s linear infinite; }
+      .band__track--rev { animation: run-right 26s linear infinite; }
+    }
+  }
+
+  @keyframes run-left  { to { transform: translateX(-50%); } }
+  @keyframes run-right { from { transform: translateX(-50%); } to { transform: none; } }
+</style>

@@ -4,6 +4,13 @@
    ───────────────────────────────────────────────────────────────────────── */
 
 @font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-var.woff2') format('woff2-variations');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: 'Geist';
   src: url('/fonts/geist-var.woff2') format('woff2-variations');
   font-weight: 100 900;
@@ -13,8 +20,8 @@
 
 :root {
   --ground:      #05060f;
-  --ground-deep: #010208;
-  --navy:        #000547;
+  --ground-deep: #000001;
+  --navy:        #171a3b;   /* 01 - AZUL MARINHO, do arquivo do cliente */
   --navy-glow:   #0a1264;
 
   --paper:       #f0f0f0;
@@ -22,12 +29,12 @@
   --paper-faint: #8990a8;
 
   --gold-deep:   #8a6c2e;
-  --gold:        #c8a45c;
+  --gold:        #d7b356;   /* início do gradiente do cliente */
   --gold-lift:   #e6cd91;
-  --gold-flare:  #f6e6bd;
+  --gold-flare:  #f4edd0;   /* fim do gradiente do cliente */
 
   --edge:        #c8a45c2e;
-  --edge-lit:    #c8a45c66;
+  --edge-lit:    #fad49f66; /* borda dourada translúcida do Figma */
 
   --measure: 56ch;
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
@@ -53,7 +60,7 @@ body {
   margin: 0;
   background: var(--ground);
   color: var(--paper);
-  font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Manrope', 'Geist', ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(1rem, 0.95rem + 0.25vw, 1.09rem);
   line-height: 1.65;
   font-feature-settings: 'tnum' 1, 'ss01' 1;
@@ -61,9 +68,10 @@ body {
   overflow-x: hidden;
 }
 
-/* IvyOra como voz de destaque dentro da headline. */
+/* Itálica de destaque. O arquivo do cliente usa IvyPresto Display Light Italic;
+   'ivyora-display' fica como segunda tentativa no mesmo kit da Adobe. */
 .hand {
-  font-family: 'ivyora-display', 'Geist', serif;
+  font-family: 'ivypresto-display', 'ivyora-display', Georgia, serif;
   font-style: italic;
   font-weight: 300;
   color: var(--gold-lift);
