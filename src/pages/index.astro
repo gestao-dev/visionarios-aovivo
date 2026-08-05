@@ -124,9 +124,14 @@ const vantagens = [
     <div class="shell method">
       <div class="method__text">
         <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
-        <h2 id="t-metodo" class="h-lg">2 dias. 6 meses de <span class="hand grad">estruturação resolvidos.</span></h2>
+        <h2 id="t-metodo" class="h-lg">
+          2 dias. 6 meses<br class="turn" />
+          de <span class="hand grad">estruturação</span><br class="turn" />
+          <span class="hand grad">resolvidos.</span>
+        </h2>
         <p class="method__lede">
-          4 fases, uma construída sobre a outra, e cada bloco entrega uma ferramenta pronta
+          4 fases, uma construída sobre a outra,<br class="turn" />
+          e cada bloco entrega uma ferramenta<br class="turn" />
           pra aplicar:
         </p>
         <p class="aside">
@@ -165,26 +170,6 @@ const vantagens = [
             </li>
           ))}
         </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ Trailer: placeholder para o vídeo 1:1 ══ -->
-  <section class="eyebrow-free" aria-labelledby="t-video">
-    <div class="shell center measure-wide">
-      <h2 id="t-video">O que acontece na sala</h2>
-    </div>
-    <div class="shell reel">
-      <!-- PLACEHOLDER: suba o trailer 1:1 e troque este bloco por <video poster>. -->
-      <div class="reel__box panel rise">
-        <span class="reel__play"><Icon name="play" size={30} /></span>
-        <p>Trailer do evento · 1:1</p>
-        <small>Espaço reservado. Envie o arquivo e eu ligo aqui com poster e clique‑para‑tocar.</small>
-      </div>
-      <div class="reel__side">
-        <!-- PLACEHOLDER: foto vertical da edição anterior (palco, plateia ou bastidor). -->
-        <div class="shot panel rise"><span>Foto vertical<br /><small>a enviar</small></span></div>
-        <div class="shot panel rise"><span>Foto vertical<br /><small>a enviar</small></span></div>
       </div>
     </div>
   </section>
@@ -502,12 +487,9 @@ const vantagens = [
   }
   .method__lede {
     margin-top: 1.35rem;
-    max-width: 34ch;
     color: var(--paper-dim);
     font-size: clamp(1rem, 2.2vw, 1.12rem);
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
+    line-height: 1.5;
   }
 
   .aside {
@@ -613,12 +595,12 @@ const vantagens = [
   @keyframes turn { to { --turn: 360deg; } }
 
   .sprint h3 {
-    max-width: 30ch;
+    max-width: 24ch;
     margin-inline: auto;
     text-align: center;
-    font-size: clamp(1.35rem, 3vw, 2rem);
-    font-weight: 500;
-    line-height: 1.25;
+    font-size: clamp(2.1rem, 4.6vw, 4rem);
+    font-weight: 600;
+    line-height: 1.08;
     letter-spacing: -0.03em;
     color: #fff;
   }
@@ -657,35 +639,6 @@ const vantagens = [
 
   @media (max-width: 46rem) {
     .rail { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1.25rem; }
-  }
-
-  /* ── Trailer + fotos ── */
-  .reel {
-    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    gap: clamp(1rem, 2vw, 1.4rem); margin-top: 2.8rem;
-  }
-  .reel__box {
-    display: grid; place-content: center; justify-items: center; gap: 0.6rem;
-    aspect-ratio: 16 / 10; text-align: center; color: var(--paper-faint);
-  }
-  .reel__play {
-    display: grid; place-items: center;
-    width: 4.5rem; height: 4.5rem; border-radius: 50%;
-    color: var(--gold-lift);
-    background: linear-gradient(180deg, #c8a45c2b, #c8a45c0d);
-    box-shadow: inset 0 1px 0 #e6cd9130;
-  }
-  .reel__box p { color: var(--paper-dim); font-weight: 500; }
-  .reel__box small { max-width: 26ch; font-size: 0.8rem; line-height: 1.5; }
-  .reel__side { display: grid; gap: clamp(1rem, 2vw, 1.4rem); }
-  .shot {
-    display: grid; place-items: center; text-align: center;
-    min-height: 8rem; color: var(--paper-faint); font-size: 0.86rem;
-  }
-  .shot small { opacity: 0.7; }
-  @media (max-width: 52rem) {
-    .reel { grid-template-columns: 1fr; }
-    .reel__side { grid-template-columns: 1fr 1fr; }
   }
 
   /* ── Elenco: cartões conforme o nó 2732:2789 ── */
@@ -799,7 +752,6 @@ const vantagens = [
 
   /* ── Fechamento ── */
   .close { padding-bottom: clamp(5.5rem, 11vw, 9rem); }
-  .close h2 { font-size: clamp(2rem, 5.2vw, 3.4rem); }
   .close .cta { margin-top: 2.6rem; }
 
   /* Halos de seção */

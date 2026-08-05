@@ -130,11 +130,10 @@ section { padding-block: var(--rhythm); position: relative; overflow: clip; }
 .glow--gold { background: radial-gradient(circle, #c8a45c66, transparent 68%); }
 .glow--navy { background: radial-gradient(circle, #12208f7a, transparent 70%); }
 
-/* ── Título de seção ── */
-.eyebrow-free h2 {
-  font-size: clamp(1.9rem, 4.6vw, 3.1rem);
-}
-/* Título grande: 64px no desktop, descendo com a tela. */
+/* ── Título de seção ──
+   64px no desktop para toda headline da página, descendo com a tela.
+   A da hero é a exceção: ela tem escala própria. */
+section h2,
 .h-lg {
   font-size: clamp(2.1rem, 4.6vw, 4rem);
   line-height: 1.08;
