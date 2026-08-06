@@ -11,11 +11,14 @@
   font-display: swap;
 }
 :root {
-  /* Cor da página inteira, casada com o pé da arte da abertura; o -deep é um
-     passo abaixo dela, pra fundo de caixa e pontas de degradê.
-     Antes daqui: --ground #041e42 e --ground-deep #02132b (PMS 282 C). */
-  --ground:      #011522;
-  --ground-deep: #000b12;
+  /* PMS 282 C, do arquivo do cliente. É a cor da página inteira; o -deep é
+     um passo abaixo dela, pra fundo de caixa e pontas de degradê. */
+  --ground:      #041e42;
+  --ground-deep: #02132b;
+
+  /* Pé da arte da abertura. Vale só na hero e na faixa logo abaixo dela,
+     que é onde a arte encosta na página. */
+  --hero-foot:   #011522;
   --navy:        #171a3b;   /* 01 - AZUL MARINHO, do arquivo do cliente */
   --navy-glow:   #0a1264;
 
@@ -230,7 +233,7 @@ section h2,
 .card {
   border: 1px solid var(--edge-lit);
   border-radius: 20px;
-  background: linear-gradient(180deg, #052738, #01121d);
+  background: linear-gradient(180deg, #07295a, #031733);
 }
 
 /* ── Painel: a superfície de conteúdo, com matéria e não filete ── */

@@ -43,7 +43,7 @@ const repetir = (xs: string[], n = 8) => Array.from({ length: n }, () => xs).fla
     /* Continua o preto em que a hero termina. Sem isto o fundo azul do corpo
        aparece aqui no meio e a página vai de preto pra azul pra preto pra
        azul antes de assentar. Padding e não margem: margem não recebe fundo. */
-    background: var(--ground);
+    background: var(--hero-foot);
     padding-bottom: clamp(3rem, 7vw, 6rem);
     pointer-events: none;
   }

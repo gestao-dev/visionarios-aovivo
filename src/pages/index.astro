@@ -336,8 +336,10 @@ const vantagens = [
 
   /* A hero termina em preto; a dobra seguinte nasce nesse mesmo preto e só
      então caminha para o azul da página. Sem isso fica a emenda visível. */
+  /* A arte da abertura termina em --hero-foot; a passagem pro azul da página
+     acontece aqui, logo abaixo das faixas, e não na página inteira. */
   .tail {
-    background: var(--ground);
+    background: linear-gradient(180deg, var(--hero-foot) 0, var(--ground) 22rem);
     background-repeat: no-repeat;
   }
 
@@ -374,7 +376,7 @@ const vantagens = [
   @media (max-width: 46rem) {
     .hero__plate { bottom: auto; height: auto; aspect-ratio: 1920 / 1027; }
     .hero__wash {
-      background: linear-gradient(180deg, #01152214 0%, #0115226b 46%, var(--ground) 100%);
+      background: linear-gradient(180deg, #01152214 0%, #0115226b 46%, var(--hero-foot) 100%);
     }
   }
   .hero__plate { position: absolute; inset: 0; z-index: -2; isolation: isolate; }
@@ -389,7 +391,7 @@ const vantagens = [
   .hero__wash {
     position: absolute; inset: 0; z-index: 1;
     background:
-      linear-gradient(180deg, #01152208 0%, #01152259 46%, var(--ground) 90%),
+      linear-gradient(180deg, #01152208 0%, #01152259 46%, var(--hero-foot) 90%),
       radial-gradient(78% 52% at 50% 46%, #0115225c 0%, #011522b3 100%);
   }
   .hero__g1 { width: 46rem; height: 28rem; top: 16%; left: 50%; transform: translateX(-50%); opacity: 0.22; }
@@ -931,7 +933,7 @@ const vantagens = [
     gap: clamp(1.5rem, 3vw, 2.6rem);
     padding: clamp(1.1rem, 2.2vw, 1.6rem);
     align-items: stretch;
-    background: linear-gradient(180deg, #000d16, #011522);
+    background: linear-gradient(180deg, #02132b, #041e42);
   }
   /* A arte já é o ingresso inteiro: logo, chips e código de barras vêm nela.
      No formato alto ela cobre a altura da coluna sozinha, sem placa. */
