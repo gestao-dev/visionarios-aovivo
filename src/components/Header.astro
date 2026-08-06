@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button class="cta bar__cta" type="button" data-open-lead>Garantir meu ingresso</button>
+    <button class="cta bar__cta" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
   </div>
 </header>
 
@@ -29,6 +29,7 @@
     position: sticky;
     top: 0;
     z-index: 60;
+    transition: transform 0.5s var(--ease);
     height: 95px;
     background: #05060f8c;
     backdrop-filter: blur(22px) saturate(1.35);
@@ -98,6 +99,11 @@
     .bar__in { grid-template-columns: auto 1fr; }
     .bar__cta { display: none; }
     .count { justify-self: end; }
+  }
+  /* Com a barra de ação no rodapé, a marca não precisa ocupar as duas pontas
+     da tela: o cabeçalho recolhe. */
+  @media (max-width: 60rem) {
+    :global(html.dock-on) .bar { transform: translateY(-100%); }
   }
   @media (max-width: 44rem) {
     .bar { height: 76px; }

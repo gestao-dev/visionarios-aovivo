@@ -112,6 +112,12 @@ a { color: var(--gold-lift); text-underline-offset: 0.25em; }
 
 section { padding-block: var(--rhythm); position: relative; overflow: clip; }
 
+/* Espaço reservado pra barra de ação do rodapé no celular. Fixo, e não ligado
+   à entrada dela: senão a página daria um pulo no momento em que ela aparece. */
+@media (max-width: 60rem) {
+  body { padding-bottom: 4.75rem; }
+}
+
 /* Celular: 20px de respiro nas laterais, 40px de cada lado entre seções, e o
    conteúdo travado em 400px de medida. */
 @media (max-width: 30rem) {

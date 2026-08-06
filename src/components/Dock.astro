@@ -1,0 +1,90 @@
+---
+// Barra de ação fixa no rodapé, só no celular. Aparece na metade da segunda
+// dobra e, quando aparece, o cabeçalho sobe: a ação fica onde o polegar
+// alcança, e a marca não ocupa duas barras ao mesmo tempo.
+---
+
+<div class="dock">
+  <div class="dock__in">
+    <img class="dock__mark" src="/logo-visionarios-ao-vivo.svg"
+         alt="Visionários ao Vivo" width="196" height="48" />
+    <button class="cta dock__cta" type="button" data-open-lead>Entrar na lista</button>
+  </div>
+</div>
+
+<style>
+  .dock {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 70;
+    display: none;
+    background: #05060fd9;
+    backdrop-filter: blur(22px) saturate(1.35);
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    border-top: 1px solid var(--edge-lit);
+    /* Fora da tela e sem foco enquanto não entra. */
+    transform: translateY(115%);
+    visibility: hidden;
+    transition:
+      transform 0.5s var(--ease),
+      visibility 0s linear 0.5s;
+  }
+  .dock__in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.7rem 20px;
+    /* Respeita a barra de gestos do aparelho. */
+    padding-bottom: max(0.7rem, env(safe-area-inset-bottom));
+  }
+  .dock__mark { width: 124px; height: 30px; flex: none; }
+  .dock__cta {
+    padding: 0.8rem 1.1rem;
+    font-size: 0.82rem;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 60rem) {
+    .dock { display: block; }
+  }
+  :global(html.dock-on) .dock {
+    transform: none;
+    visibility: visible;
+    transition:
+      transform 0.5s var(--ease),
+      visibility 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dock { transition: none; }
+  }
+</style>
+
+<script>
+  const marco = document.getElementById('dobra-2');
+  const raiz = document.documentElement;
+
+  if (marco) {
+    // Aparece quando metade da segunda dobra já passou pelo topo da tela.
+    function avaliar() {
+      const r = marco.getBoundingClientRect();
+      raiz.classList.toggle('dock-on', r.top + r.height * 0.5 <= 0);
+    }
+
+    let pendente = false;
+    function agendar() {
+      if (pendente) return;
+      pendente = true;
+      requestAnimationFrame(() => {
+        pendente = false;
+        avaliar();
+      });
+    }
+
+    avaliar();
+    addEventListener('scroll', agendar, { passive: true });
+    addEventListener('resize', agendar, { passive: true });
+  }
+</script>

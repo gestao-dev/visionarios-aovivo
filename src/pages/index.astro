@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Icon from '../components/Icon.astro';
 import LeadModal from '../components/LeadModal.astro';
 import Bands from '../components/Bands.astro';
+import Dock from '../components/Dock.astro';
 import heroSala from '../assets/hero-sala.png';
 import cardViviane from '../assets/card-viviane.png';
 import cardMarcos from '../assets/card-marcos.png';
@@ -85,7 +86,7 @@ const vantagens = [
         reinventar o próprio negócio e <b>resolver 6 meses de estruturação em 2 dias.</b>
       </p>
 
-      <button class="cta" type="button" data-open-lead>Garantir meu ingresso agora.</button>
+      <button class="cta" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
 
       <ul class="facts">
         <li><Icon name="calendar" size={15} /> 29 e 30 de Outubro de 2026</li>
@@ -100,7 +101,7 @@ const vantagens = [
 
   <div class="tail">
   <!-- ══ O muro ══ -->
-  <section class="eyebrow-free" aria-labelledby="t-muro">
+  <section id="dobra-2" class="eyebrow-free" aria-labelledby="t-muro">
     <span class="glow glow--navy g-left" aria-hidden="true"></span>
     <div class="shell center measure-wide">
       <p class="over fade">Contador comum × Contador visionário</p>
@@ -300,6 +301,7 @@ const vantagens = [
   </footer>
   </div>
 
+  <Dock />
   <LeadModal />
 </Base>
 
