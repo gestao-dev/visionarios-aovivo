@@ -573,8 +573,11 @@ const vantagens = [
     position: relative;
     isolation: isolate;
     width: min(100%, 62.5rem);
-    margin: clamp(4rem, 8vw, 6.5rem) auto 0;
-    padding-top: clamp(3rem, 6vw, 5rem);
+    /* O respiro antes do bloco vira padding, não margem: a luz nasce no topo
+       do bloco, e com margem ela começava 104px abaixo do filete dourado,
+       deixando uma faixa escura entre os dois. A headline não se move. */
+    margin: 0 auto;
+    padding-top: clamp(7rem, 12.8vw, 11.5rem);
     text-align: center;
   }
   /* Refletor: foco forte no alto, aberto pra fora, com grão por cima.
