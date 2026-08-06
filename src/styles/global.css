@@ -38,14 +38,6 @@
   color-scheme: dark;
 }
 
-/* Ângulo registrado: sem isto o navegador não sabe interpolar o conic-gradient
-   e a borda em movimento fica parada. */
-@property --turn {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
-
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: clip; }

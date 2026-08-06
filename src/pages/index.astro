@@ -164,7 +164,7 @@ const vantagens = [
     </div>
 
     <div class="shell">
-      <div class="sprint card">
+      <div class="sprint">
         <!-- Espaço reservado: troque por <Image> quando a foto chegar. -->
         <div class="sprint__art" role="img" aria-label="Espaço reservado para foto do evento">
           <span class="sprint__ph">
@@ -176,15 +176,12 @@ const vantagens = [
 
         <div class="sprint__body">
           <h3>
-            Você sai com um<br class="turn" />
-            <span class="hand">Sprint de 60 dias</span><br class="turn" />
-            pra chegar em 2027<br class="turn" />
-            estruturado
+            Você sai com um <span class="hand">Sprint de 60 dias</span>
+            pra chegar em 2027 estruturado
           </h3>
-          <ol class="rail">
+          <ol class="vrail">
             {sprint.map((e, i) => (
-              <li class={i === sprint.length - 1 ? 'rail--now' : ''}>
-                <span class="rail__dot" aria-hidden="true"></span>
+              <li class={i === sprint.length - 1 ? 'vrail--now' : ''}>
                 <b>{e.quando}</b>
                 <span>{e.oque}</span>
               </li>
@@ -571,42 +568,16 @@ const vantagens = [
     .steps__label { min-height: 0; }
   }
 
-  /* ── Sprint: painel com borda em movimento ── */
+  /* ── Sprint: foto à esquerda, linha do tempo vertical à direita ── */
   .sprint {
     position: relative;
-    width: min(100%, 74rem);
+    width: min(100%, 64rem);
     margin: clamp(4rem, 8vw, 6.5rem) auto 0;
-    padding: clamp(1.25rem, 2.4vw, 1.75rem);
-    overflow: hidden;
     display: grid;
-    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
-    gap: clamp(1.5rem, 3vw, 2.75rem);
+    grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
+    gap: clamp(1.75rem, 4vw, 3.5rem);
     align-items: center;
   }
-  /* A borda é um facho que dá a volta no painel. Fica na moldura, não no fundo. */
-  .sprint::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background:
-      conic-gradient(from var(--turn, 0deg),
-        #c8a45c1f 0deg 200deg,
-        var(--gold) 268deg,
-        var(--gold-flare) 292deg,
-        var(--gold) 316deg,
-        #c8a45c1f 360deg);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask-composite: exclude;
-    pointer-events: none;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .sprint::before { animation: turn 7s linear infinite; }
-  }
-  @keyframes turn { to { --turn: 360deg; } }
 
   /* Espaço reservado da foto: superfície da página, não caixa de erro. */
   .sprint__art {
@@ -631,55 +602,56 @@ const vantagens = [
   .sprint__ph span { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
 
   .sprint__body { padding-right: clamp(0.25rem, 1.6vw, 1.25rem); }
+  /* Menor que as headlines de seção: aqui é subtítulo de bloco, não título. */
   .sprint h3 {
-    font-size: clamp(2.1rem, 4.6vw, 4rem);
+    font-size: clamp(1.6rem, 2.9vw, 2.3rem);
     font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
+    line-height: 1.16;
+    letter-spacing: -0.025em;
     color: var(--paper);
+    text-wrap: balance;
   }
   .sprint h3 .hand { font-size: 1.08em; }
 
-  .rail {
+  /* Linha do tempo vertical: um fio contínuo, quatro marcos descendo dele. */
+  .vrail {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(0.8rem, 2vw, 1.5rem);
-    width: 100%;
-    margin: clamp(2rem, 4vw, 2.75rem) 0 0;
+    gap: clamp(1.1rem, 2vw, 1.5rem);
+    margin-top: clamp(1.75rem, 3.4vw, 2.5rem);
+    padding-left: 1.9rem;
   }
-  .rail { position: relative; }
-  .rail::before {
+  .vrail::before {
     content: '';
     position: absolute;
-    top: 4px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: #ffffff1f;
+    left: 5px;
+    top: 0.55em;
+    bottom: 0.55em;
+    width: 1px;
+    background: linear-gradient(180deg, #c8a45c40, var(--gold-lift));
   }
-  .rail li { position: relative; padding-top: 1.4rem; }
-  .rail__dot {
+  .vrail li { position: relative; display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+  .vrail li::before {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 9px;
-    height: 9px;
+    left: -1.9rem;
+    top: 0.5em;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     background: var(--gold-deep);
+    box-shadow: 0 0 0 4px #05060f;
   }
-  .rail b { display: block; font-size: 1rem; font-weight: 600; color: var(--paper); }
-  .rail span { display: block; margin-top: 0.3rem; font-size: 0.92rem; color: var(--paper); }
-  .rail--now .rail__dot { background: var(--gold-flare); box-shadow: 0 0 0 4px #d7b35630; }
-  .rail--now span { color: var(--gold-lift); }
+  .vrail b { font-size: 1.05rem; font-weight: 700; color: var(--paper); }
+  .vrail span { font-size: 0.98rem; color: var(--paper); }
+  /* O último marco é onde a promessa aterrissa: é ele que acende. */
+  .vrail li.vrail--now::before { background: var(--gold-flare); box-shadow: 0 0 0 4px #05060f, 0 0 0 7px #d7b35633; }
+  .vrail--now span { color: var(--gold-lift); }
 
   @media (max-width: 62rem) {
-    .sprint { grid-template-columns: 1fr; }
-    .sprint__art { max-width: 20rem; margin-inline: auto; }
-    .sprint__body { padding-right: 0; text-align: center; }
-    .rail { text-align: left; }
-  }
-  @media (max-width: 46rem) {
-    .rail { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1.25rem; }
+    .sprint { grid-template-columns: 1fr; justify-items: center; }
+    .sprint__art { width: min(100%, 20rem); }
+    .sprint__body { padding-right: 0; width: min(100%, 30rem); }
   }
 
   /* ── Elenco: cada card é uma peça fechada (nó 2742:6835) ── */
@@ -843,6 +815,10 @@ const vantagens = [
   }
   /* Ícone centrado na altura do texto, não colado no topo. */
   .perks li { display: grid; grid-template-columns: auto 1fr; gap: 0.9rem; align-items: center; color: var(--paper); }
+  /* Medida curta de propósito: com a largura toda, um item cabe em uma linha
+     e outro sobra uma palavra sozinha. Em 40ch os quatro caem em duas linhas,
+     e o balance reparte cada par para não deixar viúva. */
+  .perks li > span:last-child { max-width: 40ch; text-wrap: balance; }
   .medal--sm { width: 2.4rem; height: 2.4rem; border-radius: 10px; }
 
   .lote__act {
@@ -869,20 +845,21 @@ const vantagens = [
     text-transform: uppercase;
     color: var(--paper);
   }
-  .tick__boxes { display: flex; gap: 5px; }
+  .tick__boxes { display: flex; gap: 7px; }
   .tick__box {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 44px;
+    gap: 2px;
+    min-width: 66px;
+    padding: 0.7rem 0.85rem;
     border: 1px solid var(--edge-lit);
-    border-radius: 4px;
+    border-radius: 6px;
     background: #5a3e361a;
     color: var(--paper);
   }
-  .tick__box b { font-size: 1.15rem; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .tick__box b { font-size: 1.25rem; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
   .tick__box span { font-size: 9px; font-weight: 400; line-height: 1.2; color: #ffffffb3; }
 
   @media (max-width: 60rem) {
