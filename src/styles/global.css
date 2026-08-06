@@ -202,17 +202,6 @@ section h2,
   text-transform: uppercase;
   color: var(--paper);
 }
-.badge__live {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #e0483c;
-  box-shadow: 0 0 0 0 #e0483ccc;
-  animation: live 2.4s var(--ease) infinite;
-}
-@keyframes live {
-  0%   { box-shadow: 0 0 0 0 #e0483cb3; }
-  70%  { box-shadow: 0 0 0 9px #e0483c00; }
-  100% { box-shadow: 0 0 0 0 #e0483c00; }
-}
 
 /* Superfície padrão de caixa: mesmo fundo do bloco do sprint e a borda
    dourada a 40%, que vale para toda borda da página. */

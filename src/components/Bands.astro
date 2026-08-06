@@ -37,7 +37,9 @@ const repetir = (xs: string[], n = 8) => Array.from({ length: n }, () => xs).fla
     z-index: 5;
     overflow-x: clip;
     overflow-y: visible;
-    margin-top: clamp(-9rem, -15vw, -5rem);
+    /* O puxão pra cima existia pra ocupar o vazio no pé da hero antiga.
+       Agora o conteúdo da hero mora lá embaixo, e esse recuo cobria a ação. */
+    margin-top: 0;
     margin-bottom: clamp(3rem, 7vw, 6rem);
     pointer-events: none;
   }
