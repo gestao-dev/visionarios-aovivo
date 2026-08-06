@@ -1,9 +1,13 @@
 ---
 import Icon from './Icon.astro';
 
-// Endpoint do webhook. Definido em .env como PUBLIC_LEAD_WEBHOOK.
-// Sem valor, o formulário bloqueia o envio e avisa — em vez de engolir o lead.
-const webhook = import.meta.env.PUBLIC_LEAD_WEBHOOK ?? '';
+// Endpoint do webhook. O padrão é o endpoint de produção do cliente: como a
+// URL vai pro JavaScript da página de qualquer jeito, ela não é segredo, e
+// deixar embutida evita a página subir sem captura por falta de variável.
+// PUBLIC_LEAD_WEBHOOK no .env sobrescreve, pra apontar a um endpoint de teste.
+const webhook =
+  import.meta.env.PUBLIC_LEAD_WEBHOOK ||
+  'https://webhook.contadoresvisionarios.com.br/webhook/dab41c5b-26ab-493a-b749-22a56763a0a4';
 const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
 ---
 
