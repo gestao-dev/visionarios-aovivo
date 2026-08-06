@@ -12,7 +12,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
 ---
 
 <div class="veil" id="lead" hidden>
-  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="lead-title">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="lead-title" tabindex="-1">
     <button class="shut" type="button" data-close aria-label="Fechar">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
            stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
@@ -88,6 +88,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
   }
   .veil[hidden] { display: none; }
 
+  .sheet:focus-visible { outline: none; }
   .sheet {
     position: relative;
     width: min(100%, 34rem);
@@ -249,7 +250,14 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
     restoreTo = trigger;
     veil.hidden = false;
     document.body.style.overflow = 'hidden';
-    focusables()[1]?.focus();
+    // Em tela de toque o foco vai pra folha, não pro primeiro campo: focar um
+    // input abre o teclado na hora e ele cobre o formulário que a pessoa
+    // acabou de pedir pra ver. No mouse o foco continua caindo no campo.
+    if (matchMedia('(pointer: coarse)').matches) {
+      (sheet as HTMLElement).focus();
+    } else {
+      focusables()[1]?.focus();
+    }
   }
 
   function close() {

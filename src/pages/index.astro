@@ -605,12 +605,25 @@ const vantagens = [
       padding-top: 40px;
       background: #05060f;
     }
+    /* A arte tem metade da altura vazia acima dos pilares. A caixa apara esse
+       topo e a largura maior que a tela amplia o desenho: as duas coisas
+       juntas trazem os pilares pra perto do texto e maiores. */
     .pilares__plate {
       position: static;
-      margin-top: clamp(1.5rem, 5vw, 3rem);
-      aspect-ratio: 980 / 735;
+      margin-top: clamp(0.5rem, 2vw, 1rem);
+      aspect-ratio: 980 / 574;
+      overflow: hidden;
     }
-    .pilares__plate :global(img) { object-position: center bottom; }
+    .pilares__plate :global(img) {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 130%;
+      height: auto;
+      transform: translateX(-50%);
+      object-fit: fill;
+    }
+    .pilares__plate { position: relative; }
     .method__text { max-width: none; text-align: center; }
     .method__text .over { text-align: center; }
     /* Ícone acima do texto, não ao lado. */
@@ -742,26 +755,39 @@ const vantagens = [
   @media (max-width: 46rem) {
     .rail {
       grid-template-columns: 1fr;
-      gap: 1.35rem;
-      /* Largura do conteúdo e centrada: o fio e os rótulos entram como um
-         bloco só no meio da tela, em vez de encostados na esquerda. */
-      width: fit-content;
-      margin-inline: auto;
-      padding-left: 1.9rem;
-      text-align: left;
+      gap: 0.9rem;
+      width: 100%;
+      padding-left: 0;
+      text-align: center;
     }
-    .rail::before {
-      top: 0.55em;
-      bottom: 0.55em;
-      left: 5px;
-      right: auto;
+    /* O fio contínuo dá lugar a trechos: cada marco liga no próximo. */
+    .rail::before { display: none; }
+    .rail li {
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .rail__dot { position: static; order: 3; margin: 0.65rem 0 0; }
+    .rail li:not(:last-child)::after {
+      content: '';
+      order: 4;
       width: 1px;
-      height: auto;
-      background: linear-gradient(180deg, #c8a45c40, var(--gold-lift));
+      height: 1.5rem;
+      margin-top: 0.5rem;
+      background: linear-gradient(180deg, var(--gold-deep), #c8a45c2b);
     }
-    .rail li { padding-top: 0; }
-    .rail__dot { top: 0.42em; left: -1.9rem; margin-left: 0; }
-    .rail--now b { font-size: 1.4rem; }
+    .rail b { font-size: 24px; }
+    .rail--now b { font-size: 32px; }
+    /* O último marco pisca: é onde a promessa aterrissa. */
+    @media (prefers-reduced-motion: no-preference) {
+      .rail li.rail--now .rail__dot { animation: farol 2.4s var(--ease) infinite; }
+    }
+    @keyframes farol {
+      0%   { box-shadow: 0 0 0 4px var(--ground-deep), 0 0 0 6px #d7b35666; }
+      70%  { box-shadow: 0 0 0 4px var(--ground-deep), 0 0 0 16px #d7b35600; }
+      100% { box-shadow: 0 0 0 4px var(--ground-deep), 0 0 0 16px #d7b35600; }
+    }
     /* O respiro de 112px afastava demais a headline do filete dourado. */
     .sprint { padding-top: clamp(2.5rem, 9vw, 3.75rem); }
   }
@@ -797,7 +823,7 @@ const vantagens = [
      na arte sai ilegível. */
   @media (max-width: 46rem) {
     .cast { grid-template-columns: 1fr; gap: 1rem; }
-    .cast__card { width: min(100%, 17rem); margin-inline: auto; }
+    .cast__card { width: 100%; max-width: 380px; margin-inline: auto; }
   }
 
   /* Nota sob os palestrantes: sem ícone, duas linhas, quebra ditada. */
@@ -1002,7 +1028,7 @@ const vantagens = [
 
   @media (max-width: 60rem) {
     .lote__frame { grid-template-columns: 1fr; }
-    .lote__art { max-width: 20rem; margin-inline: auto; }
+    .lote__art { width: 100%; margin-inline: auto; }
   }
 
   /* ── Fechamento ── */
