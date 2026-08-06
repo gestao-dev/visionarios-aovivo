@@ -15,11 +15,17 @@ import cardConvidado2 from '../assets/card-convidado-2.png';
 import ticket from '../assets/ticket-lote-zero.png';
 import fecho from '../assets/fecho.png';
 import pilares from '../assets/pilares.png';
+import pilaresMobile from '../assets/pilares-mobile.png';
+import ticketMobile from '../assets/ticket-lote-zero-mobile.png';
 
 // Direção de arte na abertura: o celular recebe um enquadramento próprio, e o
 // <picture> garante que só um dos dois seja baixado.
 const heroLargo = await getImage({ src: heroSala, widths: [720, 1200, 1920], format: 'webp', quality: 82 });
 const heroEstreito = await getImage({ src: heroSalaMobile, widths: [430, 760, 1043], format: 'webp', quality: 86 });
+const pilaresLargo = await getImage({ src: pilares, widths: [960, 1440, 1920], format: 'webp', quality: 92 });
+const pilaresEstreito = await getImage({ src: pilaresMobile, widths: [430, 760, 980], format: 'webp', quality: 90 });
+const ticketLargo = await getImage({ src: ticket, widths: [430, 858], format: 'webp', quality: 88 });
+const ticketEstreito = await getImage({ src: ticketMobile, widths: [430, 700, 1024], format: 'webp', quality: 90 });
 
 const daqui = [
   'Faturamento travado no teto',
@@ -146,8 +152,8 @@ const vantagens = [
          esquerda, que no arquivo é preta de propósito. -->
     <div class="pilares">
       <div class="shell method">
-        <div class="method__text from-l">
-          <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
+        <div class="method__text stagger">
+          <p class="over over--metodo">Método Aceleração Visionária<span class="sep"> · </span><br class="turn-m" />exclusivo do evento</p>
           <h2 id="t-metodo" class="h-lg">
             2 dias. 6 meses<br class="turn" />
             de <span class="hand grad">estruturação</span><br class="turn" />
@@ -167,7 +173,12 @@ const vantagens = [
       <!-- Depois do texto no documento: no desktop ela é absoluta e o lugar
            não importa; no celular ela vira faixa e cai embaixo, onde deve. -->
       <div class="pilares__plate fade" aria-hidden="true">
-        <Image src={pilares} alt="" widths={[960, 1440, 1920]} sizes="100vw" quality={92} />
+        <picture>
+          <source media="(max-width: 62rem)" type="image/webp"
+                  srcset={pilaresEstreito.srcSet.attribute} sizes="100vw" />
+          <img src={pilaresLargo.src} srcset={pilaresLargo.srcSet.attribute} sizes="100vw"
+               width={1920} height={735} alt="" loading="lazy" decoding="async" />
+        </picture>
       </div>
     </div>
 
@@ -248,12 +259,17 @@ const vantagens = [
     <div class="shell lote">
       <div class="card lote__frame rise">
         <div class="lote__art from-l">
-          <Image src={ticket} alt="Ingresso Lote Zero do Visionários ao Vivo, com Viviane Araújo e Marcos Paulo"
-                 widths={[430, 858]} sizes="(max-width: 60rem) 80vw, 24rem" quality={88} />
+          <picture>
+            <source media="(max-width: 60rem)" type="image/webp"
+                    srcset={ticketEstreito.srcSet.attribute} sizes="80vw" />
+            <img src={ticketLargo.src} srcset={ticketLargo.srcSet.attribute} sizes="24rem"
+                 width={858} height={1462} loading="lazy" decoding="async"
+                 alt="Ingresso Lote Zero do Visionários ao Vivo, com Viviane Araújo e Marcos Paulo" />
+          </picture>
         </div>
 
         <div class="lote__side from-r">
-          <div class="lote__head">
+          <div class="lote__head stagger">
             <img class="lote__logo" src="/logo-visionarios-ao-vivo.svg"
                  alt="Visionários ao Vivo" width="196" height="48" />
             <span class="tag">Lote Zero</span>
@@ -439,6 +455,10 @@ const vantagens = [
      sozinha e a marca atrapalharia. */
   .turn { display: none; }
   @media (min-width: 44rem) { .turn { display: inline; } }
+  /* Espelho de .turn: quebra que só vale no celular. */
+  .turn-m { display: inline; }
+  @media (min-width: 44rem) { .turn-m { display: none; } }
+  @media (max-width: 44rem) { .over--metodo .sep { display: none; } }
 
   .cross__side { position: relative; min-width: 0; }
 
@@ -577,15 +597,29 @@ const vantagens = [
      texto cairia em cima dele. Aqui ela sai do fundo e vira faixa abaixo do
      texto, inteira, na proporção original. */
   @media (max-width: 62rem) {
-    .pilares { min-height: 0; display: block; }
-    /* Na proporção original a faixa daria 150px de altura em 390 de largura
-       e os rótulos dos pilares sairiam com 3px. Enquadra só o trecho dos
-       pilares e amplia. */
-    .pilares__plate { position: static; margin-top: clamp(1.5rem, 5vw, 3rem); aspect-ratio: 5 / 4; }
-    .pilares__plate :global(img) { object-position: 64% 46%; }
+    /* A arte do celular já vem enquadrada e com o degradê no topo em #05060F:
+       o fundo da faixa recebe a mesma cor pra a emenda desaparecer. */
+    .pilares {
+      min-height: 0;
+      display: block;
+      padding-top: 40px;
+      background: #05060f;
+    }
+    .pilares__plate {
+      position: static;
+      margin-top: clamp(1.5rem, 5vw, 3rem);
+      aspect-ratio: 980 / 735;
+    }
+    .pilares__plate :global(img) { object-position: center bottom; }
     .method__text { max-width: none; text-align: center; }
     .method__text .over { text-align: center; }
-    .aside { margin-inline: auto; }
+    /* Ícone acima do texto, não ao lado. */
+    .aside {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 0.75rem;
+      margin-inline: auto;
+    }
   }
 
   /* ── Sprint: título centrado e linha do tempo horizontal ── */
@@ -694,7 +728,7 @@ const vantagens = [
   .rail--now b { font-size: 1.6rem; line-height: 1.1; color: var(--gold-lift); }
   /* Só o valor, nunca o ponto: o ponto também é um span, e um seletor
      genérico aqui empurrava ele 4px pra baixo do fio. */
-  .rail li > span:last-child { display: block; margin-top: 0.25rem; font-size: 0.95rem; color: var(--paper); }
+  .rail li > span:last-child { display: block; margin-top: 1px; font-size: 0.95rem; color: var(--paper); }
   /* O último marco é onde a promessa aterrissa: é ele que acende. */
   .rail li.rail--now .rail__dot {
     background: var(--gold-flare);
@@ -709,7 +743,10 @@ const vantagens = [
     .rail {
       grid-template-columns: 1fr;
       gap: 1.35rem;
-      width: 100%;
+      /* Largura do conteúdo e centrada: o fio e os rótulos entram como um
+         bloco só no meio da tela, em vez de encostados na esquerda. */
+      width: fit-content;
+      margin-inline: auto;
       padding-left: 1.9rem;
       text-align: left;
     }
@@ -755,6 +792,12 @@ const vantagens = [
 
   @media (max-width: 62rem) {
     .cast { grid-template-columns: repeat(2, 1fr); }
+  }
+  /* No celular, um por vez: em 2x2 cada card fica com 170px e o nome cravado
+     na arte sai ilegível. */
+  @media (max-width: 46rem) {
+    .cast { grid-template-columns: 1fr; gap: 1rem; }
+    .cast__card { width: min(100%, 17rem); margin-inline: auto; }
   }
 
   /* Nota sob os palestrantes: sem ícone, duas linhas, quebra ditada. */
