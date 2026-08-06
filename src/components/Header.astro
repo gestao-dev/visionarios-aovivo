@@ -109,17 +109,22 @@
 
 <script>
   // 29/10/2026, 09:00 no horário de Brasília.
+  // Um relógio só alimenta todo [data-u] da página: o do topo e o do Lote Zero.
   const alvo = new Date('2026-10-29T09:00:00-03:00').getTime();
-  const el = (u: string) => document.querySelector<HTMLElement>(`.box [data-u="${u}"]`);
-  const campos = { d: el('d'), h: el('h'), m: el('m'), s: el('s') };
+  const campos = (u: string) => document.querySelectorAll<HTMLElement>(`[data-u="${u}"]`);
 
   function tick() {
     const seg = Math.max(0, Math.floor((alvo - Date.now()) / 1000));
     const pad = (n: number) => String(n).padStart(2, '0');
-    if (campos.d) campos.d.textContent = pad(Math.floor(seg / 86400));
-    if (campos.h) campos.h.textContent = pad(Math.floor(seg / 3600) % 24);
-    if (campos.m) campos.m.textContent = pad(Math.floor(seg / 60) % 60);
-    if (campos.s) campos.s.textContent = pad(seg % 60);
+    const valores = {
+      d: pad(Math.floor(seg / 86400)),
+      h: pad(Math.floor(seg / 3600) % 24),
+      m: pad(Math.floor(seg / 60) % 60),
+      s: pad(seg % 60),
+    };
+    for (const [u, v] of Object.entries(valores)) {
+      campos(u).forEach((el) => { el.textContent = v; });
+    }
   }
   tick();
   setInterval(tick, 1000);
