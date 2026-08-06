@@ -16,6 +16,9 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
       </svg>
     </button>
 
+    <img class="sheet__mark" src="/logo-visionarios-ao-vivo.svg"
+         alt="Visionários ao Vivo" width="196" height="48" />
+
     <form id="lead-form" novalidate data-webhook={webhook} data-grupo={grupo}>
       <p class="account account--center">Lista do Lote Zero</p>
       <h2 id="lead-title">Garanta seu lugar na lista</h2>
@@ -44,7 +47,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
         <p class="fault" data-fault-for="telefone" hidden>Informe seu WhatsApp com DDD.</p>
       </div>
 
-      <button class="post" type="submit" data-submit>
+      <button class="cta post" type="submit" data-submit>
         <span data-label>Entrar na lista do Lote Zero</span>
       </button>
 
@@ -59,7 +62,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
         Falta <em>1 passo</em>: entrar no grupo de WhatsApp. É lá que o Lote Zero abre
         primeiro e o bônus é liberado.
       </p>
-      <a class="post" href={grupo} data-grupo-link>
+      <a class="cta post" href={grupo} data-grupo-link>
         Entrar no grupo agora <Icon name="arrow" size={18} />
       </a>
       <p class="fine" data-tick>Abrindo o grupo em 5 s…</p>
@@ -85,11 +88,9 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
     position: relative;
     width: min(100%, 34rem);
     padding: clamp(1.75rem, 4vw, 2.75rem);
-    background:
-      radial-gradient(120% 90% at 50% -10%, #0a1150, transparent 62%),
-      linear-gradient(180deg, #05082a, #01030f);
-    border: 0;
-    border-radius: 3px;
+    background: #000001;
+    border: 1px solid var(--edge-lit);
+    border-radius: 14px;
     box-shadow: 0 40px 90px -20px #000000d9;
     animation: sheet-in 0.5s var(--ease) both;
   }
@@ -124,8 +125,17 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
   }
   .shut:hover { color: var(--gold-lift); border-color: var(--edge-lit); }
 
-  .account--center { justify-content: center; }
-  .account--center::after, .account--center::before { display: none; }
+  .sheet__mark { width: 176px; height: 43px; margin: 0 auto 1.4rem; }
+
+  /* Rótulo do bloco, no mesmo padrão dos .over da página. */
+  .account {
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
 
   h2 {
     margin-block: 0.9rem 0.65rem;
@@ -185,6 +195,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
   }
   .fault--form { text-align: center; margin-top: 0.9rem; }
 
+  /* Mesma ação da página, só ocupando a largura da folha. */
   .post { width: 100%; margin-top: 0.6rem; }
   .post[aria-busy='true'] { opacity: 0.72; cursor: progress; }
 

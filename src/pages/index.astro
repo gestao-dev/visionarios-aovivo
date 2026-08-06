@@ -295,7 +295,7 @@ const vantagens = [
   <!-- ══ Fechamento ══ -->
   <section class="close eyebrow-free" aria-labelledby="t-fim">
     <div class="close__plate" aria-hidden="true">
-      <Image src={fecho} alt="" widths={[960, 1440, 1920]} sizes="100vw" quality={80} />
+      <Image src={fecho} alt="" widths={[960, 1440, 1920]} sizes="100vw" quality={95} />
     </div>
     <span class="glow glow--navy g-center" aria-hidden="true"></span>
     <div class="shell center measure-wide">
@@ -304,9 +304,9 @@ const vantagens = [
         Você pode entrar em 2027 igual.<br />
         <span class="hand">Ou atravessar o muro agora.</span>
       </h2>
-      <p class="sec-lede measure center">
-        Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição do
-        Visionários ao Vivo, pelo menor preço, com bônus exclusivo.
+      <p class="sec-lede close__lede center">
+        Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição<br class="turn" />
+        do Visionários ao Vivo, pelo menor preço, com bônus exclusivo.
       </p>
       <button class="cta cta--wide" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
     </div>
@@ -907,6 +907,8 @@ const vantagens = [
   /* Medida larga o bastante para as duas linhas ditadas caberem inteiras:
      a primeira pede 968px em 64px, a segunda 747px no serifado. */
   .close .measure-wide { max-width: 64rem; }
+  /* Larga o bastante pra quebra ditada cair depois de "edição". */
+  .close__lede { max-width: 52rem; margin-inline: auto; }
   .close #t-fim { text-wrap: nowrap; }
   /* Abaixo disso o contêiner fica menor que os 968px da primeira linha e o
      nowrap passaria por baixo do clip da seção: aí volta a quebrar sozinho. */
