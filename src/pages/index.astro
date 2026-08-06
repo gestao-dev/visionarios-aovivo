@@ -515,17 +515,31 @@ const vantagens = [
   }
 
   /* ── Pilares: a arte é a dobra inteira, o texto ocupa a metade escura ── */
+  /* A altura acompanha a proporção da arte, com teto nos 735px de origem:
+     assim ela nunca é ampliada e o enquadramento dos pilares é o mesmo em
+     qualquer largura. */
   .pilares {
     position: relative;
     isolation: isolate;
     display: grid;
     align-items: center;
-    min-height: clamp(24rem, 38vw, 36rem);
+    min-height: min(51vw, 735px);
   }
   .pilares__plate { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
   .pilares__plate :global(img) {
     width: 100%; height: 100%;
     object-fit: cover; object-position: center;
+  }
+  /* O pé da arte não é preto puro; sem isto a chapa termina num corte seco
+     contra o fundo da página. */
+  .pilares__plate::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 22%;
+    background: linear-gradient(180deg, transparent, var(--ground-deep));
+    pointer-events: none;
   }
   .method { position: relative; z-index: 1; }
   /* Trava a medida antes de onde os pilares começam na arte, pra letra
