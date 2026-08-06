@@ -577,37 +577,38 @@ const vantagens = [
     padding-top: clamp(3rem, 6vw, 5rem);
     text-align: center;
   }
-  /* Refletor: a luz cai de cima no bloco, forte no centro e aberta pra fora. */
+  /* Refletor: foco forte no alto, aberto pra fora, com grão por cima.
+     A intensidade é o ponto — luz fraca vira névoa, não vira holofote. */
   .sprint::before {
     content: '';
     position: absolute;
     z-index: 0;
     top: 0;
     left: 50%;
-    width: min(150%, 78rem);
-    height: clamp(20rem, 34vw, 30rem);
+    width: min(190%, 96rem);
+    height: clamp(26rem, 44vw, 40rem);
     transform: translateX(-50%);
     background:
-      radial-gradient(58% 50% at 50% 4%, #f4edd047 0%, #f4edd000 70%),
-      radial-gradient(96% 78% at 50% 2%, #d7b35630 0%, #d7b35600 66%);
-    /* Sem isto a luz começa numa aresta reta no topo do bloco. */
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 62%, transparent 100%);
-            mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 62%, transparent 100%);
+      radial-gradient(34% 30% at 50% 6%,  #fff6db38 0%, #fff6db00 74%),
+      radial-gradient(58% 52% at 50% 4%,  #f4edd02e 0%, #f4edd000 72%),
+      radial-gradient(100% 86% at 50% 0%, #d7b35624 0%, #d7b35600 70%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 96%);
+            mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 96%);
     pointer-events: none;
   }
-  /* Grão fino, pra luz ter textura em vez de virar mancha lisa. */
+  /* Grão: sem ele a luz fica lisa demais e lê como mancha de CSS. */
   .sprint::after {
     content: '';
     position: absolute;
     z-index: 0;
     inset: 0 0 auto;
-    height: clamp(20rem, 34vw, 30rem);
-    opacity: 0.22;
+    height: clamp(26rem, 44vw, 40rem);
+    opacity: 0.42;
     mix-blend-mode: overlay;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
-    -webkit-mask-image: radial-gradient(70% 58% at 50% 12%, #000 0%, transparent 74%);
-            mask-image: radial-gradient(70% 58% at 50% 12%, #000 0%, transparent 74%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    -webkit-mask-image: radial-gradient(66% 56% at 50% 6%, #000 0%, transparent 76%);
+            mask-image: radial-gradient(66% 56% at 50% 6%, #000 0%, transparent 76%);
   }
   .sprint h3, .sprint .rail { position: relative; z-index: 1; }
   /* Menor que as headlines de seção: aqui é subtítulo de bloco, não título. */
@@ -689,11 +690,11 @@ const vantagens = [
   .cast__card {
     line-height: 0;
     border-radius: 12px;
-    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+    transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
   .cast__card:hover { box-shadow: 0 26px 50px -22px #000000d9; }
   @media (prefers-reduced-motion: no-preference) {
-    .cast__card:hover { transform: translateY(-6px); }
+    .cast__card:hover { transform: translateY(-4px); }
   }
   .cast__card :global(img) {
     width: 100%;
@@ -738,8 +739,8 @@ const vantagens = [
     border-color: #ffffff2e;
     background: linear-gradient(180deg, #ffffff, #ebedf3);
     transition:
-      transform 0.45s var(--ease),
-      box-shadow 0.45s var(--ease),
+      transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
       border-color 0.5s var(--ease);
   }
   /* Os dois de baixo ficam centrados sob os três de cima. */
@@ -763,7 +764,7 @@ const vantagens = [
   }
   .bento li:hover::after { opacity: 1; }
   @media (prefers-reduced-motion: no-preference) {
-    .bento li:hover { transform: translateY(-6px); }
+    .bento li:hover { transform: translateY(-4px); }
   }
 
   .bento p {
