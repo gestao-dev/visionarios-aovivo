@@ -177,11 +177,14 @@ section h2,
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transform: translateY(calc(var(--raise) * -3px));
+  /* `translate` e não `transform`: a entrada por scroll também escreve
+     `transform` neste elemento, e a regra dela tem especificidade maior.
+     As duas propriedades se somam, então o levantar do hover sobrevive. */
+  translate: 0 calc(var(--raise) * -3px);
   box-shadow:
     0 calc(10px + var(--raise) * 8px) calc(30px + var(--raise) * 20px) #c8a45c33,
     0 6px 18px #0000005c;
-  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease), filter 0.45s var(--ease);
+  transition: translate 0.45s var(--ease), box-shadow 0.45s var(--ease), filter 0.45s var(--ease);
 }
 .cta:hover { --raise: 1; filter: brightness(1.05) saturate(1.04); }
 .cta:active { --raise: 0; filter: brightness(0.96); }

@@ -805,11 +805,11 @@ const vantagens = [
   .cast__card {
     line-height: 0;
     border-radius: 12px;
-    transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: translate 0.7s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
   .cast__card:hover { box-shadow: 0 26px 50px -22px #000000d9; }
   @media (prefers-reduced-motion: no-preference) {
-    .cast__card:hover { transform: translateY(-4px); }
+    .cast__card:hover { translate: 0 -4px; }
   }
   .cast__card :global(img) {
     width: 100%;
@@ -860,7 +860,7 @@ const vantagens = [
     border-color: #ffffff2e;
     background: linear-gradient(180deg, #ffffff, #ebedf3);
     transition:
-      transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+      translate 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
       box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
       border-color 0.5s var(--ease);
   }
@@ -885,7 +885,7 @@ const vantagens = [
   }
   .bento li:hover::after { opacity: 1; }
   @media (prefers-reduced-motion: no-preference) {
-    .bento li:hover { transform: translateY(-4px); }
+    .bento li:hover { translate: 0 -4px; }
   }
 
   .bento p {
