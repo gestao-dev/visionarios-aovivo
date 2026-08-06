@@ -112,6 +112,14 @@ a { color: var(--gold-lift); text-underline-offset: 0.25em; }
 
 section { padding-block: var(--rhythm); position: relative; overflow: clip; }
 
+/* Celular: 20px de respiro nas laterais e 40px de cada lado entre seções. */
+@media (max-width: 30rem) {
+  :root {
+    --gutter: 20px;
+    --rhythm: 40px;
+  }
+}
+
 /* ── Luz: o halo que dá profundidade ao fundo escuro ── */
 .glow {
   position: absolute;

@@ -69,21 +69,56 @@ const {
       const raiz = document.documentElement;
       const alvos = document.querySelectorAll<HTMLElement>('.rise, .fade, .from-l, .from-r, .zoom, .stagger');
 
-      if (raiz.classList.contains('reveal-on') && 'IntersectionObserver' in window && alvos.length) {
+      if (raiz.classList.contains('reveal-on') && alvos.length) {
         raiz.dataset.revealPronto = '1';
-        const olho = new IntersectionObserver(
-          (entradas) => {
-            for (const e of entradas) {
-              if (!e.isIntersecting) continue;
-              e.target.classList.add('is-in');
-              olho.unobserve(e.target);
+        const restantes = new Set<HTMLElement>(Array.from(alvos));
+
+        // Teste de posição, não de evento: quem já passou do gatilho entra,
+        // mesmo que a rolagem tenha sido um salto. Um observador de interseção
+        // pode não amostrar o quadro em que o elemento cruzou a tela, e aí ele
+        // ficaria escondido pra sempre.
+        function passar() {
+          // No fim da página não sobra rolagem pra cruzar o gatilho: o que
+          // ainda estiver na última faixa da tela entra de uma vez.
+          const noFim =
+            window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+          // Gatilho no pé da tela, não antes dele: com 0.9 sobrava uma faixa
+          // morta de 10% onde o que parasse ali nunca era revelado, que era o
+          // caso do rodapé e do fecho quando a página acaba.
+          const gatilho = window.innerHeight;
+          for (const el of Array.from(restantes)) {
+            if (noFim || el.getBoundingClientRect().top < gatilho) {
+              el.classList.add('is-in');
+              restantes.delete(el);
             }
-          },
-          // Dispara um pouco antes de encostar no pé da tela, pra o elemento
-          // chegar já em movimento em vez de aparecer parado e depois animar.
-          { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
-        );
-        alvos.forEach((el) => olho.observe(el));
+          }
+          if (restantes.size === 0) {
+            removeEventListener('scroll', agendar);
+            removeEventListener('resize', agendar);
+            observadorLayout?.disconnect();
+          }
+        }
+
+        let pendente = false;
+        function agendar() {
+          if (pendente) return;
+          pendente = true;
+          requestAnimationFrame(() => {
+            pendente = false;
+            passar();
+          });
+        }
+
+        // A página cresce enquanto as imagens chegam. Sem isto, quem estava
+        // fora do gatilho quando a altura era menor nunca é reavaliado.
+        const observadorLayout =
+          'ResizeObserver' in window ? new ResizeObserver(agendar) : null;
+        observadorLayout?.observe(document.body);
+
+        passar();
+        addEventListener('scroll', agendar, { passive: true });
+        addEventListener('resize', agendar, { passive: true });
+        addEventListener('load', agendar);
       } else {
         raiz.classList.remove('reveal-on');
       }

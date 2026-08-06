@@ -68,7 +68,7 @@ const vantagens = [
     <span class="glow glow--gold hero__g1" aria-hidden="true"></span>
     <span class="glow glow--navy hero__g2" aria-hidden="true"></span>
 
-    <div class="shell hero__in">
+    <div class="shell hero__in stagger">
       <span class="badge">
         <!-- Ponto vivo do arquivo do cliente: halo translúcido e miolo cheio. -->
         <svg class="badge__mark" width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true" focusable="false">
@@ -114,7 +114,7 @@ const vantagens = [
     <div class="shell cross">
       <div class="cross__side from-l">
         <p class="cross__head"><Icon name="wall" size={16} /> <span class="grad">Do lado de cá</span></p>
-        <ul>{daqui.map((t) => <li>{t}</li>)}</ul>
+        <ul class="stagger">{daqui.map((t) => <li>{t}</li>)}</ul>
       </div>
 
       <div class="cross__seam zoom" aria-hidden="true">
@@ -123,7 +123,7 @@ const vantagens = [
 
       <div class="cross__side cross__side--to from-r">
         <p class="cross__head cross__head--to"><Icon name="key" size={16} /> <span class="grad">Do outro lado</span></p>
-        <ul>{dela.map((t) => <li>{t}</li>)}</ul>
+        <ul class="stagger">{dela.map((t) => <li>{t}</li>)}</ul>
       </div>
     </div>
   </section>
@@ -156,14 +156,14 @@ const vantagens = [
 
       <!-- Depois do texto no documento: no desktop ela é absoluta e o lugar
            não importa; no celular ela vira faixa e cai embaixo, onde deve. -->
-      <div class="pilares__plate" aria-hidden="true">
+      <div class="pilares__plate fade" aria-hidden="true">
         <Image src={pilares} alt="" widths={[960, 1440, 1920]} sizes="100vw" quality={92} />
       </div>
     </div>
 
     <div class="shell">
       <div class="sprint rise">
-        <h3>
+        <h3 class="rise">
           Você sai com um<br class="turn" />
           <span class="hand">Sprint de 60 dias</span> pra chegar<br class="turn" />
           em 2027 estruturado
@@ -249,13 +249,13 @@ const vantagens = [
             <span class="tag">Lote Zero</span>
           </div>
 
-          <ul class="perks">
+          <ul class="perks stagger">
             {vantagens.map((v) => (
               <li><span class="medal medal--sm"><Icon name={v.icon} size={19} /></span><span>{v.texto}</span></li>
             ))}
           </ul>
 
-          <div class="lote__act">
+          <div class="lote__act rise">
             <button class="cta cta--wide" type="button" data-open-lead>
               Quero o Lote Zero + bônus <Icon name="arrow" size={18} />
             </button>
@@ -291,12 +291,12 @@ const vantagens = [
         Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição<br class="turn" />
         do Visionários ao Vivo, pelo menor preço, com bônus exclusivo.
       </p>
-      <button class="cta cta--wide" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
+      <button class="cta cta--wide rise" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
     </div>
   </section>
 
   <footer class="foot">
-    <div class="shell">Visionários ao Vivo 2026 · Contadores Visionários</div>
+    <div class="shell fade">Visionários ao Vivo 2026 · Contadores Visionários</div>
   </footer>
   </div>
 
@@ -679,10 +679,29 @@ const vantagens = [
   }
   .rail--now > span:last-child { color: var(--gold-lift); }
 
+  /* No celular a linha do tempo desce: uma coluna, fio vertical, marcos
+     descendo por ele. Em duas colunas o fio ligaria pontos que não são
+     vizinhos na sequência, o que é pior do que não ter fio. */
   @media (max-width: 46rem) {
-    .rail { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; }
-    /* Em duas colunas o fio ligaria pontos de fileiras diferentes. */
-    .rail::before { display: none; }
+    .rail {
+      grid-template-columns: 1fr;
+      gap: 1.35rem;
+      width: min(100%, 22rem);
+      padding-left: 1.9rem;
+      text-align: left;
+    }
+    .rail::before {
+      top: 0.55em;
+      bottom: 0.55em;
+      left: 5px;
+      right: auto;
+      width: 1px;
+      height: auto;
+      background: linear-gradient(180deg, #c8a45c40, var(--gold-lift));
+    }
+    .rail li { padding-top: 0; }
+    .rail__dot { top: 0.42em; left: -1.9rem; margin-left: 0; }
+    .rail--now b { font-size: 1.4rem; }
   }
 
   /* ── Elenco: cada card é uma peça fechada (nó 2742:6835) ── */
