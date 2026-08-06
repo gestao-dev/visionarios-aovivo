@@ -103,25 +103,25 @@ const vantagens = [
   <section class="eyebrow-free" aria-labelledby="t-muro">
     <span class="glow glow--navy g-left" aria-hidden="true"></span>
     <div class="shell center measure-wide">
-      <p class="over">Contador comum × Contador visionário</p>
-      <h2 id="t-muro">Existe um muro <span class="grad">entre você e o escritório</span> que você queria ter.</h2>
-      <p class="sec-lede measure center">
+      <p class="over fade">Contador comum × Contador visionário</p>
+      <h2 id="t-muro" class="rise">Existe um muro <span class="grad">entre você e o escritório</span> que você queria ter.</h2>
+      <p class="sec-lede measure center rise">
         A diferença entre os dois lados nunca foi técnica: é visão.<br class="turn" />
         O evento é o portal pra atravessar.
       </p>
     </div>
 
     <div class="shell cross">
-      <div class="cross__side">
+      <div class="cross__side from-l">
         <p class="cross__head"><Icon name="wall" size={16} /> <span class="grad">Do lado de cá</span></p>
         <ul>{daqui.map((t) => <li>{t}</li>)}</ul>
       </div>
 
-      <div class="cross__seam" aria-hidden="true">
+      <div class="cross__seam zoom" aria-hidden="true">
         <span class="cross__gate"><Icon name="arrow" size={20} /></span>
       </div>
 
-      <div class="cross__side cross__side--to">
+      <div class="cross__side cross__side--to from-r">
         <p class="cross__head cross__head--to"><Icon name="key" size={16} /> <span class="grad">Do outro lado</span></p>
         <ul>{dela.map((t) => <li>{t}</li>)}</ul>
       </div>
@@ -136,7 +136,7 @@ const vantagens = [
          esquerda, que no arquivo é preta de propósito. -->
     <div class="pilares">
       <div class="shell method">
-        <div class="method__text">
+        <div class="method__text from-l">
           <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
           <h2 id="t-metodo" class="h-lg">
             2 dias. 6 meses<br class="turn" />
@@ -162,14 +162,14 @@ const vantagens = [
     </div>
 
     <div class="shell">
-      <div class="sprint">
+      <div class="sprint rise">
         <h3>
           Você sai com um<br class="turn" />
           <span class="hand">Sprint de 60 dias</span> pra chegar<br class="turn" />
           em 2027 estruturado
         </h3>
 
-        <ol class="rail">
+        <ol class="rail stagger">
           {sprint.map((e, i) => (
             <li class={i === sprint.length - 1 ? 'rail--now' : ''}>
               <span class="rail__dot" aria-hidden="true"></span>
@@ -186,15 +186,15 @@ const vantagens = [
   <section aria-labelledby="t-quem">
     <span class="glow glow--gold g-left" aria-hidden="true"></span>
     <div class="shell center measure-wide">
-      <p class="over">Quem sobe ao palco</p>
-      <h2 id="t-quem" class="grad h-lg">Os palestrantes</h2>
-      <p class="sec-lede measure center">
+      <p class="over fade">Quem sobe ao palco</p>
+      <h2 id="t-quem" class="grad h-lg rise">Os palestrantes</h2>
+      <p class="sec-lede measure center rise">
         Viviane e Marcos conduzem o método. E, a cada semana, um novo nome de peso do
         mercado contábil é revelado.
       </p>
     </div>
 
-    <ul class="shell cast">
+    <ul class="shell cast stagger">
       {elenco.map((e) => (
         <li class="cast__card">
           <Image src={e.img} alt={e.alt} widths={[320, 619]}
@@ -204,7 +204,7 @@ const vantagens = [
     </ul>
 
     <div class="shell">
-      <p class="aside aside--note">
+      <p class="aside aside--note fade">
         Os convidados são revelados um a um, sempre primeiro pra quem<br class="turn" />
         está na lista do Lote Zero.
       </p>
@@ -214,10 +214,10 @@ const vantagens = [
   <!-- ══ Qualificação ══ -->
   <section aria-labelledby="t-pra">
     <div class="shell center measure-wide">
-      <p class="over">Antes de entrar</p>
-      <h2 id="t-pra" class="h-lg">É pra você se…</h2>
+      <p class="over fade">Antes de entrar</p>
+      <h2 id="t-pra" class="h-lg rise">É pra você se…</h2>
     </div>
-    <ul class="shell bento">
+    <ul class="shell bento stagger">
       {criterios.map((c) => (
         <li class="card">
           <span class="medal medal--sm"><Icon name="check" size={18} /></span>
@@ -231,18 +231,18 @@ const vantagens = [
   <section class="eyebrow-free" aria-labelledby="t-vant">
     <span class="glow glow--gold g-center" aria-hidden="true"></span>
     <div class="shell center measure-wide">
-      <p class="over">Por que entrar agora</p>
-      <h2 id="t-vant">A vantagem de estar na lista</h2>
+      <p class="over fade">Por que entrar agora</p>
+      <h2 id="t-vant" class="rise">A vantagem de estar na lista</h2>
     </div>
 
     <div class="shell lote">
       <div class="card lote__frame rise">
-        <div class="lote__art">
+        <div class="lote__art from-l">
           <Image src={ticket} alt="Ingresso Lote Zero do Visionários ao Vivo, com Viviane Araújo e Marcos Paulo"
                  widths={[430, 858]} sizes="(max-width: 60rem) 80vw, 24rem" quality={88} />
         </div>
 
-        <div class="lote__side">
+        <div class="lote__side from-r">
           <div class="lote__head">
             <img class="lote__logo" src="/logo-visionarios-ao-vivo.svg"
                  alt="Visionários ao Vivo" width="196" height="48" />
@@ -282,12 +282,12 @@ const vantagens = [
     </div>
     <span class="glow glow--navy g-center" aria-hidden="true"></span>
     <div class="shell center measure-wide">
-      <p class="over">A decisão</p>
-      <h2 id="t-fim">
+      <p class="over fade">A decisão</p>
+      <h2 id="t-fim" class="rise">
         Você pode entrar em 2027 igual.<br />
         <span class="hand">Ou atravessar o muro agora.</span>
       </h2>
-      <p class="sec-lede close__lede center">
+      <p class="sec-lede close__lede center rise">
         Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição<br class="turn" />
         do Visionários ao Vivo, pelo menor preço, com bônus exclusivo.
       </p>
@@ -531,16 +531,11 @@ const vantagens = [
     width: 100%; height: 100%;
     object-fit: cover; object-position: center;
   }
-  /* O pé da arte não é preto puro; sem isto a chapa termina num corte seco
-     contra o fundo da página. */
-  .pilares__plate::after {
-    content: '';
-    position: absolute;
-    inset-inline: 0;
-    bottom: 0;
-    height: 22%;
-    background: linear-gradient(180deg, transparent, var(--ground-deep));
-    pointer-events: none;
+  /* Filetes de 4px no gradiente da marca fecham a faixa em cima e embaixo:
+     a borda declara o limite, então o corte lê como moldura e não como erro. */
+  .pilares {
+    border-block: 4px solid transparent;
+    border-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%) 1;
   }
   .method { position: relative; z-index: 1; }
   /* Trava a medida antes de onde os pilares começam na arte, pra letra
@@ -576,10 +571,45 @@ const vantagens = [
   /* ── Sprint: título centrado e linha do tempo horizontal ── */
   .sprint {
     position: relative;
+    isolation: isolate;
     width: min(100%, 62.5rem);
     margin: clamp(4rem, 8vw, 6.5rem) auto 0;
+    padding-top: clamp(3rem, 6vw, 5rem);
     text-align: center;
   }
+  /* Refletor: a luz cai de cima no bloco, forte no centro e aberta pra fora. */
+  .sprint::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 50%;
+    width: min(150%, 78rem);
+    height: clamp(20rem, 34vw, 30rem);
+    transform: translateX(-50%);
+    background:
+      radial-gradient(58% 50% at 50% 4%, #f4edd047 0%, #f4edd000 70%),
+      radial-gradient(96% 78% at 50% 2%, #d7b35630 0%, #d7b35600 66%);
+    /* Sem isto a luz começa numa aresta reta no topo do bloco. */
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 62%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 62%, transparent 100%);
+    pointer-events: none;
+  }
+  /* Grão fino, pra luz ter textura em vez de virar mancha lisa. */
+  .sprint::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: 0 0 auto;
+    height: clamp(20rem, 34vw, 30rem);
+    opacity: 0.22;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
+    -webkit-mask-image: radial-gradient(70% 58% at 50% 12%, #000 0%, transparent 74%);
+            mask-image: radial-gradient(70% 58% at 50% 12%, #000 0%, transparent 74%);
+  }
+  .sprint h3, .sprint .rail { position: relative; z-index: 1; }
   /* Menor que as headlines de seção: aqui é subtítulo de bloco, não título. */
   /* Quebras ditadas: sem balance, que redistribuiria as linhas por conta. */
   .sprint h3 {
@@ -656,7 +686,15 @@ const vantagens = [
     margin-top: clamp(1.7rem, 3.4vw, 2.6rem);
   }
   /* Sem borda: o PNG já traz o canto arredondado e a moldura desenhada. */
-  .cast__card { line-height: 0; }
+  .cast__card {
+    line-height: 0;
+    border-radius: 12px;
+    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  }
+  .cast__card:hover { box-shadow: 0 26px 50px -22px #000000d9; }
+  @media (prefers-reduced-motion: no-preference) {
+    .cast__card:hover { transform: translateY(-6px); }
+  }
   .cast__card :global(img) {
     width: 100%;
     height: auto;
@@ -742,7 +780,10 @@ const vantagens = [
     position: relative;
     z-index: 1;
     background: linear-gradient(160deg, var(--gold-flare), var(--gold) 62%, #c39f45);
-    box-shadow: inset 0 1px 0 #fffdf5, 0 8px 18px -10px #8a6c2e80;
+    box-shadow:
+      inset 0 1px 0 #fffdf5,
+      0 6px 12px -4px #8a6c2e6b,
+      0 12px 24px -10px #6b5223a6;
     color: var(--navy);
   }
   .bento .medal :global(svg) { stroke-width: 2.2; }
