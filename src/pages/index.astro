@@ -12,6 +12,7 @@ import cardMarcos from '../assets/card-marcos.png';
 import cardConvidado1 from '../assets/card-convidado-1.png';
 import cardConvidado2 from '../assets/card-convidado-2.png';
 import ticket from '../assets/ticket-lote-zero.png';
+import fecho from '../assets/fecho.png';
 
 const daqui = [
   'Faturamento travado no teto',
@@ -287,10 +288,16 @@ const vantagens = [
 
   <!-- ══ Fechamento ══ -->
   <section class="close eyebrow-free" aria-labelledby="t-fim">
+    <div class="close__plate" aria-hidden="true">
+      <Image src={fecho} alt="" widths={[960, 1440, 1920]} sizes="100vw" quality={80} />
+    </div>
     <span class="glow glow--navy g-center" aria-hidden="true"></span>
     <div class="shell center measure-wide">
       <p class="over">A decisão</p>
-      <h2 id="t-fim">Você pode entrar em 2027 igual.<br />Ou <span class="hand">atravessar o muro</span> agora.</h2>
+      <h2 id="t-fim">
+        Você pode entrar em 2027 igual.<br />
+        <span class="hand">Ou atravessar o muro agora.</span>
+      </h2>
       <p class="sec-lede measure center">
         Entre na lista do Lote Zero e seja o primeiro a garantir sua vaga na 1ª edição do
         Visionários ao Vivo, pelo menor preço, com bônus exclusivo.
@@ -868,7 +875,27 @@ const vantagens = [
   }
 
   /* ── Fechamento ── */
-  .close { padding-bottom: clamp(5.5rem, 11vw, 9rem); }
+  .close {
+    padding-bottom: clamp(5.5rem, 11vw, 9rem);
+    isolation: isolate;
+    /* O traçado de 4px no topo, no gradiente da marca. */
+    border-top: 4px solid transparent;
+    border-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%) 1;
+  }
+  /* A foto entra como chapa de fundo: ela já vem escurecida no arquivo.
+     Camadas explícitas e positivas: z-index negativo aqui pintaria por
+     baixo do próprio bloco e sumiria. */
+  .close__plate { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .close__plate :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .close .glow { z-index: 1; }
+  .close .shell { position: relative; z-index: 2; }
+  /* Medida larga o bastante para as duas linhas ditadas caberem inteiras:
+     a primeira pede 968px em 64px, a segunda 747px no serifado. */
+  .close .measure-wide { max-width: 64rem; }
+  .close #t-fim { text-wrap: nowrap; }
+  /* Abaixo disso o contêiner fica menor que os 968px da primeira linha e o
+     nowrap passaria por baixo do clip da seção: aí volta a quebrar sozinho. */
+  @media (max-width: 72rem) { .close #t-fim { text-wrap: balance; } }
   .close .cta { margin-top: 2.6rem; }
 
   /* Halos de seção */
