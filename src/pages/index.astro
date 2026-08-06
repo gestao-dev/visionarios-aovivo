@@ -179,7 +179,8 @@ const vantagens = [
         <div class="escada">
           <ol class="escada__degraus stagger">
             {niveis.map((n, i) => (
-              <li style={`--alt:${34 + i * 22}%`}>
+              <li style={`--i:${i}`}>
+                <p class="degrau__rot">{n.nome}</p>
                 <div class="degrau">
                   <span class="degrau__face" aria-hidden="true"></span>
                   <span class="degrau__n">{i + 1}</span>
@@ -188,9 +189,6 @@ const vantagens = [
               </li>
             ))}
           </ol>
-          <ul class="escada__rotulos">
-            {niveis.map((n) => <li>{n.nome}</li>)}
-          </ul>
         </div>
       </div>
     </div>
@@ -601,6 +599,12 @@ const vantagens = [
   .escada {
     --piso: clamp(12rem, 21vw, 17.5rem);
     --vao: clamp(6px, 1vw, 12px);
+    /* A altura de cada degrau sai do índice: base mais um passo por nível.
+       Como são variáveis, o celular pode usar outra escala sem tocar no HTML. */
+    --base: 34%;
+    --passo: 22%;
+    --rot: 3.4rem;
+    padding-bottom: var(--rot);
   }
   .escada__degraus {
     position: relative;
@@ -613,7 +617,19 @@ const vantagens = [
     align-items: stretch;
     height: var(--piso);
   }
-  .escada__degraus > li { display: flex; align-items: flex-end; }
+  .escada__degraus > li { position: relative; display: flex; align-items: flex-end; }
+  /* Fora do fluxo: no desktop desce pro pé da escada, no celular sobe pro
+     alto do próprio degrau. Mesmo texto, dois lugares. */
+  .degrau__rot {
+    position: absolute;
+    inset-inline: calc(var(--vao) / -2);
+    top: calc(100% + 0.85rem);
+    text-align: center;
+    font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--paper);
+  }
   /* O chão em que a escada assenta. */
   .escada__degraus::after {
     content: '';
@@ -627,7 +643,7 @@ const vantagens = [
   .degrau {
     position: relative;
     width: 100%;
-    height: var(--alt);
+    height: calc(var(--base) + var(--i) * var(--passo));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -675,20 +691,6 @@ const vantagens = [
     .escada__degraus li:hover .degrau { translate: 0 -4px; }
   }
 
-  .escada__rotulos {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--vao);
-    margin-top: 0.9rem;
-  }
-  .escada__rotulos li {
-    text-align: center;
-    font-size: clamp(0.7rem, 1.4vw, 0.9rem);
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--paper);
-  }
-
   /* Entrada: os degraus sobem do chão, um depois do outro. É a copy em
      movimento, "uma construída sobre a outra". A cascata padrão mexe no
      transform dos filhos, então aqui ela é neutralizada: quem cresce é a
@@ -727,8 +729,26 @@ const vantagens = [
       gap: 0.75rem;
       margin-inline: auto;
     }
-    .escada { --piso: clamp(10rem, 34vw, 14rem); }
-    .escada__rotulos li { font-size: 0.68rem; }
+    /* A escada vem primeiro: é a imagem da dobra, e o texto explica depois. */
+    .escada {
+      order: -1;
+      --piso: clamp(11rem, 42vw, 15rem);
+      /* Escala mais alta: no celular o degrau 1 na escala do desktop não
+         comportava número e ícone, e o ícone escapava do bloco. */
+      --base: 52%;
+      --passo: 16%;
+      --rot: 0;
+      padding-top: 3.4rem;
+      padding-bottom: 0;
+    }
+    /* Ancorado na altura do degrau, não do li: o li ocupa a fileira inteira,
+       então 100% deixaria os quatro rótulos na mesma linha em vez de subirem
+       junto com os degraus. */
+    .degrau__rot {
+      top: auto;
+      bottom: calc(var(--base) + var(--i) * var(--passo) + 0.5rem);
+      font-size: 0.68rem;
+    }
   }
 
   /* ── Sprint: título centrado e linha do tempo horizontal ── */
