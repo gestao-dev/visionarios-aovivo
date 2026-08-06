@@ -205,9 +205,9 @@ const vantagens = [
     </ul>
 
     <div class="shell">
-      <p class="aside aside--center">
-        <Icon name="clapper" size={17} /> Os convidados são revelados um a um, sempre primeiro
-        pra quem está na lista do Lote Zero.
+      <p class="aside aside--note">
+        Os convidados são revelados um a um, sempre primeiro pra quem<br class="turn" />
+        está na lista do Lote Zero.
       </p>
     </div>
   </section>
@@ -221,7 +221,7 @@ const vantagens = [
     <ul class="shell bento">
       {criterios.map((c) => (
         <li class="card">
-          <span class="medal medal--sm"><Icon name="check" size={18} /></span>
+          <span class="medal medal--sm"><Icon name="check" size={22} /></span>
           <p>{c}</p>
         </li>
       ))}
@@ -652,10 +652,12 @@ const vantagens = [
     .cast { grid-template-columns: repeat(2, 1fr); }
   }
 
-  .aside--center { margin-inline: auto; }
-
-  @media (max-width: 62rem) {
-    .cast { grid-template-columns: repeat(2, 1fr); }
+  /* Nota sob os palestrantes: sem ícone, duas linhas, quebra ditada. */
+  .aside--note {
+    display: block;
+    max-width: none;
+    margin-inline: auto;
+    text-align: center;
   }
 
   /* ── Qualificação: cinco quadrados iguais, 3 + 2 ── */
@@ -666,14 +668,21 @@ const vantagens = [
     width: min(100%, 60rem);
     margin: clamp(3rem, 6vw, 4.5rem) auto 0;
   }
+  /* Fundo: o gradiente dourado da marca a 5% sobre a base escura. */
   .bento li {
     position: relative;
     grid-column: span 2;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: clamp(1.1rem, 2.2vw, 1.5rem);
-    padding: clamp(1.4rem, 2.6vw, 1.9rem);
+    padding: clamp(1.6rem, 3vw, 2.2rem) clamp(1.4rem, 2.6vw, 1.9rem);
     overflow: hidden;
+    background:
+      linear-gradient(140deg, #d7b3560d 0%, #f4edd00d 52%, #f4edd000 100%),
+      linear-gradient(180deg, #080b23, #04050f);
     transition:
       transform 0.45s var(--ease),
       box-shadow 0.45s var(--ease),
@@ -703,14 +712,31 @@ const vantagens = [
     .bento li:hover { transform: translateY(-6px); }
   }
 
+  /* Texto em ouro escovado, o mesmo gradiente do botão. */
   .bento p {
     position: relative;
     z-index: 1;
-    font-size: clamp(0.98rem, 1.9vw, 1.08rem);
-    line-height: 1.45;
-    color: var(--paper-dim);
+    font-size: clamp(1rem, 1.9vw, 1.12rem);
+    font-weight: 700;
+    line-height: 1.42;
+    letter-spacing: -0.012em;
+    background-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
   }
-  .bento .medal { position: relative; z-index: 1; }
+  /* Placa de ouro cheia, ícone escuro por dentro. */
+  .bento .medal {
+    position: relative;
+    z-index: 1;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 14px;
+    background: linear-gradient(150deg, var(--gold-flare), var(--gold) 58%, var(--gold-deep));
+    box-shadow: inset 0 1px 0 #fffaf0a6, 0 10px 22px -12px #00000099;
+    color: #0b0d1e;
+  }
+  .bento .medal :global(svg) { stroke-width: 1.8; }
 
   @media (max-width: 62rem) {
     .bento { grid-template-columns: repeat(2, 1fr); }
