@@ -16,8 +16,11 @@
   --navy:        #171a3b;   /* 01 - AZUL MARINHO, do arquivo do cliente */
   --navy-glow:   #0a1264;
 
+  /* Texto corrido é sempre --paper. O antigo --paper-dim (#c3c7d8) foi
+     aposentado: apoio em cinza-azulado deixava o corpo do texto lavado
+     sobre o fundo escuro. --paper-faint fica só para metadado curto
+     (rótulo, legenda, nota), nunca para parágrafo. */
   --paper:       #f0f0f0;
-  --paper-dim:   #c3c7d8;
   --paper-faint: #8990a8;
 
   --gold-deep:   #8a6c2e;
@@ -140,7 +143,7 @@ section h2,
 }
 .sec-lede {
   margin-top: 1.25rem;
-  color: var(--paper-dim);
+  color: var(--paper);
   font-size: clamp(1rem, 2.2vw, 1.12rem);
 }
 

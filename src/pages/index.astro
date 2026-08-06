@@ -221,7 +221,7 @@ const vantagens = [
     <ul class="shell bento">
       {criterios.map((c) => (
         <li class="card">
-          <span class="medal medal--sm"><Icon name="check" size={22} /></span>
+          <span class="medal medal--sm"><Icon name="check" size={18} /></span>
           <p>{c}</p>
         </li>
       ))}
@@ -300,8 +300,9 @@ const vantagens = [
 
   /* Linha curta acima do título: centralizada e destacada como rótulo do bloco,
      não empilhada como rótulo de formulário. */
+  /* Proximidade: o rótulo pertence ao título, então encosta nele. */
   .over {
-    margin-bottom: 1.1rem;
+    margin-bottom: 0.77rem;
     font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -473,7 +474,7 @@ const vantagens = [
   }
   .method__lede {
     margin-top: 1.35rem;
-    color: var(--paper-dim);
+    color: var(--paper);
     font-size: clamp(1rem, 2.2vw, 1.12rem);
     line-height: 1.5;
   }
@@ -632,15 +633,11 @@ const vantagens = [
   .cast {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: clamp(0.85rem, 1.8vw, 1.6rem);
-    margin-top: clamp(3rem, 6vw, 4.5rem);
+    gap: clamp(0.42rem, 0.9vw, 0.8rem);
+    margin-top: clamp(1.7rem, 3.4vw, 2.6rem);
   }
-  .cast__card {
-    border: 1px solid var(--edge-lit);
-    border-radius: 12px;
-    overflow: hidden;
-    line-height: 0;
-  }
+  /* Sem borda: o PNG já traz o canto arredondado e a moldura desenhada. */
+  .cast__card { line-height: 0; }
   .cast__card :global(img) {
     width: 100%;
     height: auto;
@@ -664,7 +661,7 @@ const vantagens = [
   .bento {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: clamp(0.85rem, 1.8vw, 1.4rem);
+    gap: clamp(0.42rem, 0.9vw, 0.7rem);
     width: min(100%, 60rem);
     margin: clamp(3rem, 6vw, 4.5rem) auto 0;
   }
@@ -712,7 +709,6 @@ const vantagens = [
     .bento li:hover { transform: translateY(-6px); }
   }
 
-  /* Texto em ouro escovado, o mesmo gradiente do botão. */
   .bento p {
     position: relative;
     z-index: 1;
@@ -720,23 +716,9 @@ const vantagens = [
     font-weight: 700;
     line-height: 1.42;
     letter-spacing: -0.012em;
-    background-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%);
-    -webkit-background-clip: text;
-            background-clip: text;
-    color: transparent;
+    color: var(--paper);
   }
-  /* Placa de ouro cheia, ícone escuro por dentro. */
-  .bento .medal {
-    position: relative;
-    z-index: 1;
-    width: 3.4rem;
-    height: 3.4rem;
-    border-radius: 14px;
-    background: linear-gradient(150deg, var(--gold-flare), var(--gold) 58%, var(--gold-deep));
-    box-shadow: inset 0 1px 0 #fffaf0a6, 0 10px 22px -12px #00000099;
-    color: #0b0d1e;
-  }
-  .bento .medal :global(svg) { stroke-width: 1.8; }
+  .bento .medal { position: relative; z-index: 1; }
 
   @media (max-width: 62rem) {
     .bento { grid-template-columns: repeat(2, 1fr); }
@@ -759,7 +741,7 @@ const vantagens = [
   .lote__when strong { font-size: 1.7rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--gold-lift); }
   .lote__scope { margin-top: 0.6rem; color: var(--paper-faint); font-size: 0.9rem; }
   .perks { margin-top: 2.2rem; display: grid; gap: 1.35rem; }
-  .perks li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; color: var(--paper-dim); }
+  .perks li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; color: var(--paper); }
   .perks li:first-child { color: var(--paper); }
   .medal--sm { width: 2.4rem; height: 2.4rem; border-radius: 10px; }
   .lote__act { margin-top: 2.6rem; text-align: center; }
