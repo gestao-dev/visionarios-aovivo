@@ -25,10 +25,10 @@ const ticketEstreito = await getImage({ src: ticketMobile, widths: [430, 700, 10
 
 // A escada: cada degrau é mais alto que o anterior, e a altura vem do índice.
 const niveis = [
-  { icon: 'mind',  nome: 'Mentalidade & Modelo' },
-  { icon: 'users', nome: 'Equipe & Estrutura' },
-  { icon: 'cpu',   nome: 'Sistemas, Tech & IA' },
-  { icon: 'chart', nome: 'Receita & Faturamento' },
+  { icon: 'mind',  nome: 'Mentalidade e Modelo' },
+  { icon: 'users', nome: 'Equipe e Estrutura' },
+  { icon: 'cpu',   nome: 'Sistemas, Tech e IA' },
+  { icon: 'chart', nome: 'Receita e Faturamento' },
 ];
 
 const daqui = [
@@ -569,7 +569,7 @@ const vantagens = [
   /* ── Método: texto à esquerda, a escada dos 4 níveis à direita ── */
   .pilares {
     position: relative;
-    padding-block: clamp(2.5rem, 5vw, 4rem);
+    padding-block: clamp(4rem, 8vw, 6.5rem);
     border-block: 4px solid transparent;
     border-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%) 1;
   }
@@ -598,15 +598,15 @@ const vantagens = [
      Quatro degraus, cada um mais alto que o anterior, encostados de modo que
      leiam como uma escada e não como quatro barras soltas. O fio de luz no
      topo de cada um é que separa um do outro. */
-  .escada { --piso: clamp(12rem, 21vw, 17.5rem); }
+  .escada {
+    --piso: clamp(12rem, 21vw, 17.5rem);
+    --vao: clamp(6px, 1vw, 12px);
+  }
   .escada__degraus {
     position: relative;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    /* Encostados: com vão entre eles isto vira gráfico de barras. Colados, o
-       fio de luz no topo de cada um é que marca onde um acaba e o outro
-       começa, e o conjunto lê como escada. */
-    gap: 0;
+    gap: var(--vao);
     /* stretch e não end: com end o li encolhe até o conteúdo e a altura em
        porcentagem do degrau não tem contra o que resolver. O li ocupa a
        fileira inteira e o degrau assenta no pé dele. */
@@ -644,11 +644,13 @@ const vantagens = [
     inset: 0;
     z-index: 0;
     border-radius: 6px 6px 0 0;
-    background: linear-gradient(180deg, #0d3a6e 0%, #082a52 42%, #041e42 100%);
+    /* Mais escuro que a página: separado por vão, o degrau precisa afundar
+       em relação ao fundo pra ler como volume e não como bloco flutuando. */
+    background: linear-gradient(180deg, #06223d 0%, #03162b 52%, #010e1c 100%);
     box-shadow:
       inset 0 3px 0 var(--gold-lift),
-      inset -1px 0 0 #01152299,
-      0 -14px 34px -16px #d7b35680;
+      inset 0 0 0 1px #ffffff0a,
+      0 -14px 34px -16px #d7b35666;
     transform-origin: bottom;
     transition: transform 0.85s var(--ease), box-shadow 0.5s var(--ease);
   }
@@ -666,7 +668,7 @@ const vantagens = [
   .escada__degraus li:hover .degrau__face {
     box-shadow:
       inset 0 3px 0 #fffaf0,
-      inset -1px 0 0 #01152299,
+      inset 0 0 0 1px #ffffff14,
       0 -18px 40px -12px #d7b35699;
   }
   @media (prefers-reduced-motion: no-preference) {
@@ -676,7 +678,7 @@ const vantagens = [
   .escada__rotulos {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0;
+    gap: var(--vao);
     margin-top: 0.9rem;
   }
   .escada__rotulos li {
