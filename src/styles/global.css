@@ -247,35 +247,38 @@ section h2,
 }
 
 /* ── Entrada orquestrada ──
-   Tudo dentro de @supports: onde a linha do tempo de scroll não existe, a
-   regra nem se aplica e o conteúdo nasce visível. Sem isso, um opacity: 0
-   que nunca anima esconde a página inteira. */
-@keyframes rise  { from { transform: translateY(2rem);    opacity: 0; } }
-@keyframes fade  { from {                                 opacity: 0; } }
-@keyframes fromL { from { transform: translateX(-2.5rem); opacity: 0; } }
-@keyframes fromR { from { transform: translateX(2.5rem);  opacity: 0; } }
-@keyframes zoom  { from { transform: scale(0.94);         opacity: 0; } }
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .rise, .fade, .from-l, .from-r, .zoom {
-      animation-duration: 0.85s;
-      animation-timing-function: var(--ease);
-      animation-fill-mode: both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 32%;
-    }
-    .rise   { animation-name: rise; }
-    .fade   { animation-name: fade; }
-    .from-l { animation-name: fromL; }
-    .from-r { animation-name: fromR; }
-    .zoom   { animation-name: zoom; }
-
-    /* Escalonamento: filhos de uma lista entram em cascata. */
-    .stagger > *  { animation: rise 0.85s var(--ease) both; animation-timeline: view(); animation-range: entry 5% cover 34%; }
-    .stagger > :nth-child(2) { animation-range: entry 2% cover 32%; }
-    .stagger > :nth-child(3) { animation-range: entry 0% cover 30%; }
-    .stagger > :nth-child(4) { animation-range: entry -3% cover 28%; }
-    .stagger > :nth-child(5) { animation-range: entry -6% cover 26%; }
+   Conduzida por IntersectionObserver, não por animation-timeline: o
+   timeline de scroll ainda não existe no Firefox, e lá a página ficava
+   sem nenhuma entrada. Aqui a classe .reveal-on só entra se o script
+   rodar — sem JS, ou com movimento reduzido, tudo nasce visível. */
+@media (prefers-reduced-motion: no-preference) {
+  html.reveal-on :is(.rise, .fade, .from-l, .from-r, .zoom) {
+    opacity: 0;
+    transition:
+      opacity 0.8s var(--ease),
+      transform 0.8s var(--ease);
   }
+  html.reveal-on .rise   { transform: translateY(2.2rem); }
+  html.reveal-on .from-l { transform: translateX(-2.75rem); }
+  html.reveal-on .from-r { transform: translateX(2.75rem); }
+  html.reveal-on .zoom   { transform: scale(0.9); }
+
+  html.reveal-on :is(.rise, .fade, .from-l, .from-r, .zoom).is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Cascata: os filhos entram em sequência a partir do pai. */
+  html.reveal-on .stagger > * {
+    opacity: 0;
+    transform: translateY(1.8rem);
+    transition:
+      opacity 0.75s var(--ease),
+      transform 0.75s var(--ease);
+  }
+  html.reveal-on .stagger.is-in > * { opacity: 1; transform: none; }
+  html.reveal-on .stagger > :nth-child(2) { transition-delay: 0.09s; }
+  html.reveal-on .stagger > :nth-child(3) { transition-delay: 0.18s; }
+  html.reveal-on .stagger > :nth-child(4) { transition-delay: 0.27s; }
+  html.reveal-on .stagger > :nth-child(5) { transition-delay: 0.36s; }
 }

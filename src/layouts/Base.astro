@@ -28,6 +28,21 @@ const {
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />
     <link rel="preconnect" href="https://p.typekit.net" crossorigin />
     <link rel="stylesheet" href="https://use.typekit.net/dbc3pfu.css" />
+
+    <script is:inline>
+      // Liga o estado inicial das entradas antes da primeira pintura, senão o
+      // conteúdo pisca visível e some. A rede de segurança embaixo desliga tudo
+      // se o observador não confirmar que assumiu: melhor sem animação do que
+      // com a página escondida.
+      (function () {
+        var raiz = document.documentElement;
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        raiz.classList.add('reveal-on');
+        setTimeout(function () {
+          if (!raiz.dataset.revealPronto) raiz.classList.remove('reveal-on');
+        }, 2500);
+      })();
+    </script>
   </head>
 
   <body>
@@ -49,5 +64,29 @@ const {
     FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
     -->
     <slot />
+
+    <script>
+      const raiz = document.documentElement;
+      const alvos = document.querySelectorAll<HTMLElement>('.rise, .fade, .from-l, .from-r, .zoom, .stagger');
+
+      if (raiz.classList.contains('reveal-on') && 'IntersectionObserver' in window && alvos.length) {
+        raiz.dataset.revealPronto = '1';
+        const olho = new IntersectionObserver(
+          (entradas) => {
+            for (const e of entradas) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.add('is-in');
+              olho.unobserve(e.target);
+            }
+          },
+          // Dispara um pouco antes de encostar no pé da tela, pra o elemento
+          // chegar já em movimento em vez de aparecer parado e depois animar.
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
+        );
+        alvos.forEach((el) => olho.observe(el));
+      } else {
+        raiz.classList.remove('reveal-on');
+      }
+    </script>
   </body>
 </html>
