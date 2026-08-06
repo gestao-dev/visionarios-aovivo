@@ -12,6 +12,7 @@ import cardConvidado1 from '../assets/card-convidado-1.png';
 import cardConvidado2 from '../assets/card-convidado-2.png';
 import ticket from '../assets/ticket-lote-zero.png';
 import fecho from '../assets/fecho.png';
+import pilares from '../assets/pilares.png';
 
 const daqui = [
   'Faturamento travado no teto',
@@ -25,17 +26,11 @@ const dela = [
   'Time que roda sem você',
   'Você no estratégico, com liberdade',
 ];
-const fases = [
-  { icon: 'mind',  nome: 'Mentalidade & Modelo' },
-  { icon: 'users', nome: 'Equipe & Estrutura' },
-  { icon: 'cpu',   nome: 'Sistemas, Tech & IA' },
-  { icon: 'chart', nome: 'Receita & Faturamento' },
-];
 const sprint = [
-  { quando: 'Evento',    oque: '29–30/out' },
-  { quando: 'Novembro',  oque: 'implementa' },
-  { quando: 'Dezembro',  oque: 'consolida' },
-  { quando: '2027',      oque: 'estruturado' },
+  { quando: 'Evento',   linhas: ['29 e 30', 'de Outubro'] },
+  { quando: 'Novembro', linhas: ['implementa'] },
+  { quando: 'Dezembro', linhas: ['consolida'] },
+  { quando: '2027',     linhas: ['estruturado'] },
 ];
 const elenco = [
   { img: cardViviane,    alt: 'Viviane Araújo, fundadora da Soluzzi e mentora' },
@@ -137,37 +132,33 @@ const vantagens = [
   <section aria-labelledby="t-metodo">
     <span class="glow glow--gold g-right" aria-hidden="true"></span>
 
-    <div class="shell method">
-      <div class="method__text">
-        <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
-        <h2 id="t-metodo" class="h-lg">
-          2 dias. 6 meses<br class="turn" />
-          de <span class="hand grad">estruturação</span><br class="turn" />
-          <span class="hand grad">resolvidos.</span>
-        </h2>
-        <p class="method__lede">
-          4 fases, uma construída sobre a outra,<br class="turn" />
-          e cada bloco entrega uma ferramenta pra aplicar:
-        </p>
-        <p class="aside">
-          <Icon name="star" size={17} /> + Reforma tributária como tema transversal nos dois dias.
-        </p>
+    <!-- Os quatro pilares vêm desenhados na arte: o texto mora na metade
+         esquerda, que no arquivo é preta de propósito. -->
+    <div class="pilares">
+      <div class="shell method">
+        <div class="method__text">
+          <p class="over">Método Aceleração Visionária · exclusivo do evento</p>
+          <h2 id="t-metodo" class="h-lg">
+            2 dias. 6 meses<br class="turn" />
+            de <span class="hand grad">estruturação</span><br class="turn" />
+            <span class="hand grad">resolvidos.</span>
+          </h2>
+          <p class="method__lede">
+            4 fases, uma construída sobre a outra,<br class="turn" />
+            e cada bloco entrega uma ferramenta pra aplicar:
+          </p>
+          <p class="aside">
+            <span class="medal medal--sm"><Icon name="star" size={19} /></span>
+            <span>+ Reforma tributária como tema transversal nos dois dias.</span>
+          </p>
+        </div>
       </div>
 
-      <!-- As quatro fases como degraus: cada uma se apoia na anterior. -->
-      <ol class="steps">
-        {fases.map((f, i) => (
-          <li style={`--h:${52 + i * 16}%`}>
-            <div class="steps__slot">
-              <div class="steps__bar">
-                <span class="steps__n">{i + 1}</span>
-                <Icon name={f.icon} size={26} />
-              </div>
-            </div>
-            <p class="steps__label">{f.nome}</p>
-          </li>
-        ))}
-      </ol>
+      <!-- Depois do texto no documento: no desktop ela é absoluta e o lugar
+           não importa; no celular ela vira faixa e cai embaixo, onde deve. -->
+      <div class="pilares__plate" aria-hidden="true">
+        <Image src={pilares} alt="" widths={[960, 1440, 1920]} sizes="100vw" quality={92} />
+      </div>
     </div>
 
     <div class="shell">
@@ -182,7 +173,7 @@ const vantagens = [
             <li class={i === sprint.length - 1 ? 'rail--now' : ''}>
               <span class="rail__dot" aria-hidden="true"></span>
               <b>{e.quando}</b>
-              <span>{e.oque}</span>
+              <span>{e.linhas.map((l, n) => (n === 0 ? l : [<br />, l]))}</span>
             </li>
           ))}
         </ol>
@@ -511,80 +502,66 @@ const vantagens = [
     line-height: 1.5;
   }
 
+  /* Nota com a mesma placa de ícone da dobra do preço. */
   .aside {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.7rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.9rem;
     max-width: 34ch;
     margin-top: 2.2rem;
     color: var(--paper);
     font-size: 0.95rem;
   }
-  .aside :global(svg) { color: var(--gold); flex: none; margin-top: 0.28rem; }
 
-  /* Degraus: a barra cresce a cada fase, e a altura vem do índice. */
-  .steps {
+  /* ── Pilares: a arte é a dobra inteira, o texto ocupa a metade escura ── */
+  .pilares {
+    position: relative;
+    isolation: isolate;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(0.6rem, 1.4vw, 1.1rem);
-    align-items: stretch;
-    min-height: clamp(17rem, 30vw, 23rem);
-  }
-  /* As colunas têm a mesma altura e o conteúdo desce até o pé; com o rótulo
-     reservando duas linhas, as barras assentam todas na mesma base. */
-  .steps li { display: flex; flex-direction: column; }
-  /* A altura da barra é porcentagem DESTE espaço, não da coluna inteira: assim
-     a de 100% chega ao topo em vez de bater no teto junto com a de 86%. */
-  .steps__slot { flex: 1; display: flex; align-items: flex-end; }
-
-  .steps__bar {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0.55rem;
-    height: var(--h);
-    padding-top: clamp(1rem, 2.4vw, 1.6rem);
-    border-radius: 14px 14px 4px 4px;
-    color: var(--navy);
-    background-image:
-      linear-gradient(180deg, #ffffff40, transparent 34%),
-      linear-gradient(168deg, var(--gold-flare) 0%, var(--gold) 46%, #a8863f 100%);
-    box-shadow:
-      inset 0 1px 0 #fff8e6cc,
-      0 18px 40px -22px #d7b35666;
+    min-height: clamp(24rem, 38vw, 36rem);
   }
-  .steps__n {
-    font-family: 'ivypresto-display', Georgia, serif;
-    font-size: clamp(1.5rem, 3.4vw, 2.15rem);
+  .pilares__plate { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .pilares__plate :global(img) {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+  }
+  .method { position: relative; z-index: 1; }
+  /* Trava a medida antes de onde os pilares começam na arte, pra letra
+     nunca cair em cima do desenho. */
+  .method__text { max-width: 32rem; text-align: left; }
+  .method__text .over { text-align: left; }
+  /* Itálica de display em regular; o .grad traz 700 e aqui ele não serve. */
+  .method__text h2 .hand {
     font-weight: 400;
-    line-height: 1;
+    font-size: 1.04em;
+    letter-spacing: -0.02em;
   }
-  .steps__label {
-    min-height: 2.6em;
-    margin-top: 1.1rem;
-    font-size: clamp(0.82rem, 1.5vw, 0.95rem);
-    font-weight: 600;
-    line-height: 1.3;
+  .method__lede {
+    margin-top: 1.35rem;
     color: var(--paper);
-    text-align: center;
+    font-size: clamp(1rem, 2.2vw, 1.12rem);
+    line-height: 1.5;
   }
 
-  @media (max-width: 60rem) {
-    .method { grid-template-columns: 1fr; }
-    .steps { min-height: 15rem; }
-  }
-  @media (max-width: 34rem) {
-    .steps { grid-template-columns: repeat(2, 1fr); gap: 1.6rem 0.8rem; min-height: 0; }
-    .steps__slot { flex: none; }
-    .steps__bar { height: auto; padding-bottom: 1.1rem; }
-    .steps__label { min-height: 0; }
+  /* Numa coluna estreita o cover ampliaria a arte até só caber um pilar, e o
+     texto cairia em cima dele. Aqui ela sai do fundo e vira faixa abaixo do
+     texto, inteira, na proporção original. */
+  @media (max-width: 62rem) {
+    .pilares { min-height: 0; display: block; }
+    /* Na proporção original a faixa daria 150px de altura em 390 de largura
+       e os rótulos dos pilares sairiam com 3px. Enquadra só o trecho dos
+       pilares e amplia. */
+    .pilares__plate { position: static; margin-top: clamp(2rem, 6vw, 3rem); aspect-ratio: 3 / 2; }
+    .pilares__plate :global(img) { object-position: 64% 45%; }
+    .method__text { max-width: none; }
   }
 
   /* ── Sprint: título centrado e linha do tempo horizontal ── */
   .sprint {
     position: relative;
-    width: min(100%, 56rem);
+    width: min(100%, 62.5rem);
     margin: clamp(4rem, 8vw, 6.5rem) auto 0;
     text-align: center;
   }
@@ -592,7 +569,7 @@ const vantagens = [
   .sprint h3 {
     max-width: 22ch;
     margin-inline: auto;
-    font-size: clamp(1.6rem, 2.9vw, 2.3rem);
+    font-size: clamp(2.1rem, 4.6vw, 4rem);
     font-weight: 600;
     line-height: 1.16;
     letter-spacing: -0.025em;
@@ -611,7 +588,8 @@ const vantagens = [
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--gap);
-    margin-top: clamp(2.25rem, 4.5vw, 3.25rem);
+    width: min(100%, 62.5rem);
+    margin: clamp(2.25rem, 4.5vw, 3.25rem) auto 0;
   }
   /* Meia coluna de recuo em cada ponta, não 12,5%: com três vãos no meio,
      a coluna é menor que um quarto e a porcentagem erra o centro do ponto. */
@@ -638,6 +616,8 @@ const vantagens = [
     box-shadow: 0 0 0 4px var(--ground-deep);
   }
   .rail b { display: block; font-size: 1.02rem; font-weight: 700; color: var(--paper); }
+  /* O ano de chegada é o destino da linha: maior e em ouro. */
+  .rail--now b { font-size: 1.6rem; line-height: 1.1; color: var(--gold-lift); }
   /* Só o valor, nunca o ponto: o ponto também é um span, e um seletor
      genérico aqui empurrava ele 4px pra baixo do fio. */
   .rail li > span:last-child { display: block; margin-top: 0.25rem; font-size: 0.95rem; color: var(--paper); }
@@ -690,7 +670,8 @@ const vantagens = [
     width: min(100%, 60rem);
     margin: clamp(3rem, 6vw, 4.5rem) auto 0;
   }
-  /* Fundo: o gradiente dourado da marca a 5% sobre a base escura. */
+  /* Cartão claro: o único bloco de superfície branca da página, pra a lista
+     de corte pesar mais que uma caixa escura a mais no escuro. */
   .bento li {
     position: relative;
     grid-column: span 2;
@@ -702,9 +683,8 @@ const vantagens = [
     gap: clamp(1.1rem, 2.2vw, 1.5rem);
     padding: clamp(1.6rem, 3vw, 2.2rem) clamp(1.4rem, 2.6vw, 1.9rem);
     overflow: hidden;
-    background:
-      linear-gradient(140deg, #d7b3560d 0%, #f4edd00d 52%, #f4edd000 100%),
-      linear-gradient(180deg, #080b23, #04050f);
+    border-color: #ffffff2e;
+    background: linear-gradient(180deg, #ffffff, #ebedf3);
     transition:
       transform 0.45s var(--ease),
       box-shadow 0.45s var(--ease),
@@ -720,13 +700,13 @@ const vantagens = [
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(115% 72% at 50% 116%, #d7b3564d, #d7b35614 38%, transparent 66%);
+    background: radial-gradient(115% 72% at 50% 116%, #d7b35666, #d7b3561f 38%, transparent 66%);
     opacity: 0;
     transition: opacity 0.55s var(--ease);
     pointer-events: none;
   }
   .bento li:hover {
-    border-color: #fad49f80;
+    border-color: var(--gold);
     box-shadow: 0 26px 50px -22px #000000d9;
   }
   .bento li:hover::after { opacity: 1; }
@@ -741,9 +721,17 @@ const vantagens = [
     font-weight: 700;
     line-height: 1.42;
     letter-spacing: -0.012em;
-    color: var(--paper);
+    color: var(--navy);
   }
-  .bento .medal { position: relative; z-index: 1; }
+  /* Placa dourada cheia com o traço em azul marinho. */
+  .bento .medal {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(160deg, var(--gold-flare), var(--gold) 62%, #c39f45);
+    box-shadow: inset 0 1px 0 #fffdf5, 0 8px 18px -10px #8a6c2e80;
+    color: var(--navy);
+  }
+  .bento .medal :global(svg) { stroke-width: 2.2; }
 
   @media (max-width: 62rem) {
     .bento { grid-template-columns: repeat(2, 1fr); }
