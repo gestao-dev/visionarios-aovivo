@@ -9,23 +9,34 @@ Os tokens vivem em `src/styles/global.css`; este arquivo diz **quando** usar cad
 
 | Uso | Token | Valor |
 |---|---|---|
-| **Todo texto corrido** — parágrafo, item de lista, texto de caixa | `--paper` | `#f0f0f0` |
-| Metadado curto — rótulo, legenda, nota de rodapé | `--paper-faint` | `#8990a8` |
+| **Todo texto** — parágrafo, item de lista, rótulo, legenda, nota | `--paper` | `#f0f0f0` |
 | Realce sólido dentro de frase | `--gold-lift` | `#e6cd91` |
 
-**Regra dura:** texto corrido é sempre `#f0f0f0`. Não existe tom de apoio
-intermediário para parágrafo.
+**Regra dura:** a página tem **um único branco**. Texto é `#f0f0f0` — do
+parágrafo de abertura à legenda de rodapé. Não existe tom de apoio, nem cinza
+intermediário, nem "branco mais calmo".
 
-O antigo `--paper-dim` (`#c3c7d8`) **foi aposentado e não volta**. Ele era um
-cinza-azulado usado como "branco mais calmo", e sobre fundo escuro isso não lê
-como calma: lê como texto lavado, meio apagado, como se fosse secundário. Numa
-página de ticket alto o corpo do texto é o argumento — ele não pode parecer nota
-de rodapé. Se um bloco precisa de menos peso, resolva com **tamanho, entrelinha
-ou espaço**, nunca rebaixando a cor.
+Os dois antigos apoios, `--paper-dim` (`#c3c7d8`) e `--paper-faint`
+(`#8990a8`), **foram aposentados e não voltam**. Eram cinza-azulados usados
+para "acalmar" texto secundário, e sobre fundo escuro isso não lê como calma:
+lê como texto lavado, como se estivesse meio apagado. Numa página de ticket
+alto tudo que está escrito está lá porque precisa ser lido.
 
-`--paper-faint` continua válido, mas só para o que de fato é metadado e some do
-olho de propósito: o rótulo acima do título, a nota sob os palestrantes, o selo
-de confiança. Nunca para um parágrafo.
+Quando um bloco precisa de menos peso, resolva com **tamanho, entrelinha,
+maiúscula, entreletra ou espaço** — nunca rebaixando a cor. É assim que os
+rótulos de seção e as legendas funcionam hoje: mesmo branco, corpo menor e
+caixa alta espaçada.
+
+O `#fff` puro também saiu: `#fff` e `#f0f0f0` na mesma página são dois brancos
+sem nenhuma diferença perceptível, ou seja, inconsistência sem ganho. Tudo é
+`--paper`.
+
+**Efeito colateral aceito, na tabela "Do lado de cá × Do outro lado":** os dois
+lados eram separados por cor (cinza de um lado, branco do outro). Agora estão
+no mesmo branco, e a oposição passa a ser carregada só pelo ícone (muro ×
+chave), pelo título de cada coluna, pela seta do meio e pelo gradiente dourado
+nos títulos. Se um dia isso precisar de mais força, o caminho é **peso, fundo
+ou tachado** — não voltar a apagar a coluna da esquerda.
 
 ## Ouro
 

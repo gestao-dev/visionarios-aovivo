@@ -16,12 +16,11 @@
   --navy:        #171a3b;   /* 01 - AZUL MARINHO, do arquivo do cliente */
   --navy-glow:   #0a1264;
 
-  /* Texto corrido é sempre --paper. O antigo --paper-dim (#c3c7d8) foi
-     aposentado: apoio em cinza-azulado deixava o corpo do texto lavado
-     sobre o fundo escuro. --paper-faint fica só para metadado curto
-     (rótulo, legenda, nota), nunca para parágrafo. */
+  /* Um único branco para todo texto. Os apoios --paper-dim (#c3c7d8) e
+     --paper-faint (#8990a8) foram aposentados: cinza-azulado sobre fundo
+     escuro lê como texto apagado, não como calma. Menos peso se resolve
+     com tamanho, entrelinha e espaço, nunca rebaixando a cor. */
   --paper:       #f0f0f0;
-  --paper-faint: #8990a8;
 
   --gold-deep:   #8a6c2e;
   --gold:        #d7b356;   /* início do gradiente do cliente */
@@ -186,7 +185,7 @@ section h2,
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 1.2rem;
-  color: var(--paper-faint);
+  color: var(--paper);
   font-size: 0.85rem;
 }
 .assure svg { color: var(--gold); flex: none; }
@@ -209,7 +208,7 @@ section h2,
   line-height: 1.3;
   letter-spacing: -0.05em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--paper);
 }
 .badge__live {
   width: 8px; height: 8px; border-radius: 50%;
