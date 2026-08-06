@@ -140,8 +140,7 @@ const vantagens = [
         </h2>
         <p class="method__lede">
           4 fases, uma construída sobre a outra,<br class="turn" />
-          e cada bloco entrega uma ferramenta<br class="turn" />
-          pra aplicar:
+          e cada bloco entrega uma ferramenta pra aplicar:
         </p>
         <p class="aside">
           <Icon name="star" size={17} /> + Reforma tributária como tema transversal nos dois dias.
@@ -166,20 +165,32 @@ const vantagens = [
 
     <div class="shell">
       <div class="sprint card">
-        <h3>
-          Você sai com um<br class="turn" />
-          <span class="hand">Sprint de 60 dias</span> pra chegar<br class="turn" />
-          em 2027 estruturado
-        </h3>
-        <ol class="rail">
-          {sprint.map((e, i) => (
-            <li class={i === sprint.length - 1 ? 'rail--now' : ''}>
-              <span class="rail__dot" aria-hidden="true"></span>
-              <b>{e.quando}</b>
-              <span>{e.oque}</span>
-            </li>
-          ))}
-        </ol>
+        <!-- Espaço reservado: troque por <Image> quando a foto chegar. -->
+        <div class="sprint__art" role="img" aria-label="Espaço reservado para foto do evento">
+          <span class="sprint__ph">
+            <Icon name="play" size={26} />
+            <b>Foto aqui</b>
+            <span>proporção 3:4</span>
+          </span>
+        </div>
+
+        <div class="sprint__body">
+          <h3>
+            Você sai com um<br class="turn" />
+            <span class="hand">Sprint de 60 dias</span><br class="turn" />
+            pra chegar em 2027<br class="turn" />
+            estruturado
+          </h3>
+          <ol class="rail">
+            {sprint.map((e, i) => (
+              <li class={i === sprint.length - 1 ? 'rail--now' : ''}>
+                <span class="rail__dot" aria-hidden="true"></span>
+                <b>{e.quando}</b>
+                <span>{e.oque}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
   </section>
@@ -241,7 +252,7 @@ const vantagens = [
       <div class="card lote__frame rise">
         <div class="lote__art">
           <Image src={ticket} alt="Ingresso Lote Zero do Visionários ao Vivo, com Viviane Araújo e Marcos Paulo"
-                 widths={[430, 858]} sizes="(max-width: 60rem) 92vw, 26rem" quality={88} />
+                 widths={[430, 858]} sizes="(max-width: 60rem) 80vw, 24rem" quality={88} />
         </div>
 
         <div class="lote__side">
@@ -561,10 +572,14 @@ const vantagens = [
   /* ── Sprint: painel com borda em movimento ── */
   .sprint {
     position: relative;
-    width: min(100%, 60rem);
+    width: min(100%, 74rem);
     margin: clamp(4rem, 8vw, 6.5rem) auto 0;
-    padding: clamp(1.75rem, 4vw, 3rem);
+    padding: clamp(1.25rem, 2.4vw, 1.75rem);
     overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+    align-items: center;
   }
   /* A borda é um facho que dá a volta no painel. Fica na moldura, não no fundo. */
   .sprint::before {
@@ -591,9 +606,30 @@ const vantagens = [
   }
   @keyframes turn { to { --turn: 360deg; } }
 
-  .sprint h3 {
-    margin-inline: auto;
+  /* Espaço reservado da foto: superfície da página, não caixa de erro. */
+  .sprint__art {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 4;
+    border-radius: 14px;
+    border: 1px dashed var(--edge-lit);
+    background:
+      radial-gradient(85% 55% at 50% 40%, #c8a45c14, transparent 72%),
+      linear-gradient(180deg, #0b0f2c, #04050f);
+  }
+  .sprint__ph {
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    color: var(--paper);
     text-align: center;
+  }
+  .sprint__ph :global(svg) { color: var(--gold-lift); }
+  .sprint__ph b { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em; }
+  .sprint__ph span { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .sprint__body { padding-right: clamp(0.25rem, 1.6vw, 1.25rem); }
+  .sprint h3 {
     font-size: clamp(2.1rem, 4.6vw, 4rem);
     font-weight: 600;
     line-height: 1.08;
@@ -606,8 +642,8 @@ const vantagens = [
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: clamp(0.8rem, 2vw, 1.5rem);
-    width: min(100%, 40rem);
-    margin: clamp(2rem, 4vw, 3rem) auto 0;
+    width: 100%;
+    margin: clamp(2rem, 4vw, 2.75rem) 0 0;
   }
   .rail { position: relative; }
   .rail::before {
@@ -634,6 +670,12 @@ const vantagens = [
   .rail--now .rail__dot { background: var(--gold-flare); box-shadow: 0 0 0 4px #d7b35630; }
   .rail--now span { color: var(--gold-lift); }
 
+  @media (max-width: 62rem) {
+    .sprint { grid-template-columns: 1fr; }
+    .sprint__art { max-width: 20rem; margin-inline: auto; }
+    .sprint__body { padding-right: 0; text-align: center; }
+    .rail { text-align: left; }
+  }
   @media (max-width: 46rem) {
     .rail { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1.25rem; }
   }
@@ -745,24 +787,15 @@ const vantagens = [
   .lote { margin-top: 3rem; max-width: 64rem; }
   .lote__frame {
     display: grid;
-    grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
     gap: clamp(1.5rem, 3vw, 2.6rem);
     padding: clamp(1.1rem, 2.2vw, 1.6rem);
     align-items: stretch;
   }
   /* A arte já é o ingresso inteiro: logo, chips e código de barras vêm nela.
-     A coluna da direita é bem mais alta que ela, então o ingresso fica
-     montado numa placa — o espaço vira passe-partout em vez de sobra. */
-  .lote__art {
-    display: grid;
-    place-items: center;
-    padding: clamp(1rem, 2vw, 1.8rem);
-    border-radius: 16px;
-    background:
-      radial-gradient(90% 55% at 50% 42%, #c8a45c1c, transparent 70%),
-      linear-gradient(180deg, #0b0f2c, #04050f);
-  }
-  .lote__art :global(img) { width: 100%; height: auto; border-radius: 10px; }
+     No formato alto ela cobre a altura da coluna sozinha, sem placa. */
+  .lote__art { line-height: 0; }
+  .lote__art :global(img) { width: 100%; height: auto; border-radius: 12px; }
 
   .lote__side {
     display: flex;
@@ -839,7 +872,7 @@ const vantagens = [
 
   @media (max-width: 60rem) {
     .lote__frame { grid-template-columns: 1fr; }
-    .lote__art { max-width: 26rem; margin-inline: auto; }
+    .lote__art { max-width: 20rem; margin-inline: auto; }
   }
 
   /* ── Fechamento ── */
