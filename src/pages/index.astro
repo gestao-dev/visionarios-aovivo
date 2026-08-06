@@ -128,7 +128,7 @@ const vantagens = [
     </div>
 
     <div class="shell cross">
-      <div class="cross__side from-l">
+      <div class="cross__side stagger">
         <p class="cross__head"><Icon name="wall" size={16} /> <span class="grad">Do lado de cá</span></p>
         <ul class="stagger">{daqui.map((t) => <li>{t}</li>)}</ul>
       </div>
@@ -137,7 +137,7 @@ const vantagens = [
         <span class="cross__gate"><Icon name="arrow" size={20} /></span>
       </div>
 
-      <div class="cross__side cross__side--to from-r">
+      <div class="cross__side cross__side--to stagger">
         <p class="cross__head cross__head--to"><Icon name="key" size={16} /> <span class="grad">Do outro lado</span></p>
         <ul class="stagger">{dela.map((t) => <li>{t}</li>)}</ul>
       </div>
@@ -195,7 +195,7 @@ const vantagens = [
             <li class={i === sprint.length - 1 ? 'rail--now' : ''}>
               <span class="rail__dot" aria-hidden="true"></span>
               <b>{e.quando}</b>
-              <span>{e.linhas.map((l, n) => (n === 0 ? l : [<br />, l]))}</span>
+              <span>{e.linhas.map((l, n) => (n === 0 ? l : [<br class="turn" />, ' ', l]))}</span>
             </li>
           ))}
         </ol>
@@ -768,13 +768,14 @@ const vantagens = [
       flex-direction: column;
       align-items: center;
     }
-    .rail__dot { position: static; order: 3; margin: 0.65rem 0 0; }
+    /* Ponto em cima, texto no meio, trecho de linha embaixo. */
+    .rail__dot { position: static; order: 0; margin: 0 0 0.7rem; }
     .rail li:not(:last-child)::after {
       content: '';
       order: 4;
       width: 1px;
       height: 1.5rem;
-      margin-top: 0.5rem;
+      margin-top: 0.7rem;
       background: linear-gradient(180deg, var(--gold-deep), #c8a45c2b);
     }
     .rail b { font-size: 24px; }
@@ -1029,6 +1030,10 @@ const vantagens = [
   @media (max-width: 60rem) {
     .lote__frame { grid-template-columns: 1fr; }
     .lote__art { width: 100%; margin-inline: auto; }
+    /* A arte do ingresso já traz marca e lote: repetir os dois embaixo dela
+       é dizer a mesma coisa duas vezes. */
+    .lote__head { display: none; }
+    .perks { margin-top: 0; padding-top: 0; border-top: 0; }
   }
 
   /* ── Fechamento ── */
