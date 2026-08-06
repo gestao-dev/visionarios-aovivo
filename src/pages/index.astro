@@ -1050,7 +1050,9 @@ const vantagens = [
      Camadas explícitas e positivas: z-index negativo aqui pintaria por
      baixo do próprio bloco e sumiria. */
   .close__plate { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-  .close__plate :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  /* Ancorada no topo: a arte é mais alta que a seção, e centrada o corte
+     comia as cabeças. */
+  .close__plate :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
   .close .glow { z-index: 1; }
   .close .shell { position: relative; z-index: 2; }
   /* Medida larga o bastante para as duas linhas ditadas caberem inteiras:
