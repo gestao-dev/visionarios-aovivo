@@ -172,29 +172,20 @@ const vantagens = [
 
     <div class="shell">
       <div class="sprint">
-        <!-- Espaço reservado: troque por <Image> quando a foto chegar. -->
-        <div class="sprint__art" role="img" aria-label="Espaço reservado para foto do evento">
-          <span class="sprint__ph">
-            <Icon name="play" size={26} />
-            <b>Foto aqui</b>
-            <span>proporção 3:4</span>
-          </span>
-        </div>
+        <h3>
+          Você sai com um <span class="hand">Sprint de 60 dias</span>
+          pra chegar em 2027 estruturado
+        </h3>
 
-        <div class="sprint__body">
-          <h3>
-            Você sai com um <span class="hand">Sprint de 60 dias</span>
-            pra chegar em 2027 estruturado
-          </h3>
-          <ol class="vrail">
-            {sprint.map((e, i) => (
-              <li class={i === sprint.length - 1 ? 'vrail--now' : ''}>
-                <b>{e.quando}</b>
-                <span>{e.oque}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <ol class="rail">
+          {sprint.map((e, i) => (
+            <li class={i === sprint.length - 1 ? 'rail--now' : ''}>
+              <span class="rail__dot" aria-hidden="true"></span>
+              <b>{e.quando}</b>
+              <span>{e.oque}</span>
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   </section>
@@ -590,42 +581,17 @@ const vantagens = [
     .steps__label { min-height: 0; }
   }
 
-  /* ── Sprint: foto à esquerda, linha do tempo vertical à direita ── */
+  /* ── Sprint: título centrado e linha do tempo horizontal ── */
   .sprint {
     position: relative;
-    width: min(100%, 64rem);
+    width: min(100%, 56rem);
     margin: clamp(4rem, 8vw, 6.5rem) auto 0;
-    display: grid;
-    grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
-    gap: clamp(1.75rem, 4vw, 3.5rem);
-    align-items: center;
-  }
-
-  /* Espaço reservado da foto: superfície da página, não caixa de erro. */
-  .sprint__art {
-    display: grid;
-    place-items: center;
-    aspect-ratio: 3 / 4;
-    border-radius: 14px;
-    border: 1px dashed var(--edge-lit);
-    background:
-      radial-gradient(85% 55% at 50% 40%, #c8a45c14, transparent 72%),
-      linear-gradient(180deg, #0b0f2c, #04050f);
-  }
-  .sprint__ph {
-    display: grid;
-    justify-items: center;
-    gap: 0.35rem;
-    color: var(--paper);
     text-align: center;
   }
-  .sprint__ph :global(svg) { color: var(--gold-lift); }
-  .sprint__ph b { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em; }
-  .sprint__ph span { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
-
-  .sprint__body { padding-right: clamp(0.25rem, 1.6vw, 1.25rem); }
   /* Menor que as headlines de seção: aqui é subtítulo de bloco, não título. */
   .sprint h3 {
+    max-width: 22ch;
+    margin-inline: auto;
     font-size: clamp(1.6rem, 2.9vw, 2.3rem);
     font-weight: 600;
     line-height: 1.16;
@@ -635,45 +601,57 @@ const vantagens = [
   }
   .sprint h3 .hand { font-size: 1.08em; }
 
-  /* Linha do tempo vertical: um fio contínuo, quatro marcos descendo dele. */
-  .vrail {
+  /* Quatro marcos em colunas iguais, cada um com o ponto no centro da sua
+     coluna. O fio nasce no centro do primeiro ponto e morre no centro do
+     último: ele liga os círculos em vez de atravessar a caixa inteira. */
+  .rail {
+    --dot: 11px;
+    --gap: clamp(0.8rem, 2vw, 1.5rem);
     position: relative;
     display: grid;
-    gap: clamp(1.1rem, 2vw, 1.5rem);
-    margin-top: clamp(1.75rem, 3.4vw, 2.5rem);
-    padding-left: 1.9rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gap);
+    margin-top: clamp(2.25rem, 4.5vw, 3.25rem);
   }
-  .vrail::before {
+  /* Meia coluna de recuo em cada ponta, não 12,5%: com três vãos no meio,
+     a coluna é menor que um quarto e a porcentagem erra o centro do ponto. */
+  .rail::before {
     content: '';
     position: absolute;
-    left: 5px;
-    top: 0.55em;
-    bottom: 0.55em;
-    width: 1px;
-    background: linear-gradient(180deg, #c8a45c40, var(--gold-lift));
+    top: calc(var(--dot) / 2);
+    left: calc((100% - 3 * var(--gap)) / 8);
+    right: calc((100% - 3 * var(--gap)) / 8);
+    height: 1px;
+    background: linear-gradient(90deg, #c8a45c40, var(--gold-lift));
+    transform: translateY(-0.5px);
   }
-  .vrail li { position: relative; display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
-  .vrail li::before {
-    content: '';
+  .rail li { position: relative; padding-top: calc(var(--dot) + 1.05rem); }
+  .rail__dot {
     position: absolute;
-    left: -1.9rem;
-    top: 0.5em;
-    width: 11px;
-    height: 11px;
+    top: 0;
+    left: 50%;
+    width: var(--dot);
+    height: var(--dot);
+    margin-left: calc(var(--dot) / -2);
     border-radius: 50%;
     background: var(--gold-deep);
-    box-shadow: 0 0 0 4px #05060f;
+    box-shadow: 0 0 0 4px var(--ground-deep);
   }
-  .vrail b { font-size: 1.05rem; font-weight: 700; color: var(--paper); }
-  .vrail span { font-size: 0.98rem; color: var(--paper); }
+  .rail b { display: block; font-size: 1.02rem; font-weight: 700; color: var(--paper); }
+  /* Só o valor, nunca o ponto: o ponto também é um span, e um seletor
+     genérico aqui empurrava ele 4px pra baixo do fio. */
+  .rail li > span:last-child { display: block; margin-top: 0.25rem; font-size: 0.95rem; color: var(--paper); }
   /* O último marco é onde a promessa aterrissa: é ele que acende. */
-  .vrail li.vrail--now::before { background: var(--gold-flare); box-shadow: 0 0 0 4px #05060f, 0 0 0 7px #d7b35633; }
-  .vrail--now span { color: var(--gold-lift); }
+  .rail li.rail--now .rail__dot {
+    background: var(--gold-flare);
+    box-shadow: 0 0 0 4px var(--ground-deep), 0 0 0 7px #d7b35633;
+  }
+  .rail--now > span:last-child { color: var(--gold-lift); }
 
-  @media (max-width: 62rem) {
-    .sprint { grid-template-columns: 1fr; justify-items: center; }
-    .sprint__art { width: min(100%, 20rem); }
-    .sprint__body { padding-right: 0; width: min(100%, 30rem); }
+  @media (max-width: 46rem) {
+    .rail { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; }
+    /* Em duas colunas o fio ligaria pontos de fileiras diferentes. */
+    .rail::before { display: none; }
   }
 
   /* ── Elenco: cada card é uma peça fechada (nó 2742:6835) ── */
