@@ -40,7 +40,11 @@ const repetir = (xs: string[], n = 8) => Array.from({ length: n }, () => xs).fla
     /* O puxão pra cima existia pra ocupar o vazio no pé da hero antiga.
        Agora o conteúdo da hero mora lá embaixo, e esse recuo cobria a ação. */
     margin-top: 0;
-    margin-bottom: clamp(3rem, 7vw, 6rem);
+    /* Continua o preto em que a hero termina. Sem isto o fundo azul do corpo
+       aparece aqui no meio e a página vai de preto pra azul pra preto pra
+       azul antes de assentar. Padding e não margem: margem não recebe fundo. */
+    background: #000001;
+    padding-bottom: clamp(3rem, 7vw, 6rem);
     pointer-events: none;
   }
 
