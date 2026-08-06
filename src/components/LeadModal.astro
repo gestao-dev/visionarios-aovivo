@@ -8,6 +8,12 @@ import Icon from './Icon.astro';
 const webhook =
   import.meta.env.PUBLIC_LEAD_WEBHOOK ||
   'https://webhook.contadoresvisionarios.com.br/webhook/dab41c5b-26ab-493a-b749-22a56763a0a4';
+
+// Modo demonstração: com PUBLIC_LEAD_DEMO=1 o formulário valida e mostra a tela
+// de sucesso sem enviar nada. Existe pra cópia de portfólio: deixar a variável
+// do webhook vazia não bastaria, porque o `||` acima cairia no endpoint de
+// produção e um visitante curioso viraria lead na lista do cliente.
+const demo = import.meta.env.PUBLIC_LEAD_DEMO === '1';
 const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
 ---
 
@@ -23,7 +29,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
     <img class="sheet__mark" src="/logo-visionarios-ao-vivo.svg"
          alt="Visionários ao Vivo" width="196" height="48" />
 
-    <form id="lead-form" novalidate data-webhook={webhook} data-grupo={grupo}>
+    <form id="lead-form" novalidate data-webhook={demo ? '' : webhook} data-demo={demo ? '1' : null} data-grupo={grupo}>
       <p class="account account--center">Lista do Lote Zero</p>
       <h2 id="lead-title">Garanta seu lugar na lista</h2>
       <p class="lede">
@@ -343,6 +349,12 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
     const inputs = Array.from(form.querySelectorAll('input')) as HTMLInputElement[];
     const bad = inputs.filter((i) => !check(i));
     if (bad.length) { bad[0].focus(); return; }
+
+    // Demonstração: nada sai do navegador, e a pessoa vê o fluxo inteiro.
+    if (form.dataset.demo === '1') {
+      toDone();
+      return;
+    }
 
     const endpoint = form.dataset.webhook;
     if (!endpoint) {
