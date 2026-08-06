@@ -341,6 +341,14 @@ const vantagens = [
     text-align: center;
   }
   @media (max-width: 44rem) { .hero { min-height: calc(100svh - 76px); } }
+  /* No celular a foto não cobre a dobra: vira faixa no topo, na proporção
+     dela, e o véu a dissolve no preto antes do selo. */
+  @media (max-width: 46rem) {
+    .hero__plate { bottom: auto; height: auto; aspect-ratio: 1920 / 1027; }
+    .hero__wash {
+      background: linear-gradient(180deg, #00000114 0%, #0000016b 46%, #000001 100%);
+    }
+  }
   .hero__plate { position: absolute; inset: 0; z-index: -2; isolation: isolate; }
   /* Ancorada embaixo: é onde a plateia está, e é o que não pode ser cortado. */
   .hero__plate :global(img) {
@@ -412,7 +420,7 @@ const vantagens = [
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: clamp(1.5rem, 4vw, 3.25rem);
-    width: min(100%, 58rem);
+    max-width: 58rem;
     margin: clamp(3rem, 6vw, 4.5rem) auto 0;
     align-items: stretch;
   }
@@ -467,6 +475,13 @@ const vantagens = [
     color: var(--gold-flare);
   }
 
+  /* Celular: a lista centrada e as divisórias na mesma medida curta, em vez
+     de filetes de ponta a ponta da tela. */
+  @media (max-width: 46rem) {
+    .cross__side ul { width: min(100%, 17rem); margin-inline: auto; }
+    .cross__side li { text-align: center; }
+    .cross__head { justify-content: center; }
+  }
   @media (max-width: 56rem) {
     .cross { grid-template-columns: 1fr; gap: 0; }
     .cross__seam {
@@ -482,14 +497,6 @@ const vantagens = [
   }
 
   /* ── Método: texto à esquerda, degraus à direita ── */
-  .method {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
-    gap: clamp(2.5rem, 6vw, 5rem);
-    align-items: center;
-  }
-  .method__text { text-align: left; }
-  .method__text .over { text-align: left; }
   /* Itálica de display em regular; o .grad traz 700 e aqui ele não serve. */
   .method__text h2 .hand {
     font-weight: 400;
@@ -563,9 +570,11 @@ const vantagens = [
     /* Na proporção original a faixa daria 150px de altura em 390 de largura
        e os rótulos dos pilares sairiam com 3px. Enquadra só o trecho dos
        pilares e amplia. */
-    .pilares__plate { position: static; margin-top: clamp(2rem, 6vw, 3rem); aspect-ratio: 3 / 2; }
-    .pilares__plate :global(img) { object-position: 64% 45%; }
-    .method__text { max-width: none; }
+    .pilares__plate { position: static; margin-top: clamp(1.5rem, 5vw, 3rem); aspect-ratio: 5 / 4; }
+    .pilares__plate :global(img) { object-position: 64% 46%; }
+    .method__text { max-width: none; text-align: center; }
+    .method__text .over { text-align: center; }
+    .aside { margin-inline: auto; }
   }
 
   /* ── Sprint: título centrado e linha do tempo horizontal ── */
@@ -689,7 +698,7 @@ const vantagens = [
     .rail {
       grid-template-columns: 1fr;
       gap: 1.35rem;
-      width: min(100%, 22rem);
+      width: 100%;
       padding-left: 1.9rem;
       text-align: left;
     }
@@ -705,6 +714,8 @@ const vantagens = [
     .rail li { padding-top: 0; }
     .rail__dot { top: 0.42em; left: -1.9rem; margin-left: 0; }
     .rail--now b { font-size: 1.4rem; }
+    /* O respiro de 112px afastava demais a headline do filete dourado. */
+    .sprint { padding-top: clamp(2.5rem, 9vw, 3.75rem); }
   }
 
   /* ── Elenco: cada card é uma peça fechada (nó 2742:6835) ── */
@@ -748,7 +759,7 @@ const vantagens = [
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: clamp(0.42rem, 0.9vw, 0.7rem);
-    width: min(100%, 60rem);
+    max-width: 60rem;
     margin: clamp(3rem, 6vw, 4.5rem) auto 0;
   }
   /* Cartão claro: o único bloco de superfície branca da página, pra a lista
@@ -825,7 +836,8 @@ const vantagens = [
     .bento li:nth-child(5) { grid-column: span 1; }
   }
   @media (max-width: 40rem) {
-    .bento { grid-template-columns: 1fr; }
+    .bento { grid-template-columns: 1fr; justify-items: center; }
+    .bento li { width: 100%; max-width: 300px; }
   }
 
   /* ── Lote ── */
