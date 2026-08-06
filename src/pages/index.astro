@@ -11,6 +11,7 @@ import cardViviane from '../assets/card-viviane.png';
 import cardMarcos from '../assets/card-marcos.png';
 import cardConvidado1 from '../assets/card-convidado-1.png';
 import cardConvidado2 from '../assets/card-convidado-2.png';
+import ticket from '../assets/ticket-lote-zero.png';
 
 const daqui = [
   'Faturamento travado no teto',
@@ -237,30 +238,38 @@ const vantagens = [
     </div>
 
     <div class="shell lote">
-      <div class="panel panel--lit rise">
-        <div class="lote__head">
-          <div>
-            <p class="lote__kind">Lote</p>
-            <p class="lote__name hand">Zero</p>
+      <div class="card lote__frame rise">
+        <div class="lote__art">
+          <Image src={ticket} alt="Ingresso Lote Zero do Visionários ao Vivo, com Viviane Araújo e Marcos Paulo"
+                 widths={[430, 858]} sizes="(max-width: 60rem) 92vw, 26rem" quality={88} />
+        </div>
+
+        <div class="lote__side">
+          <div class="lote__head">
+            <img class="lote__logo" src="/logo-visionarios-ao-vivo.svg"
+                 alt="Visionários ao Vivo" width="196" height="48" />
+            <span class="tag">Lote Zero</span>
           </div>
-          <div class="lote__when">
+
+          <p class="lote__scope">Exclusivo pra quem está no grupo</p>
+
+          <ul class="perks">
+            {vantagens.map((v) => (
+              <li><span class="medal medal--sm"><Icon name={v.icon} size={19} /></span><span>{v.texto}</span></li>
+            ))}
+          </ul>
+
+          <p class="lote__when">
             <span>Abre em</span>
             <strong>22 · 08</strong>
+          </p>
+
+          <div class="lote__act">
+            <button class="cta cta--wide" type="button" data-open-lead>
+              Quero o Lote Zero + bônus <Icon name="arrow" size={18} />
+            </button>
+            <p class="assure"><Icon name="shield" size={16} /> Vagas presenciais limitadas · 1ª edição · sala fechada</p>
           </div>
-        </div>
-        <p class="lote__scope">Exclusivo pra quem está no grupo</p>
-
-        <ul class="perks">
-          {vantagens.map((v) => (
-            <li><span class="medal medal--sm"><Icon name={v.icon} size={19} /></span><span>{v.texto}</span></li>
-          ))}
-        </ul>
-
-        <div class="lote__act">
-          <button class="cta cta--wide" type="button" data-open-lead>
-            Quero o Lote Zero + bônus <Icon name="arrow" size={18} />
-          </button>
-          <p class="assure"><Icon name="shield" size={16} /> Vagas presenciais limitadas · 1ª edição · sala fechada</p>
         </div>
       </div>
     </div>
@@ -732,19 +741,106 @@ const vantagens = [
   }
 
   /* ── Lote ── */
-  .lote { margin-top: 3rem; max-width: 52rem; }
-  .lote__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
-  .lote__kind { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--paper); }
-  .lote__name { font-size: clamp(2.6rem, 7vw, 4rem); line-height: 1; }
-  .lote__when { text-align: right; }
-  .lote__when span { display: block; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper); }
-  .lote__when strong { font-size: 1.7rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--gold-lift); }
-  .lote__scope { margin-top: 0.6rem; color: var(--paper); font-size: 0.9rem; }
-  .perks { margin-top: 2.2rem; display: grid; gap: 1.35rem; }
-  .perks li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; color: var(--paper); }
-  .perks li:first-child { color: var(--paper); }
+  /* ── Lote Zero: o ingresso à esquerda, o argumento à direita ── */
+  .lote { margin-top: 3rem; max-width: 64rem; }
+  .lote__frame {
+    display: grid;
+    grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.6rem);
+    padding: clamp(1.1rem, 2.2vw, 1.6rem);
+    align-items: stretch;
+  }
+  /* A arte já é o ingresso inteiro: logo, chips e código de barras vêm nela.
+     A coluna da direita é bem mais alta que ela, então o ingresso fica
+     montado numa placa — o espaço vira passe-partout em vez de sobra. */
+  .lote__art {
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 2vw, 1.8rem);
+    border-radius: 16px;
+    background:
+      radial-gradient(90% 55% at 50% 42%, #c8a45c1c, transparent 70%),
+      linear-gradient(180deg, #0b0f2c, #04050f);
+  }
+  .lote__art :global(img) { width: 100%; height: auto; border-radius: 10px; }
+
+  .lote__side {
+    display: flex;
+    flex-direction: column;
+    padding-right: clamp(0.2rem, 1.6vw, 1.2rem);
+  }
+  .lote__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .lote__logo { width: 172px; height: 42px; }
+
+  /* Etiqueta do lote, no lugar da marca do produto na referência. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.15rem;
+    border-radius: 100px;
+    background-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%);
+    color: var(--navy);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Os filetes que separam os blocos vêm da referência. */
+  .lote__scope {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--edge-lit);
+    color: var(--paper);
+    font-size: 0.95rem;
+  }
+  .perks { margin-top: 1.25rem; display: grid; gap: 1.1rem; }
+  .perks li { display: grid; grid-template-columns: auto 1fr; gap: 0.9rem; align-items: start; color: var(--paper); }
   .medal--sm { width: 2.4rem; height: 2.4rem; border-radius: 10px; }
-  .lote__act { margin-top: 2.6rem; text-align: center; }
+
+  /* A data é o número que faz agir: ocupa o lugar do preço na referência. */
+  .lote__when {
+    margin-top: 1.6rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--edge-lit);
+  }
+  .lote__when span {
+    display: block;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper);
+  }
+  .lote__when strong {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: clamp(2.6rem, 6vw, 3.9rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold-lift);
+  }
+
+  .lote__act {
+    margin-top: 1.6rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--edge-lit);
+    text-align: center;
+  }
+  .lote__act .cta { width: 100%; }
+
+  @media (max-width: 60rem) {
+    .lote__frame { grid-template-columns: 1fr; }
+    .lote__art { max-width: 26rem; margin-inline: auto; }
+  }
 
   /* ── Fechamento ── */
   .close { padding-bottom: clamp(5.5rem, 11vw, 9rem); }
