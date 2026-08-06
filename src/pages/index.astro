@@ -14,18 +14,22 @@ import cardConvidado1 from '../assets/card-convidado-1.png';
 import cardConvidado2 from '../assets/card-convidado-2.png';
 import ticket from '../assets/ticket-lote-zero.png';
 import fecho from '../assets/fecho.png';
-import pilares from '../assets/pilares.png';
-import pilaresMobile from '../assets/pilares-mobile.png';
 import ticketMobile from '../assets/ticket-lote-zero-mobile.png';
 
 // Direção de arte na abertura: o celular recebe um enquadramento próprio, e o
 // <picture> garante que só um dos dois seja baixado.
 const heroLargo = await getImage({ src: heroSala, widths: [720, 1200, 1920], format: 'webp', quality: 82 });
 const heroEstreito = await getImage({ src: heroSalaMobile, widths: [430, 760, 1043], format: 'webp', quality: 86 });
-const pilaresLargo = await getImage({ src: pilares, widths: [960, 1440, 1920], format: 'webp', quality: 92 });
-const pilaresEstreito = await getImage({ src: pilaresMobile, widths: [430, 760, 980], format: 'webp', quality: 90 });
 const ticketLargo = await getImage({ src: ticket, widths: [430, 858], format: 'webp', quality: 88 });
 const ticketEstreito = await getImage({ src: ticketMobile, widths: [430, 700, 1024], format: 'webp', quality: 90 });
+
+// A escada: cada degrau é mais alto que o anterior, e a altura vem do índice.
+const niveis = [
+  { icon: 'mind',  nome: 'Mentalidade & Modelo' },
+  { icon: 'users', nome: 'Equipe & Estrutura' },
+  { icon: 'cpu',   nome: 'Sistemas, Tech & IA' },
+  { icon: 'chart', nome: 'Receita & Faturamento' },
+];
 
 const daqui = [
   'Faturamento travado no teto',
@@ -168,17 +172,25 @@ const vantagens = [
             <span>+ Reforma tributária como tema transversal nos dois dias.</span>
           </p>
         </div>
-      </div>
 
-      <!-- Depois do texto no documento: no desktop ela é absoluta e o lugar
-           não importa; no celular ela vira faixa e cai embaixo, onde deve. -->
-      <div class="pilares__plate fade" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 62rem)" type="image/webp"
-                  srcset={pilaresEstreito.srcSet.attribute} sizes="100vw" />
-          <img src={pilaresLargo.src} srcset={pilaresLargo.srcSet.attribute} sizes="100vw"
-               width={1920} height={735} alt="" loading="lazy" decoding="async" />
-        </picture>
+        <!-- A escada. Desenhada aqui e não numa imagem: quatro degraus são
+             quatro por construção, os rótulos ficam nítidos em qualquer tela e
+             trocar um nome não custa arte nova. -->
+        <div class="escada">
+          <ol class="escada__degraus stagger">
+            {niveis.map((n, i) => (
+              <li style={`--alt:${34 + i * 22}%`}>
+                <div class="degrau">
+                  <span class="degrau__n">{i + 1}</span>
+                  <Icon name={n.icon} size={22} />
+                </div>
+              </li>
+            ))}
+          </ol>
+          <ul class="escada__rotulos">
+            {niveis.map((n) => <li>{n.nome}</li>)}
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -553,32 +565,20 @@ const vantagens = [
     font-size: 0.95rem;
   }
 
-  /* ── Pilares: a arte é a dobra inteira, o texto ocupa a metade escura ── */
-  /* A altura acompanha a proporção da arte, com teto nos 735px de origem:
-     assim ela nunca é ampliada e o enquadramento dos pilares é o mesmo em
-     qualquer largura. */
+  /* ── Método: texto à esquerda, a escada dos 4 níveis à direita ── */
   .pilares {
     position: relative;
-    isolation: isolate;
-    display: grid;
-    align-items: center;
-    min-height: min(51vw, 735px);
-  }
-  .pilares__plate { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-  .pilares__plate :global(img) {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
-  }
-  /* Filetes de 4px no gradiente da marca fecham a faixa em cima e embaixo:
-     a borda declara o limite, então o corte lê como moldura e não como erro. */
-  .pilares {
+    padding-block: clamp(2.5rem, 5vw, 4rem);
     border-block: 4px solid transparent;
     border-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%) 1;
   }
-  .method { position: relative; z-index: 1; }
-  /* Trava a medida antes de onde os pilares começam na arte, pra letra
-     nunca cair em cima do desenho. */
-  .method__text { max-width: 32rem; text-align: left; }
+  .method {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .method__text { text-align: left; }
   .method__text .over { text-align: left; }
   /* Itálica de display em regular; o .grad traz 700 e aqui ele não serve. */
   .method__text h2 .hand {
@@ -593,46 +593,117 @@ const vantagens = [
     line-height: 1.5;
   }
 
-  /* Numa coluna estreita o cover ampliaria a arte até só caber um pilar, e o
-     texto cairia em cima dele. Aqui ela sai do fundo e vira faixa abaixo do
-     texto, inteira, na proporção original. */
+  /* ── A escada ──
+     Quatro degraus, cada um mais alto que o anterior, encostados de modo que
+     leiam como uma escada e não como quatro barras soltas. O fio de luz no
+     topo de cada um é que separa um do outro. */
+  .escada { --piso: clamp(12rem, 21vw, 17.5rem); }
+  .escada__degraus {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Encostados: com vão entre eles isto vira gráfico de barras. Colados, o
+       fio de luz no topo de cada um é que marca onde um acaba e o outro
+       começa, e o conjunto lê como escada. */
+    gap: 0;
+    /* stretch e não end: com end o li encolhe até o conteúdo e a altura em
+       porcentagem do degrau não tem contra o que resolver. O li ocupa a
+       fileira inteira e o degrau assenta no pé dele. */
+    align-items: stretch;
+    height: var(--piso);
+  }
+  .escada__degraus > li { display: flex; align-items: flex-end; }
+  /* O chão em que a escada assenta. */
+  .escada__degraus::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #fad49f4d 18%, #fad49f4d 82%, transparent);
+  }
+
+  .degrau {
+    position: relative;
+    width: 100%;
+    height: var(--alt);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding-top: 0.85rem;
+    overflow: hidden;
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(180deg, #0d3a6e 0%, #082a52 42%, #041e42 100%);
+    box-shadow:
+      inset 0 3px 0 var(--gold-lift),
+      inset -1px 0 0 #01152299,
+      0 -14px 34px -16px #d7b35680;
+    transition:
+      translate 0.5s var(--ease),
+      box-shadow 0.5s var(--ease);
+  }
+  .degrau__n {
+    font-family: 'ivypresto-display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--gold-flare);
+  }
+  .degrau :global(svg) { color: var(--gold-lift); flex: none; }
+  .escada__degraus li:hover .degrau {
+    box-shadow:
+      inset 0 2px 0 #fffaf0,
+      inset 0 -1px 0 #fad49f33,
+      0 -16px 38px -12px #d7b35699;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .escada__degraus li:hover .degrau { translate: 0 -4px; }
+  }
+
+  .escada__rotulos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 0.9rem;
+  }
+  .escada__rotulos li {
+    text-align: center;
+    font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--paper);
+  }
+
+  /* Entrada: os degraus sobem do chão, um depois do outro. É a copy em
+     movimento, "uma construída sobre a outra". A regra de cascata mexe no
+     transform dos filhos, então aqui ela é neutralizada e quem anima é a
+     altura do degrau. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.reveal-on) .escada__degraus.stagger > * { transform: none; opacity: 1; }
+    :global(html.reveal-on) .escada__degraus.stagger > * .degrau {
+      height: 0;
+      transition: height 0.85s var(--ease), translate 0.5s var(--ease), box-shadow 0.5s var(--ease);
+    }
+    :global(html.reveal-on) .escada__degraus.stagger.is-in > * .degrau { height: var(--alt); }
+    :global(html.reveal-on) .escada__degraus > :nth-child(2) .degrau { transition-delay: 0.12s; }
+    :global(html.reveal-on) .escada__degraus > :nth-child(3) .degrau { transition-delay: 0.24s; }
+    :global(html.reveal-on) .escada__degraus > :nth-child(4) .degrau { transition-delay: 0.36s; }
+  }
+
   @media (max-width: 62rem) {
-    /* A arte do celular já vem enquadrada e com o degradê no topo em #05060F:
-       o fundo da faixa recebe a mesma cor pra a emenda desaparecer. */
-    .pilares {
-      min-height: 0;
-      display: block;
-      padding-top: 40px;
-      background: #05060f;
-    }
-    /* A arte tem metade da altura vazia acima dos pilares. A caixa apara esse
-       topo e a largura maior que a tela amplia o desenho: as duas coisas
-       juntas trazem os pilares pra perto do texto e maiores. */
-    .pilares__plate {
-      position: static;
-      margin-top: clamp(0.5rem, 2vw, 1rem);
-      aspect-ratio: 980 / 574;
-      overflow: hidden;
-    }
-    .pilares__plate :global(img) {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 130%;
-      height: auto;
-      transform: translateX(-50%);
-      object-fit: fill;
-    }
-    .pilares__plate { position: relative; }
-    .method__text { max-width: none; text-align: center; }
+    .method { grid-template-columns: 1fr; gap: 2.25rem; }
+    .method__text { text-align: center; }
     .method__text .over { text-align: center; }
-    /* Ícone acima do texto, não ao lado. */
     .aside {
       grid-template-columns: 1fr;
       justify-items: center;
       gap: 0.75rem;
       margin-inline: auto;
     }
+    .escada { --piso: clamp(10rem, 34vw, 14rem); }
+    .escada__rotulos li { font-size: 0.68rem; }
   }
 
   /* ── Sprint: título centrado e linha do tempo horizontal ── */
@@ -1053,6 +1124,14 @@ const vantagens = [
   /* Ancorada no topo: a arte é mais alta que a seção, e centrada o corte
      comia as cabeças. */
   .close__plate :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  /* Véu no azul da marca: a foto é clara demais atrás de texto branco. */
+  .close__plate::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #041e42a6 0%, #041e42cc 55%, #041e42e6 100%);
+    pointer-events: none;
+  }
   .close .glow { z-index: 1; }
   .close .shell { position: relative; z-index: 2; }
   /* Medida larga o bastante para as duas linhas ditadas caberem inteiras:
