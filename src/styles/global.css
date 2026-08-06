@@ -15,10 +15,6 @@
      um passo abaixo dela, pra fundo de caixa e pontas de degradê. */
   --ground:      #041e42;
   --ground-deep: #02132b;
-
-  /* Pé da arte da abertura. Vale só na hero e na faixa logo abaixo dela,
-     que é onde a arte encosta na página. */
-  --hero-foot:   #011522;
   --navy:        #171a3b;   /* 01 - AZUL MARINHO, do arquivo do cliente */
   --navy-glow:   #0a1264;
 
