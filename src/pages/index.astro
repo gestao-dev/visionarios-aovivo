@@ -53,16 +53,16 @@ const elenco = [
 ];
 const criterios = [
   'Você é dono de escritório contábil (não estudante, não iniciante)',
-  'A empresa não anda sem você, e isso já te esgotou',
+  'O escritório não anda sem você, e isso já te esgotou',
   'Você tem técnica de sobra, mas gestão de menos',
-  'Você prefere implementar a acumular mais um curso na estante',
+  'Sofre com gestão e mão de obra qualificada',
   'Você quer entrar em 2027 com o escritório estruturado, não no mesmo caos',
 ];
 const vantagens = [
   { icon: 'star',      texto: 'O menor preço do evento: abre antes de todos os lotes, por 48h, e não volta.' },
   { icon: 'gift',      texto: 'Bônus físico exclusivo pra quem garantir nas primeiras 48h.' },
   { icon: 'stopwatch', texto: 'Prioridade na abertura: você é avisado primeiro, antes da lista pública.' },
-  { icon: 'clapper',   texto: 'Bastidores e lineup: palestrantes e novidades em primeira mão.' },
+  { icon: 'clapper',   texto: 'Bastidores: palestrantes e novidades em primeira mão.' },
 ];
 ---
 
@@ -336,7 +336,7 @@ const vantagens = [
   /* A hero termina em preto; a dobra seguinte nasce nesse mesmo preto e só
      então caminha para o azul da página. Sem isso fica a emenda visível. */
   .tail {
-    background: linear-gradient(180deg, #000001 0, #01020a 14rem, var(--ground) 34rem);
+    background: linear-gradient(180deg, #000001 0, #010a1c 14rem, var(--ground) 34rem);
     background-repeat: no-repeat;
   }
 
@@ -930,7 +930,7 @@ const vantagens = [
     gap: clamp(1.5rem, 3vw, 2.6rem);
     padding: clamp(1.1rem, 2.2vw, 1.6rem);
     align-items: stretch;
-    background: linear-gradient(180deg, #000001, #04050f);
+    background: linear-gradient(180deg, #02132b, #041e42);
   }
   /* A arte já é o ingresso inteiro: logo, chips e código de barras vêm nela.
      No formato alto ela cobre a altura da coluna sozinha, sem placa. */

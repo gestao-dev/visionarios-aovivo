@@ -11,8 +11,10 @@
   font-display: swap;
 }
 :root {
-  --ground:      #05060f;
-  --ground-deep: #000001;
+  /* PMS 282 C, do arquivo do cliente. É a cor da página inteira; o -deep é
+     um passo abaixo dela, pra fundo de caixa e pontas de degradê. */
+  --ground:      #041e42;
+  --ground-deep: #02132b;
   --navy:        #171a3b;   /* 01 - AZUL MARINHO, do arquivo do cliente */
   --navy-glow:   #0a1264;
 
@@ -32,7 +34,7 @@
 
   --measure: 56ch;
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
-  --rhythm: clamp(5rem, 10vw, 9rem);
+  --rhythm: clamp(2.5rem, 5vw, 4.5rem);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   color-scheme: dark;
@@ -52,7 +54,7 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: clip
 
 body {
   margin: 0;
-  background: #000001;
+  background: var(--ground);
   color: var(--paper);
   font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(1rem, 0.95rem + 0.25vw, 1.09rem);
@@ -224,7 +226,7 @@ section h2,
 .card {
   border: 1px solid var(--edge-lit);
   border-radius: 20px;
-  background: linear-gradient(180deg, #080b23, #04050f);
+  background: linear-gradient(180deg, #07295a, #031733);
 }
 
 /* ── Painel: a superfície de conteúdo, com matéria e não filete ── */
