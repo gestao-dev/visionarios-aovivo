@@ -29,12 +29,16 @@ const { ctaLabel = 'Entrar na lista', ctaHref } = Astro.props;
     backdrop-filter: blur(22px) saturate(1.35);
     -webkit-backdrop-filter: blur(22px) saturate(1.35);
     border-top: 1px solid var(--edge-lit);
-    /* Fora da tela e sem foco enquanto não entra. */
-    transform: translateY(115%);
+    /* Fora da tela e sem foco enquanto não entra. A saída desce por inteiro,
+       com a opacidade indo junto: só o transform deixava a barra visível
+       cruzando a borda da tela em aparelho baixo. */
+    transform: translateY(120%);
+    opacity: 0;
     visibility: hidden;
     transition:
-      transform 0.5s var(--ease),
-      visibility 0s linear 0.5s;
+      transform 0.62s cubic-bezier(0.36, 0, 0.2, 1),
+      opacity 0.42s var(--ease),
+      visibility 0s linear 0.62s;
   }
   .dock__in {
     display: flex;
@@ -56,11 +60,14 @@ const { ctaLabel = 'Entrar na lista', ctaHref } = Astro.props;
   @media (max-width: 60rem) {
     .dock { display: block; }
   }
+  /* Entrada com a curva de saída-suave: sobe rápido e assenta devagar. */
   :global(html.dock-on) .dock {
     transform: none;
+    opacity: 1;
     visibility: visible;
     transition:
-      transform 0.5s var(--ease),
+      transform 0.62s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.34s var(--ease),
       visibility 0s;
   }
   @media (prefers-reduced-motion: reduce) {
@@ -70,13 +77,19 @@ const { ctaLabel = 'Entrar na lista', ctaHref } = Astro.props;
 
 <script>
   const marco = document.getElementById('dobra-2');
+  // Onde a própria página passa a oferecer a ação: a partir daí a barra
+  // fixa vira redundante e sai de cena.
+  const fim = document.getElementById('garanta');
   const raiz = document.documentElement;
 
   if (marco) {
-    // Aparece quando metade da segunda dobra já passou pelo topo da tela.
+    // Aparece quando metade da segunda dobra já passou pelo topo da tela, e
+    // recolhe assim que "Garanta sua vaga" sobe além do topo.
     function avaliar() {
       const r = marco.getBoundingClientRect();
-      raiz.classList.toggle('dock-on', r.top + r.height * 0.5 <= 0);
+      const entrou = r.top + r.height * 0.5 <= 0;
+      const saiu = fim ? fim.getBoundingClientRect().top <= 0 : false;
+      raiz.classList.toggle('dock-on', entrou && !saiu);
     }
 
     let pendente = false;
