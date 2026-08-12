@@ -1,5 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from '../Icon.astro';
+import ingressoRoyal from '../../assets/ingresso-royal.png';
+import ingressoGold from '../../assets/ingresso-gold.png';
 
 // Copy e valores idênticos ao public/lp/index.html (produção), só com o
 // tratamento visual do sistema novo. Links de pagamento e WhatsApp mantidos.
@@ -10,7 +13,9 @@ const ingressos = [
   {
     nome: 'Royal',
     sub: 'Ingresso · Lote Zero',
+    arte: ingressoRoyal,
     preco: '397',
+    centavos: '00',
     pagamento: 'https://clkdmg.site/pay/lote-zero-vav',
     inclHead: 'O que está incluso',
     incl: ['Acesso aos 2 dias de evento', 'Material de apoio', 'Coffee break', 'Certificado de participação'],
@@ -19,7 +24,9 @@ const ingressos = [
   {
     nome: 'Gold',
     sub: 'Ingresso · Lote Zero · VIP',
+    arte: ingressoGold,
     preco: '997',
+    centavos: '00',
     pagamento: 'https://clkdmg.site/pay/lote-zero-gold',
     inclHead: 'Tudo do Royal, mais:',
     incl: [
@@ -51,17 +58,9 @@ const ingressos = [
       <div class={`card tk ${t.destaque ? 'tk--gold' : ''}`}>
         {t.destaque && <span class="tk__flag">Experiência completa</span>}
 
-        <!-- Arte do ingresso: placeholder até a peça final chegar. -->
-        <div class="tk__art ph" aria-hidden="true">
-          <span>Foto do ingresso {t.nome}</span>
-        </div>
-
-        <div class="tk__head">
-          <span class="medal medal--sm"><Icon name={t.destaque ? 'star' : 'shield'} size={19} /></span>
-          <div>
-            <p class="tk__name">{t.nome}</p>
-            <p class="tk__sub">{t.sub}</p>
-          </div>
+        <div class="tk__art">
+          <Image src={t.arte} alt={`Ingresso ${t.nome} do Visionários ao Vivo`}
+                 widths={[430, 860]} sizes="(max-width: 54rem) 80vw, 26rem" quality={90} />
         </div>
 
         <div class="tk__incl">
@@ -73,23 +72,24 @@ const ingressos = [
           </ul>
         </div>
 
-        <p class="tk__price"><span class="tk__cur">R$</span>{t.preco}</p>
+        <p class="tk__price">
+          <span class="tk__cur">R$</span>{t.preco}<span class="tk__cents">,{t.centavos}</span>
+        </p>
         <p class="tk__vagas">Vagas limitadas</p>
 
-        <a class="cta cta--wide" href={t.pagamento}>Garantir 1 ingresso <Icon name="arrow" size={18} /></a>
+        <a class={`cta cta--wide ${t.destaque ? '' : 'cta--royal'}`} href={t.pagamento}>
+          Garantir 1 ingresso <Icon name="arrow" size={18} />
+        </a>
 
         <div class="tk__btns">
           <a class="tk__btn2" href={whatsapp}>2 a 4 ingressos <span>15% OFF</span></a>
           <a class="tk__btn2" href={whatsapp}>5+ ingressos <span>20% OFF</span></a>
         </div>
 
-        <p class="tk__pay">Pix ou em até <b>12x</b> no cartão</p>
         <p class="tk__note">Grupos de 2+ ingressos: atendimento consultivo com o nosso time no WhatsApp.</p>
 
-        <!-- Bandeiras dos cartões: placeholder até a arte final chegar. -->
-        <div class="tk__flags ph" aria-hidden="true">
-          <span>Bandeiras de cartões</span>
-        </div>
+        <img class="tk__flags" src="/bandeiras-cartao.svg" alt="Bandeiras de cartão aceitas"
+             width="269" height="47" loading="lazy" decoding="async" />
       </div>
     ))}
   </div>
@@ -148,12 +148,14 @@ const ingressos = [
       linear-gradient(180deg, #07295a, #031733) padding-box,
       conic-gradient(
         from var(--tk-angle),
-        var(--gold-deep) 0deg,
+        /* Base a 50%: a borda parada some pela metade e o brilho que gira
+           passa a ser o que se vê. */
+        #8a6c2e80 0deg,
         var(--gold) 28deg,
         var(--gold-flare) 52deg,
         var(--gold) 76deg,
-        var(--gold-deep) 108deg,
-        var(--gold-deep) 360deg
+        #8a6c2e80 108deg,
+        #8a6c2e80 360deg
       ) border-box;
     box-shadow: 0 30px 70px -30px #000000f0;
   }
@@ -164,26 +166,16 @@ const ingressos = [
     to { --tk-angle: 360deg; }
   }
 
-  /* Placeholders de arte: leem como espaço reservado, não como caixa vazia. */
-  .ph {
-    display: grid;
-    place-items: center;
-    border: 1px dashed var(--edge-lit);
-    border-radius: 12px;
-    background: #ffffff08;
-    color: var(--paper);
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-align: center;
-  }
-  .tk__art {
-    aspect-ratio: 16 / 9;
-    margin-bottom: 1.5rem;
-  }
+  /* A arte já traz sombra e recorte próprios: entra solta, sem moldura. */
+  .tk__art { line-height: 0; margin-bottom: 0.5rem; }
+  .tk__art :global(img) { width: 100%; height: auto; }
+
   .tk__flags {
-    height: 2.75rem;
-    margin-top: 0.9rem;
+    display: block;
+    height: 2rem;
+    width: auto;
+    margin: 1.1rem auto 0;
+    opacity: 0.9;
   }
 
   .tk__flag {
@@ -201,25 +193,25 @@ const ingressos = [
     white-space: nowrap;
   }
 
-  .tk__head { display: flex; align-items: center; gap: 0.9rem; }
-  .tk__name { font-size: 1.35rem; font-weight: 700; color: var(--paper); letter-spacing: -0.02em; }
-  .tk__sub { margin-top: 0.15rem; font-size: 0.85rem; color: var(--paper); }
-
   /* O valor é o que decide a leitura do cartão: cresce acima de tudo. */
   .tk__price {
     margin-top: 1.5rem;
     font-size: clamp(3.4rem, 7.4vw, 4.75rem);
     font-weight: 700;
     line-height: 0.95;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.055em;
     color: var(--paper);
+    text-align: center;
   }
   .tk__cur { margin-right: 0.3rem; font-size: 0.34em; font-weight: 600; color: var(--gold-lift); vertical-align: 0.72em; }
+  /* Centavos menores: pesam na leitura sem disputar com o número cheio. */
+  .tk__cents { font-size: 0.42em; letter-spacing: -0.02em; vertical-align: 0.62em; }
   /* Etiqueta, não linha de texto: a escassez precisa ler como selo. */
   .tk__vagas {
-    display: inline-flex;
+    display: flex;
+    width: fit-content;
     align-items: center;
-    margin-top: 0.8rem;
+    margin: 0.8rem auto 0;
     padding: 0.4rem 0.9rem;
     border: 1px solid var(--gold);
     border-radius: 100px;
@@ -231,7 +223,23 @@ const ingressos = [
     color: var(--gold-lift);
   }
 
-  .tk .cta { margin-top: 1.3rem; }
+  .tk .cta { display: flex; margin: 1.3rem auto 0; }
+  /* Royal: o botão veste o azul da arte do próprio ingresso, com o realce
+     claro que aparece no lettering "Royal". */
+  .cta--royal {
+    background-color: #16306f;
+    background-image: linear-gradient(90deg, #16306f 0%, #2f5bb5 100%);
+    border: 1px solid #609fff59;
+    color: #eaf1ff;
+    /* O halo dourado do botão padrão não cabe num botão azul. */
+    box-shadow:
+      0 calc(10px + var(--raise) * 8px) calc(30px + var(--raise) * 20px) #2f5bb540,
+      0 6px 18px #0000005c;
+  }
+  .cta--royal:hover {
+    background-image: linear-gradient(90deg, #1b3a86 0%, #3a6bd0 100%);
+    border-color: #8eb7ff80;
+  }
 
   .tk__btns { display: grid; gap: 0.5rem; margin-top: 0.75rem; }
   .tk__btn2 {
@@ -251,9 +259,15 @@ const ingressos = [
   .tk__btn2 span { font-weight: 700; color: var(--gold-lift); }
   .tk__btn2:hover { border-color: var(--gold); background: #d7b3560d; }
 
-  .tk__pay { margin-top: 0.9rem; font-size: 0.85rem; color: var(--paper); }
-  .tk__pay b { color: var(--gold-lift); }
-  .tk__note { margin-top: 0.4rem; font-size: 0.82rem; color: var(--paper); }
+  /* Fecha o bloco dos pacotes: fica logo abaixo da opção de 5+ ingressos. */
+  .tk__note {
+    max-width: 34ch;
+    margin: 0.8rem auto 0;
+    font-size: 0.82rem;
+    color: var(--paper);
+    text-align: center;
+    text-wrap: balance;
+  }
 
   /* O que está incluso vem antes do preço: o valor é lido depois da entrega. */
   .tk__incl {
@@ -269,14 +283,18 @@ const ingressos = [
     text-transform: uppercase;
     color: var(--gold-flare);
   }
+  .tk__inclh { text-align: center; }
   .tk__incl ul { display: grid; gap: 0.7rem; }
+  /* Centralizado, com o ícone colado no texto: o par anda junto no eixo,
+     em vez de o traço ficar preso numa coluna à esquerda. */
   .tk__incl li {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
     align-items: center;
-    gap: 0.65rem;
+    justify-content: center;
+    gap: 0.5rem;
     font-size: 0.94rem;
     color: var(--paper);
+    text-align: center;
   }
   .tk__incl :global(svg) { color: var(--gold); flex: none; }
 
