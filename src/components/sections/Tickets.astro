@@ -46,16 +46,16 @@ const ingressos = [
 <section id="ingressos" class="eyebrow-free" aria-labelledby="t-ing">
   <span class="glow glow--gold g-center" aria-hidden="true"></span>
   <div class="shell center measure-wide">
-    <p class="over fade">Garanta sua vaga</p>
+    <p class="over fade" id="garanta">Garanta sua vaga</p>
     <h2 id="t-ing" class="rise">Escolha seu ingresso</h2>
     <p class="sec-lede measure center rise">
       Preço de <span class="grad">Lote Zero</span>: o menor que esse evento vai ter. Vagas limitadas.
     </p>
   </div>
 
-  <div class="shell tickets stagger">
+  <div class="shell tickets">
     {ingressos.map((t) => (
-      <div class={`card tk ${t.destaque ? 'tk--gold' : ''}`}>
+      <div class={`card tk ${t.destaque ? 'tk--gold' : ''} ${t.destaque ? 'from-r' : 'from-l'}`}>
         {t.destaque && <span class="tk__flag">Experiência completa</span>}
 
         <div class="tk__art">
@@ -116,6 +116,9 @@ const ingressos = [
   }
   @media (max-width: 54rem) {
     .tickets { grid-template-columns: 1fr; max-width: 30rem; }
+    /* Empilhado, o Gold vem primeiro: é a oferta que queremos que seja lida
+       antes, e no desktop ele já ocupa a coluna da direita. */
+    .tk--gold { order: -1; }
   }
 
   .tk {
