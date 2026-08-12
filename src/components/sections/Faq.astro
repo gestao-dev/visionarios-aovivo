@@ -118,25 +118,24 @@ const perguntas = [
   }
   .faq__item[open] .faq__mark::after { opacity: 0; rotate: 0deg; }
 
-  /* Abertura suave: a altura vai de 0 ao conteúdo. interpolate-size libera a
-     transição até height: auto; onde o navegador não suporta, o item abre
-     na hora, como sempre abriu. */
-  .faq__item { interpolate-size: allow-keywords; }
-  .faq__body {
-    height: 0;
-    overflow: hidden;
-    transition: height 0.35s var(--ease), content-visibility 0.35s allow-discrete;
-  }
-  .faq__item[open] .faq__body { height: auto; }
+  /* Abertura suave: a fileira do grid vai de 0fr a 1fr, em vez de animar
+     altura. Onde ::details-content não existe, o item abre na hora, como
+     sempre abriu. */
   .faq__item::details-content {
-    height: 0;
-    overflow: hidden;
-    transition: height 0.35s var(--ease), content-visibility 0.35s allow-discrete;
+    display: grid;
+    grid-template-rows: 0fr;
     content-visibility: hidden;
+    transition:
+      grid-template-rows 0.35s var(--ease),
+      content-visibility 0.35s allow-discrete;
   }
-  .faq__item[open]::details-content { height: auto; content-visibility: visible; }
+  .faq__item[open]::details-content {
+    grid-template-rows: 1fr;
+    content-visibility: visible;
+  }
+  /* min-height zerado: sem ele a fileira não encolhe abaixo do conteúdo. */
+  .faq__body { min-height: 0; overflow: hidden; }
   @media (prefers-reduced-motion: reduce) {
-    .faq__body,
     .faq__item::details-content { transition: none; }
   }
 
