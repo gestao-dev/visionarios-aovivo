@@ -94,13 +94,6 @@ const ingressos = [
     ))}
   </div>
 
-  <div class="shell">
-    <p class="assure rise">
-      <Icon name="shield" size={16} />
-      Compra 100% segura · <b>7 dias de garantia</b>: se desistir em até 7 dias da compra,
-      devolvemos 100% do valor (direito de arrependimento, conforme o Código de Defesa do Consumidor).
-    </p>
-  </div>
 </section>
 
 <style>
@@ -113,9 +106,6 @@ const ingressos = [
     text-transform: uppercase;
     color: var(--gold-flare);
   }
-  .assure { color: var(--paper); }
-  .assure b { color: var(--gold-lift); font-weight: 700; }
-
   .tickets {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -181,7 +171,9 @@ const ingressos = [
   .tk__flag {
     position: absolute;
     top: -0.85rem;
-    left: clamp(1.6rem, 3vw, 2.2rem);
+    /* Centrada na largura do cartão, não ancorada na margem esquerda. */
+    left: 50%;
+    translate: -50%;
     padding: 0.4rem 0.9rem;
     border-radius: 100px;
     background-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%);
@@ -207,16 +199,13 @@ const ingressos = [
   /* Centavos menores: pesam na leitura sem disputar com o número cheio. */
   .tk__cents { font-size: 0.42em; letter-spacing: -0.02em; vertical-align: 0.62em; }
   /* Etiqueta, não linha de texto: a escassez precisa ler como selo. */
+  /* Só o texto: sem pílula, a escassez fala sem competir com a etiqueta do
+     topo do cartão nem com o botão logo abaixo. */
   .tk__vagas {
-    display: flex;
-    width: fit-content;
-    align-items: center;
-    margin: 0.8rem auto 0;
-    padding: 0.4rem 0.9rem;
-    border: 1px solid var(--gold);
-    border-radius: 100px;
-    background: #d7b3561f;
-    font-size: 0.74rem;
+    display: block;
+    margin-top: 0.7rem;
+    font-size: 0.78rem;
+    text-align: center;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
