@@ -1,6 +1,9 @@
 ---
 // Barra de topo conforme o arquivo do cliente (nó 2720:869):
 // 95px, fundo preto a 58%, desfoque leve, filete dourado embaixo.
+// A ação é parametrizável: sem ctaHref, abre o modal de lista (captação);
+// com ctaHref, vira link direto (vendas leva pra #ingressos).
+const { ctaLabel = 'Entrar na lista do Lote Zero', ctaHref } = Astro.props;
 ---
 
 <header class="bar">
@@ -20,7 +23,11 @@
       </div>
     </div>
 
-    <button class="cta bar__cta" type="button" data-open-lead>Entrar na lista do Lote Zero</button>
+    {ctaHref ? (
+      <a class="cta bar__cta" href={ctaHref}>{ctaLabel}</a>
+    ) : (
+      <button class="cta bar__cta" type="button" data-open-lead>{ctaLabel}</button>
+    )}
   </div>
 </header>
 

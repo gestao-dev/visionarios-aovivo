@@ -2,13 +2,19 @@
 // Barra de ação fixa no rodapé, só no celular. Aparece na metade da segunda
 // dobra e, quando aparece, o cabeçalho sobe: a ação fica onde o polegar
 // alcança, e a marca não ocupa duas barras ao mesmo tempo.
+// A ação é parametrizável do mesmo jeito que no Header.
+const { ctaLabel = 'Entrar na lista', ctaHref } = Astro.props;
 ---
 
 <div class="dock">
   <div class="dock__in">
     <img class="dock__mark" src="/logo-visionarios-ao-vivo.svg"
          alt="Visionários ao Vivo" width="196" height="48" />
-    <button class="cta dock__cta" type="button" data-open-lead>Entrar na lista</button>
+    {ctaHref ? (
+      <a class="cta dock__cta" href={ctaHref}>{ctaLabel}</a>
+    ) : (
+      <button class="cta dock__cta" type="button" data-open-lead>{ctaLabel}</button>
+    )}
   </div>
 </div>
 

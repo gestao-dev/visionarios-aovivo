@@ -1,0 +1,101 @@
+---
+import Icon from '../Icon.astro';
+
+// Perguntas e respostas idênticas ao public/lp/index.html (produção).
+const perguntas = [
+  {
+    q: 'Para quem é o Visionários ao Vivo?',
+    r: 'Para donos e sócios de escritório contábil que querem sair do operacional e estruturar um negócio lucrativo e organizado. Não é para estudantes nem para quem está começando agora.',
+  },
+  {
+    q: 'Qual a diferença entre o Royal e o Gold?',
+    r: 'O Royal dá acesso completo aos 2 dias de evento, material de apoio, coffee break e certificado. O Gold inclui tudo isso e mais a experiência VIP: jantar exclusivo no dia anterior com Marcos e Viviane, lounge VIP, fotógrafa de retratos, credenciamento prioritário, assentos reservados na frente e press kit VIP.',
+  },
+  {
+    q: 'Onde e quando acontece?',
+    r: 'Nos dias 29 e 30 de outubro de 2026, em São Paulo. O endereço exato e todas as orientações são enviados por e-mail para quem garantir o ingresso.',
+  },
+  {
+    q: 'Como funciona o pagamento?',
+    r: 'Para 1 ingresso, você garante direto pelo site, no Pix ou em até 12x no cartão. Para 2 ou mais ingressos (com desconto), o atendimento é feito pelo nosso time no WhatsApp.',
+  },
+  {
+    q: 'Posso levar a minha equipe?',
+    r: 'Sim, e é até recomendado. De 2 a 4 ingressos você tem 15% OFF, e a partir de 5 ingressos, 20% OFF. É só clicar no botão do pacote e falar com o nosso time no WhatsApp para um atendimento consultivo.',
+  },
+  {
+    q: 'E se eu não puder ir depois de comprar?',
+    r: 'Você tem 7 dias de garantia: se desistir em até 7 dias da compra, devolvemos 100% do valor (direito de arrependimento, conforme o Código de Defesa do Consumidor).',
+  },
+  {
+    q: 'As vagas acabam?',
+    r: 'Sim. É a 1ª edição, presencial e com vagas limitadas. E o Lote Zero é o menor preço que o evento vai ter: quando esgotar, o valor sobe e não volta.',
+  },
+];
+---
+
+<!-- ══ FAQ ══ -->
+<section aria-labelledby="t-faq">
+  <div class="shell center measure-wide">
+    <p class="over fade">Ainda com dúvida</p>
+    <h2 id="t-faq" class="h-lg rise">Perguntas frequentes</h2>
+  </div>
+
+  <div class="shell faq stagger">
+    {perguntas.map((p) => (
+      <details class="faq__item">
+        <summary>
+          {p.q}
+          <span class="faq__mark" aria-hidden="true"><Icon name="arrow" size={16} /></span>
+        </summary>
+        <p>{p.r}</p>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .measure-wide { max-width: 46rem; }
+  .over {
+    margin-bottom: 0.77rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+
+  .faq {
+    display: grid;
+    gap: 0.7rem;
+    max-width: 48rem;
+    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+  }
+  .faq__item {
+    border: 1px solid var(--edge-lit);
+    border-radius: 12px;
+    background: linear-gradient(180deg, #07295a, #031733);
+    overflow: clip;
+  }
+  .faq__item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem;
+    color: var(--paper);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__mark { flex: none; color: var(--gold-lift); transition: rotate 0.3s var(--ease); }
+  .faq__item[open] .faq__mark { rotate: 90deg; }
+  .faq__item p {
+    padding: 0 1.4rem 1.2rem;
+    color: var(--paper);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+</style>

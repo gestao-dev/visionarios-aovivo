@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import cardViviane from '../../assets/card-viviane.png';
+import cardMarcos from '../../assets/card-marcos.png';
+import cardConvidado1 from '../../assets/card-convidado-1.png';
+import cardConvidado2 from '../../assets/card-convidado-2.png';
+
+const elenco = [
+  { img: cardViviane,    alt: 'Viviane Araújo, fundadora da Soluzzi e mentora' },
+  { img: cardMarcos,     alt: 'Marcos Paulo, Contadores Visionários' },
+  { img: cardConvidado1, alt: 'Palestrante a revelar, anunciado no grupo' },
+  { img: cardConvidado2, alt: 'Palestrante a revelar, anunciado no grupo' },
+];
+---
+
+<!-- ══ Palestrantes ══ -->
+<section aria-labelledby="t-quem">
+  <span class="glow glow--gold g-left" aria-hidden="true"></span>
+  <div class="shell center measure-wide">
+    <p class="over fade">Quem sobe ao palco</p>
+    <h2 id="t-quem" class="grad h-lg rise">Os palestrantes</h2>
+    <p class="sec-lede measure center rise">
+      Viviane e Marcos conduzem o método. E, a cada semana, um novo nome de peso do
+      mercado contábil é revelado.
+    </p>
+  </div>
+
+  <ul class="shell cast stagger">
+    {elenco.map((e) => (
+      <li class="cast__card">
+        <Image src={e.img} alt={e.alt} widths={[320, 619]}
+               sizes="(max-width: 46rem) calc(100vw - 40px), (max-width: 62rem) 45vw, 17rem"
+               quality={88} />
+      </li>
+    ))}
+  </ul>
+
+  <div class="shell">
+    <p class="aside aside--note fade">
+      Os convidados são revelados um a um, sempre primeiro pra quem<br class="turn" />
+      está na lista do Lote Zero.
+    </p>
+  </div>
+</section>
+
+<style>
+  .measure-wide { max-width: 46rem; }
+  .over {
+    margin-bottom: 0.77rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+  .turn { display: none; }
+  @media (min-width: 44rem) { .turn { display: inline; } }
+
+  /* ── Elenco: cada card é uma peça fechada (nó 2742:6835) ── */
+  .cast {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.42rem, 0.9vw, 0.8rem);
+    margin-top: clamp(1.7rem, 3.4vw, 2.6rem);
+  }
+  /* Sem borda: o PNG já traz o canto arredondado e a moldura desenhada. */
+  .cast__card {
+    line-height: 0;
+    border-radius: 12px;
+    transition: translate 0.7s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .cast__card:hover { box-shadow: 0 26px 50px -22px #000000d9; }
+  @media (prefers-reduced-motion: no-preference) {
+    .cast__card:hover { translate: 0 -4px; }
+  }
+  .cast__card :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 619 / 892;
+    object-fit: cover;
+  }
+
+  @media (max-width: 62rem) {
+    .cast { grid-template-columns: repeat(2, 1fr); }
+  }
+  /* No celular, um por vez: em 2x2 cada card fica com 170px e o nome cravado
+     na arte sai ilegível. */
+  @media (max-width: 46rem) {
+    .cast { grid-template-columns: 1fr; gap: 1rem; }
+    .cast__card { width: 100%; max-width: 380px; margin-inline: auto; }
+  }
+
+  /* Nota sob os palestrantes: sem ícone, duas linhas, quebra ditada. */
+  .aside--note {
+    display: block;
+    max-width: none;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  /* Halos de seção */
+  .g-left { width: 34rem; height: 24rem; top: 6%; left: -14rem; opacity: 0.32; }
+</style>

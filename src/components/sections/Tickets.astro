@@ -1,0 +1,212 @@
+---
+import Icon from '../Icon.astro';
+
+// Copy e valores idênticos ao public/lp/index.html (produção), só com o
+// tratamento visual do sistema novo. Links de pagamento e WhatsApp mantidos.
+const whatsapp =
+  'https://wa.me/5513981810880?text=Ol%C3%A1%2C%20vim%20do%20site%20do%20Vision%C3%A1rios%20ao%20vivo%20e%20quero%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20pacotes%20de%20ingressos%20com%20desconto.';
+
+const ingressos = [
+  {
+    nome: 'Royal',
+    sub: 'Ingresso · Lote Zero',
+    preco: '397',
+    pagamento: 'https://clkdmg.site/pay/lote-zero-vav',
+    inclHead: 'O que está incluso',
+    incl: ['Acesso aos 2 dias de evento', 'Material de apoio', 'Coffee break', 'Certificado de participação'],
+    destaque: false,
+  },
+  {
+    nome: 'Gold',
+    sub: 'Ingresso · Lote Zero · VIP',
+    preco: '997',
+    pagamento: 'https://clkdmg.site/pay/lote-zero-gold',
+    inclHead: 'Tudo do Royal, mais:',
+    incl: [
+      'Jantar exclusivo no dia anterior com Marcos e Viviane',
+      'Lounge VIP durante o evento',
+      'Fotógrafa de retratos exclusiva',
+      'Credenciamento prioritário',
+      'Assentos reservados na frente',
+      'Press kit VIP exclusivo',
+    ],
+    destaque: true,
+  },
+];
+---
+
+<!-- ══ Ingressos ══ -->
+<section id="ingressos" class="eyebrow-free" aria-labelledby="t-ing">
+  <span class="glow glow--gold g-center" aria-hidden="true"></span>
+  <div class="shell center measure-wide">
+    <p class="over fade">Garanta sua vaga</p>
+    <h2 id="t-ing" class="rise">Escolha seu ingresso</h2>
+    <p class="sec-lede measure center rise">
+      Preço de <span class="grad">Lote Zero</span>: o menor que esse evento vai ter. Vagas limitadas.
+    </p>
+  </div>
+
+  <div class="shell tickets stagger">
+    {ingressos.map((t) => (
+      <div class={`card tk ${t.destaque ? 'tk--gold' : ''}`}>
+        {t.destaque && <span class="tk__flag">Experiência completa</span>}
+
+        <div class="tk__head">
+          <span class="medal medal--sm"><Icon name={t.destaque ? 'star' : 'shield'} size={19} /></span>
+          <div>
+            <p class="tk__name">{t.nome}</p>
+            <p class="tk__sub">{t.sub}</p>
+          </div>
+        </div>
+
+        <p class="tk__price"><span class="tk__cur">R$</span>{t.preco}</p>
+        <p class="tk__vagas">Vagas limitadas</p>
+
+        <a class="cta cta--wide" href={t.pagamento}>Garantir 1 ingresso <Icon name="arrow" size={18} /></a>
+
+        <div class="tk__btns">
+          <a class="tk__btn2" href={whatsapp}>2 a 4 ingressos <span>15% OFF</span></a>
+          <a class="tk__btn2" href={whatsapp}>5+ ingressos <span>20% OFF</span></a>
+        </div>
+
+        <p class="tk__pay">Pix ou em até <b>12x</b> no cartão · Visa · Master · Elo</p>
+        <p class="tk__note">Grupos de 2+ ingressos: atendimento consultivo com o nosso time no WhatsApp.</p>
+
+        <div class="tk__incl">
+          <p class="tk__inclh">{t.inclHead}</p>
+          <ul>
+            {t.incl.map((i) => (
+              <li><Icon name="check" size={15} />{i}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="shell">
+    <p class="assure rise">
+      <Icon name="shield" size={16} />
+      Compra 100% segura · <b>7 dias de garantia</b>: se desistir em até 7 dias da compra,
+      devolvemos 100% do valor (direito de arrependimento, conforme o Código de Defesa do Consumidor).
+    </p>
+  </div>
+</section>
+
+<style>
+  .measure-wide { max-width: 46rem; }
+  .over {
+    margin-bottom: 0.77rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+  .assure { color: var(--paper); }
+  .assure b { color: var(--gold-lift); font-weight: 700; }
+
+  .tickets {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 2rem);
+    max-width: 62rem;
+    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+    align-items: start;
+  }
+  @media (max-width: 54rem) {
+    .tickets { grid-template-columns: 1fr; max-width: 30rem; }
+  }
+
+  .tk {
+    position: relative;
+    padding: clamp(1.6rem, 3vw, 2.2rem);
+  }
+  .tk--gold {
+    border-color: var(--gold);
+    background:
+      linear-gradient(180deg, #d7b3560d, #f4edd00d),
+      linear-gradient(180deg, #07295a, #031733);
+    box-shadow: 0 0 0 1px #d7b3562e, 0 30px 70px -30px #000000f0;
+  }
+
+  .tk__flag {
+    position: absolute;
+    top: -0.85rem;
+    left: clamp(1.6rem, 3vw, 2.2rem);
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    background-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%);
+    color: var(--navy);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tk__head { display: flex; align-items: center; gap: 0.9rem; }
+  .tk__name { font-size: 1.35rem; font-weight: 700; color: var(--paper); letter-spacing: -0.02em; }
+  .tk__sub { margin-top: 0.15rem; font-size: 0.85rem; color: var(--paper); }
+
+  .tk__price {
+    margin-top: 1.4rem;
+    font-size: clamp(2.4rem, 5vw, 3.1rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--paper);
+  }
+  .tk__cur { margin-right: 0.3rem; font-size: 0.42em; font-weight: 600; color: var(--gold-lift); vertical-align: 0.6em; }
+  .tk__vagas { margin-top: 0.5rem; font-size: 0.82rem; font-weight: 600; color: var(--gold-lift); text-transform: uppercase; letter-spacing: 0.04em; }
+
+  .tk .cta { margin-top: 1.3rem; }
+
+  .tk__btns { display: grid; gap: 0.5rem; margin-top: 0.75rem; }
+  .tk__btn2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--edge-lit);
+    border-radius: 8px;
+    color: var(--paper);
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .tk__btn2 span { font-weight: 700; color: var(--gold-lift); }
+  .tk__btn2:hover { border-color: var(--gold); background: #d7b3560d; }
+
+  .tk__pay { margin-top: 0.9rem; font-size: 0.85rem; color: var(--paper); }
+  .tk__pay b { color: var(--gold-lift); }
+  .tk__note { margin-top: 0.4rem; font-size: 0.82rem; color: var(--paper); }
+
+  .tk__incl {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--edge-lit);
+  }
+  .tk__inclh {
+    margin-bottom: 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+  .tk__incl ul { display: grid; gap: 0.7rem; }
+  .tk__incl li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.94rem;
+    color: var(--paper);
+  }
+  .tk__incl :global(svg) { color: var(--gold); flex: none; }
+
+  .g-center { width: 42rem; height: 26rem; top: 10%; left: 50%; transform: translateX(-50%); opacity: 0.3; }
+</style>

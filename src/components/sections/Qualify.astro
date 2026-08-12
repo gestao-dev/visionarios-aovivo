@@ -1,0 +1,125 @@
+---
+import Icon from '../Icon.astro';
+
+const criterios = [
+  'Você é dono de escritório contábil (não estudante, não iniciante)',
+  'O escritório não anda sem você, e isso já te esgotou',
+  'Você tem técnica de sobra, mas gestão de menos',
+  'Sofre com gestão e mão de obra qualificada',
+  'Você quer entrar em 2027 com o escritório estruturado, não no mesmo caos',
+];
+---
+
+<!-- ══ Qualificação ══ -->
+<section aria-labelledby="t-pra">
+  <div class="shell center measure-wide">
+    <p class="over fade">Antes de entrar</p>
+    <h2 id="t-pra" class="h-lg rise">É pra você se…</h2>
+  </div>
+  <ul class="shell bento stagger">
+    {criterios.map((c) => (
+      <li class="card">
+        <span class="medal medal--sm"><Icon name="check" size={18} /></span>
+        <p>{c}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .measure-wide { max-width: 46rem; }
+  .over {
+    margin-bottom: 0.77rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+
+  /* ── Qualificação: cinco quadrados iguais, 3 + 2 ── */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(0.42rem, 0.9vw, 0.7rem);
+    max-width: 60rem;
+    margin: clamp(3rem, 6vw, 4.5rem) auto 0;
+  }
+  /* Cartão claro: o único bloco de superfície branca da página, pra a lista
+     de corte pesar mais que uma caixa escura a mais no escuro. */
+  .bento li {
+    position: relative;
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: clamp(1.1rem, 2.2vw, 1.5rem);
+    padding: clamp(1.6rem, 3vw, 2.2rem) clamp(1.4rem, 2.6vw, 1.9rem);
+    overflow: hidden;
+    border-color: #ffffff2e;
+    background: linear-gradient(180deg, #ffffff, #ebedf3);
+    transition:
+      translate 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+      border-color 0.5s var(--ease);
+  }
+  /* Os dois de baixo ficam centrados sob os três de cima. */
+  .bento li:nth-child(4) { grid-column: 2 / span 2; }
+  .bento li:nth-child(5) { grid-column: 4 / span 2; }
+
+  /* Luz que sobe do pé da caixa ao passar o mouse. */
+  .bento li::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(115% 72% at 50% 116%, #d7b35666, #d7b3561f 38%, transparent 66%);
+    opacity: 0;
+    transition: opacity 0.55s var(--ease);
+    pointer-events: none;
+  }
+  .bento li:hover {
+    border-color: var(--gold);
+    box-shadow: 0 26px 50px -22px #000000d9;
+  }
+  .bento li:hover::after { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .bento li:hover { translate: 0 -4px; }
+  }
+
+  .bento p {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(1rem, 1.9vw, 1.12rem);
+    font-weight: 700;
+    line-height: 1.42;
+    letter-spacing: -0.012em;
+    color: var(--navy);
+  }
+  /* Placa dourada cheia com o traço em azul marinho. */
+  .bento .medal {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(160deg, var(--gold-flare), var(--gold) 62%, #c39f45);
+    box-shadow:
+      inset 0 1px 0 #fffdf5,
+      0 6px 12px -4px #8a6c2e6b,
+      0 12px 24px -10px #6b5223a6;
+    color: var(--navy);
+  }
+  .bento .medal :global(svg) { stroke-width: 2.2; }
+
+  @media (max-width: 62rem) {
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .bento li,
+    .bento li:nth-child(4) { grid-column: span 1; }
+    /* Sobrando um, ele fica centrado na última fileira. */
+    .bento li:nth-child(5) { grid-column: span 1; }
+  }
+  @media (max-width: 40rem) {
+    .bento { grid-template-columns: 1fr; justify-items: center; }
+    .bento li { width: 100%; max-width: 300px; }
+  }
+</style>

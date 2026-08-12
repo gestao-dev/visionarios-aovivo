@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets';
+import fecho from '../../assets/fecho.png';
+
+// Fechamento da página: mesma chapa e o mesmo tratamento de luz em captação e
+// vendas, só o eyebrow, o título e a ação mudam por página.
+const { eyebrow = 'A decisão', ctaLabel, ctaHref, titleNowrap = false } = Astro.props;
+---
+
+<!-- ══ Fechamento ══ -->
+<section class="close eyebrow-free" aria-labelledby="t-fim">
+  <div class="close__plate" aria-hidden="true">
+    <Image src={fecho} alt="" widths={[960, 1440, 1920]} sizes="100vw" quality={95} />
+  </div>
+  <span class="glow glow--navy g-center" aria-hidden="true"></span>
+  <div class="shell center measure-wide">
+    <p class="over fade">{eyebrow}</p>
+    <h2 id="t-fim" class={`rise${titleNowrap ? ' t-fim--nowrap' : ''}`}><slot name="title" /></h2>
+    <p class="sec-lede close__lede center rise"><slot name="lede" /></p>
+    {ctaHref ? (
+      <a class="cta cta--wide rise" href={ctaHref}>{ctaLabel}</a>
+    ) : (
+      <button class="cta cta--wide rise" type="button" data-open-lead>{ctaLabel}</button>
+    )}
+  </div>
+</section>
+
+<style>
+  .over {
+    margin-bottom: 0.77rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+
+  .close {
+    /* Respiro igual em cima e embaixo: o conteúdo era 76px do topo contra
+       144px do pé, e lia como empurrado pra cima. Junto vem a altura maior. */
+    padding-block: clamp(4rem, 10.4vw, 10rem);
+    isolation: isolate;
+    /* Filetes de 2px em cima e embaixo, no gradiente da marca. */
+    border-block: 2px solid transparent;
+    border-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%) 1;
+  }
+  /* A foto entra como chapa de fundo: ela já vem escurecida no arquivo.
+     Camadas explícitas e positivas: z-index negativo aqui pintaria por
+     baixo do próprio bloco e sumiria. */
+  .close__plate { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  /* Ancorada no topo: a arte é mais alta que a seção, e centrada o corte
+     comia as cabeças. */
+  .close__plate :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  /* Véu no azul da marca: a foto é clara demais atrás de texto branco. */
+  .close__plate::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #041e42a6 0%, #041e42cc 55%, #041e42e6 100%);
+    pointer-events: none;
+  }
+  .close .glow { z-index: 1; }
+  .close .shell { position: relative; z-index: 2; }
+  /* Medida larga o bastante para as duas linhas ditadas caberem inteiras:
+     a primeira pede 968px em 64px, a segunda 747px no serifado. */
+  .close .measure-wide { max-width: 64rem; }
+  /* Larga o bastante pra quebra ditada cair depois de "edição". */
+  .close__lede { max-width: 52rem; margin-inline: auto; }
+  .close .cta { margin-top: 2.6rem; }
+
+  /* Só quando o título tem uma quebra ditada de propósito (nó do cliente):
+     abaixo dos 968px da primeira linha ela volta a quebrar sozinha. */
+  .t-fim--nowrap { text-wrap: nowrap; }
+  @media (max-width: 72rem) { .t-fim--nowrap { text-wrap: balance; } }
+
+  .g-center { width: 42rem; height: 26rem; top: 18%; left: 50%; transform: translateX(-50%); opacity: 0.3; }
+</style>
