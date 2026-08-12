@@ -51,12 +51,26 @@ const ingressos = [
       <div class={`card tk ${t.destaque ? 'tk--gold' : ''}`}>
         {t.destaque && <span class="tk__flag">Experiência completa</span>}
 
+        <!-- Arte do ingresso: placeholder até a peça final chegar. -->
+        <div class="tk__art ph" aria-hidden="true">
+          <span>Foto do ingresso {t.nome}</span>
+        </div>
+
         <div class="tk__head">
           <span class="medal medal--sm"><Icon name={t.destaque ? 'star' : 'shield'} size={19} /></span>
           <div>
             <p class="tk__name">{t.nome}</p>
             <p class="tk__sub">{t.sub}</p>
           </div>
+        </div>
+
+        <div class="tk__incl">
+          <p class="tk__inclh">{t.inclHead}</p>
+          <ul>
+            {t.incl.map((i) => (
+              <li><Icon name="check" size={15} />{i}</li>
+            ))}
+          </ul>
         </div>
 
         <p class="tk__price"><span class="tk__cur">R$</span>{t.preco}</p>
@@ -69,16 +83,12 @@ const ingressos = [
           <a class="tk__btn2" href={whatsapp}>5+ ingressos <span>20% OFF</span></a>
         </div>
 
-        <p class="tk__pay">Pix ou em até <b>12x</b> no cartão · Visa · Master · Elo</p>
+        <p class="tk__pay">Pix ou em até <b>12x</b> no cartão</p>
         <p class="tk__note">Grupos de 2+ ingressos: atendimento consultivo com o nosso time no WhatsApp.</p>
 
-        <div class="tk__incl">
-          <p class="tk__inclh">{t.inclHead}</p>
-          <ul>
-            {t.incl.map((i) => (
-              <li><Icon name="check" size={15} />{i}</li>
-            ))}
-          </ul>
+        <!-- Bandeiras dos cartões: placeholder até a arte final chegar. -->
+        <div class="tk__flags ph" aria-hidden="true">
+          <span>Bandeiras de cartões</span>
         </div>
       </div>
     ))}
@@ -121,13 +131,59 @@ const ingressos = [
   .tk {
     position: relative;
     padding: clamp(1.6rem, 3vw, 2.2rem);
+    /* Royal: azul chapado, sem degradê. */
+    background: var(--ground);
+  }
+
+  /* Gold: recebe o degradê que era do Royal, e a borda que anda. */
+  @property --tk-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
   }
   .tk--gold {
-    border-color: var(--gold);
+    border: 1px solid transparent;
+    /* padding-box guarda a superfície, border-box recebe a luz que gira. */
     background:
-      linear-gradient(180deg, #d7b3560d, #f4edd00d),
-      linear-gradient(180deg, #07295a, #031733);
-    box-shadow: 0 0 0 1px #d7b3562e, 0 30px 70px -30px #000000f0;
+      linear-gradient(180deg, #07295a, #031733) padding-box,
+      conic-gradient(
+        from var(--tk-angle),
+        var(--gold-deep) 0deg,
+        var(--gold) 28deg,
+        var(--gold-flare) 52deg,
+        var(--gold) 76deg,
+        var(--gold-deep) 108deg,
+        var(--gold-deep) 360deg
+      ) border-box;
+    box-shadow: 0 30px 70px -30px #000000f0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .tk--gold { animation: tk-giro 5s linear infinite; }
+  }
+  @keyframes tk-giro {
+    to { --tk-angle: 360deg; }
+  }
+
+  /* Placeholders de arte: leem como espaço reservado, não como caixa vazia. */
+  .ph {
+    display: grid;
+    place-items: center;
+    border: 1px dashed var(--edge-lit);
+    border-radius: 12px;
+    background: #ffffff08;
+    color: var(--paper);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .tk__art {
+    aspect-ratio: 16 / 9;
+    margin-bottom: 1.5rem;
+  }
+  .tk__flags {
+    height: 2.75rem;
+    margin-top: 0.9rem;
   }
 
   .tk__flag {
@@ -149,16 +205,31 @@ const ingressos = [
   .tk__name { font-size: 1.35rem; font-weight: 700; color: var(--paper); letter-spacing: -0.02em; }
   .tk__sub { margin-top: 0.15rem; font-size: 0.85rem; color: var(--paper); }
 
+  /* O valor é o que decide a leitura do cartão: cresce acima de tudo. */
   .tk__price {
-    margin-top: 1.4rem;
-    font-size: clamp(2.4rem, 5vw, 3.1rem);
+    margin-top: 1.5rem;
+    font-size: clamp(3.4rem, 7.4vw, 4.75rem);
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.03em;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
     color: var(--paper);
   }
-  .tk__cur { margin-right: 0.3rem; font-size: 0.42em; font-weight: 600; color: var(--gold-lift); vertical-align: 0.6em; }
-  .tk__vagas { margin-top: 0.5rem; font-size: 0.82rem; font-weight: 600; color: var(--gold-lift); text-transform: uppercase; letter-spacing: 0.04em; }
+  .tk__cur { margin-right: 0.3rem; font-size: 0.34em; font-weight: 600; color: var(--gold-lift); vertical-align: 0.72em; }
+  /* Etiqueta, não linha de texto: a escassez precisa ler como selo. */
+  .tk__vagas {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.8rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--gold);
+    border-radius: 100px;
+    background: #d7b3561f;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-lift);
+  }
 
   .tk .cta { margin-top: 1.3rem; }
 
@@ -184,10 +255,11 @@ const ingressos = [
   .tk__pay b { color: var(--gold-lift); }
   .tk__note { margin-top: 0.4rem; font-size: 0.82rem; color: var(--paper); }
 
+  /* O que está incluso vem antes do preço: o valor é lido depois da entrega. */
   .tk__incl {
     margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--edge-lit);
+    padding-block: 1.5rem;
+    border-block: 1px solid var(--edge-lit);
   }
   .tk__inclh {
     margin-bottom: 0.9rem;
