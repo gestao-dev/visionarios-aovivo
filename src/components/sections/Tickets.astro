@@ -116,6 +116,10 @@ const ingressos = [
   }
   @media (max-width: 54rem) {
     .tickets { grid-template-columns: 1fr; max-width: 30rem; }
+    /* Piso do preço no celular. Fora do clamp: 5.4rem passa do teto de
+       4.75rem, e um clamp com piso acima do teto trava o valor em 5.4rem
+       na tela inteira, inclusive no desktop. */
+    .tk__price { font-size: 5.4rem; }
     /* Empilhado, o Gold vem primeiro: é a oferta que queremos que seja lida
        antes, e no desktop ele já ocupa a coluna da direita. */
     .tk--gold { order: -1; }
