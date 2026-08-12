@@ -1,0 +1,145 @@
+---
+import Icon from '../Icon.astro';
+
+const daqui = [
+  'Faturamento travado no teto',
+  'Cliente que entra e sai',
+  'Equipe que não anda sem você',
+  'Você fazendo tudo, o dia todo',
+];
+const dela = [
+  'Escritório lucrativo e previsível',
+  'Cliente que fica e indica',
+  'Time que roda sem você',
+  'Você no estratégico, com liberdade',
+];
+---
+
+<!-- ══ O muro ══ -->
+<section id="dobra-2" class="eyebrow-free" aria-labelledby="t-muro">
+  <span class="glow glow--navy g-left" aria-hidden="true"></span>
+  <div class="shell center measure-wide">
+    <p class="over fade">Contador comum × Contador visionário</p>
+    <h2 id="t-muro" class="rise">Existe um muro <span class="grad">entre você e o escritório</span> que você queria ter.</h2>
+    <p class="sec-lede measure center rise">
+      A diferença entre os dois lados nunca foi técnica: é visão.<br class="turn" />
+      O evento é o portal pra atravessar.
+    </p>
+  </div>
+
+  <div class="shell cross">
+    <div class="cross__side stagger">
+      <p class="cross__head"><Icon name="wall" size={16} /> <span class="grad">Do lado de cá</span></p>
+      <ul class="stagger">{daqui.map((t) => <li>{t}</li>)}</ul>
+    </div>
+
+    <div class="cross__seam zoom" aria-hidden="true">
+      <span class="cross__gate"><Icon name="arrow" size={20} /></span>
+    </div>
+
+    <div class="cross__side cross__side--to stagger">
+      <p class="cross__head cross__head--to"><Icon name="key" size={16} /> <span class="grad">Do outro lado</span></p>
+      <ul class="stagger">{dela.map((t) => <li>{t}</li>)}</ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .measure-wide { max-width: 46rem; }
+
+  /* Linha curta acima do título: centralizada e destacada como rótulo do bloco,
+     não empilhada como rótulo de formulário. */
+  /* Proximidade: o rótulo pertence ao título, então encosta nele. */
+  .over {
+    margin-bottom: 0.77rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+
+  /* ── Muro: tabela de travessia, conforme o nó 2722:2080 ── */
+  .cross {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: clamp(1.5rem, 4vw, 3.25rem);
+    max-width: 58rem;
+    margin: clamp(3rem, 6vw, 4.5rem) auto 0;
+    align-items: stretch;
+  }
+  /* A quebra é decisão de leitura no desktop; no celular a linha já quebra
+     sozinha e a marca atrapalharia. */
+  .turn { display: none; }
+  @media (min-width: 44rem) { .turn { display: inline; } }
+
+  .cross__side { position: relative; min-width: 0; }
+
+  .cross__head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .cross__head .grad { font-weight: 600; }
+  .cross__head :global(svg) { flex: none; }
+
+  .cross__side ul { display: grid; }
+  .cross__side li {
+    padding-block: clamp(1rem, 2.2vw, 1.45rem);
+    border-bottom: 1px solid #ffffff1c;
+    font-size: clamp(0.98rem, 1.9vw, 1.14rem);
+    color: var(--paper);
+  }
+  .cross__side--to li { color: var(--paper); }
+
+  /* A divisa: filete vertical com o portal no meio. */
+  .cross__seam {
+    position: relative;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--gold-deep) 12%, var(--gold) 50%, var(--gold-deep) 88%, transparent);
+  }
+  .cross__gate {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    background: var(--ground);
+    color: var(--gold-flare);
+  }
+
+  /* Celular: a lista centrada e as divisórias na mesma medida curta, em vez
+     de filetes de ponta a ponta da tela. */
+  @media (max-width: 46rem) {
+    .cross__side ul { width: min(100%, 17rem); margin-inline: auto; }
+    .cross__side li { text-align: center; }
+    .cross__head { justify-content: center; }
+  }
+  @media (max-width: 56rem) {
+    .cross { grid-template-columns: 1fr; gap: 0; }
+    .cross__seam {
+      width: auto;
+      height: 4.5rem;
+      background: linear-gradient(90deg, transparent, var(--gold-deep) 20%, var(--gold) 50%, var(--gold-deep) 80%, transparent);
+      background-size: 100% 1px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .cross__gate { rotate: 90deg; }
+    .cross__side--to { padding-top: 0.5rem; }
+  }
+
+  /* Halos de seção */
+  .g-left { width: 34rem; height: 24rem; top: 6%; left: -14rem; opacity: 0.32; }
+</style>
