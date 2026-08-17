@@ -1,19 +1,25 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from '../Icon.astro';
+import comfort from '../../assets/hotel-comfort-suites.png';
+import blueTree from '../../assets/hotel-blue-tree.png';
+import ibis from '../../assets/hotel-ibis-budget.png';
 
-// Hospedagem perto do espaço. As fotos ainda não chegaram: cada cartão traz
-// um placeholder marcado, e trocar por <Image> depois é uma linha por hotel.
+// Hospedagem perto do espaço.
 const hoteis = [
   {
     nome: 'Comfort Suites Alphaville',
+    foto: comfort,
     link: 'https://atlantica.letsbook.com.br/reserva/selecao-de-quartos?checkin=2026-09-01&checkout=2026-09-02&adultos=2&idioma=pt-BR&moeda=BRL&consumer=gads_20940ff292344b118b3c8b71053ebf1b&codigoHotel=42',
   },
   {
     nome: 'Blue Tree Premium Alphaville',
+    foto: blueTree,
     link: 'https://book.omnibees.com/chain/986/hotel/4527?q=4527&lang=pt-BR&currencyId=16',
   },
   {
     nome: 'Ibis Budget Tamboré',
+    foto: ibis,
     link: 'https://all.accor.com/booking/pt-br/accor/hotel/5520?dateIn=2026-09-01&nights=1&compositions=2&stayplus=false&snu=false&accessibleRooms=false&hideWDR=true&productCode=null&hideHotelDetails=true&gclid=Cj0KCQjwnIDUBhDrARIsAJDGwSs0P1KzDmKmgVjIfn1CjsgS5C0BlYV1dXvU-VP1OocBF2ucKb0k5GsaAmXwEALw_wcB&utm_campaign=5520-BR-cpc-desktop-default-0--localuniversal-23665481197-0-0-1&utm_medium=partenariats&hmGUID=0746b153-99c0-42a3-a362-8f483953380c&wiz_campaign=23665481197&utm_source=Google+Hotel+Ads',
   },
 ];
@@ -33,8 +39,9 @@ const hoteis = [
   <ul class="shell hotels stagger">
     {hoteis.map((h) => (
       <li class="card hotel">
-        <div class="hotel__art ph" aria-hidden="true">
-          <span>Foto do hotel</span>
+        <div class="hotel__art">
+          <Image src={h.foto} alt={`Fachada do ${h.nome}`} widths={[380, 760]}
+                 sizes="(max-width: 56rem) calc(100vw - 40px), 19rem" quality={68} />
         </div>
         <p class="hotel__name">{h.nome}</p>
         <a class="hotel__cta" href={h.link}>
@@ -76,19 +83,20 @@ const hoteis = [
     text-align: center;
   }
 
-  /* Placeholder marcado: espaço reservado, não caixa vazia. */
+  /* As fotos são verticais e de proporções diferentes entre si: a janela é
+     que fixa o formato, e o corte se resolve no centro. */
   .hotel__art {
     width: 100%;
-    aspect-ratio: 4 / 3;
-    display: grid;
-    place-items: center;
-    border: 1px dashed var(--edge-lit);
+    line-height: 0;
     border-radius: 12px;
-    background: #ffffff08;
-    color: var(--paper);
-    font-size: 0.74rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    overflow: clip;
+  }
+  .hotel__art :global(img) {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center;
   }
 
   .hotel__name {
