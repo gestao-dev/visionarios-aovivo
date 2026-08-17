@@ -2,11 +2,11 @@
 import Icon from '../Icon.astro';
 
 const criterios = [
-  'Você é dono de escritório contábil (não estudante, não iniciante)',
+  'Dono de escritório contábil (não estudante, não iniciante)',
   'O escritório não anda sem você, e isso já te esgotou',
-  'Você tem técnica de sobra, mas gestão de menos',
-  'Sofre com gestão e mão de obra qualificada',
-  'Você quer entrar em 2027 com o escritório estruturado, não no mesmo caos',
+  'Tem técnica de sobra, mas falta gestão',
+  'Sofre com rotatividade de funcionários e dificuldade em contratar',
+  'Você quer entrar em 2027 com o escritório estruturado',
 ];
 ---
 
@@ -14,7 +14,7 @@ const criterios = [
 <section aria-labelledby="t-pra">
   <div class="shell center measure-wide">
     <p class="over fade">Antes de entrar</p>
-    <h2 id="t-pra" class="h-lg rise">É pra você se…</h2>
+    <h2 id="t-pra" class="h-lg rise">É pra você…</h2>
   </div>
   <ul class="shell bento stagger">
     {criterios.map((c) => (

@@ -1,0 +1,129 @@
+---
+import Icon from '../Icon.astro';
+
+// Hospedagem perto do espaço. As fotos ainda não chegaram: cada cartão traz
+// um placeholder marcado, e trocar por <Image> depois é uma linha por hotel.
+const hoteis = [
+  {
+    nome: 'Comfort Suites Alphaville',
+    link: 'https://atlantica.letsbook.com.br/reserva/selecao-de-quartos?checkin=2026-09-01&checkout=2026-09-02&adultos=2&idioma=pt-BR&moeda=BRL&consumer=gads_20940ff292344b118b3c8b71053ebf1b&codigoHotel=42',
+  },
+  {
+    nome: 'Blue Tree Premium Alphaville',
+    link: 'https://book.omnibees.com/chain/986/hotel/4527?q=4527&lang=pt-BR&currencyId=16',
+  },
+  {
+    nome: 'Ibis Budget Tamboré',
+    link: 'https://all.accor.com/booking/pt-br/accor/hotel/5520?dateIn=2026-09-01&nights=1&compositions=2&stayplus=false&snu=false&accessibleRooms=false&hideWDR=true&productCode=null&hideHotelDetails=true&gclid=Cj0KCQjwnIDUBhDrARIsAJDGwSs0P1KzDmKmgVjIfn1CjsgS5C0BlYV1dXvU-VP1OocBF2ucKb0k5GsaAmXwEALw_wcB&utm_campaign=5520-BR-cpc-desktop-default-0--localuniversal-23665481197-0-0-1&utm_medium=partenariats&hmGUID=0746b153-99c0-42a3-a362-8f483953380c&wiz_campaign=23665481197&utm_source=Google+Hotel+Ads',
+  },
+];
+---
+
+<!-- ══ Hotéis ══ -->
+<section aria-labelledby="t-hoteis">
+  <div class="shell center measure-wide">
+    <p class="over fade">Onde se hospedar</p>
+    <h2 id="t-hoteis" class="h-lg rise">Hotéis em Alphaville</h2>
+    <p class="sec-lede measure center rise">
+      Três opções perto do espaço, para quem vem de fora e quer chegar descansado
+      nos dois dias de evento.
+    </p>
+  </div>
+
+  <ul class="shell hotels stagger">
+    {hoteis.map((h) => (
+      <li class="card hotel">
+        <div class="hotel__art ph" aria-hidden="true">
+          <span>Foto do hotel</span>
+        </div>
+        <p class="hotel__name">{h.nome}</p>
+        <a class="hotel__cta" href={h.link}>
+          Entrar em contato <Icon name="arrow" size={16} />
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .measure-wide { max-width: 46rem; }
+  .over {
+    margin-bottom: 0.77rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+
+  .hotels {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 1.6rem);
+    max-width: 62rem;
+    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+  }
+  @media (max-width: 56rem) {
+    .hotels { grid-template-columns: 1fr; max-width: 26rem; }
+  }
+
+  .hotel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    padding: clamp(1rem, 2vw, 1.25rem);
+    text-align: center;
+  }
+
+  /* Placeholder marcado: espaço reservado, não caixa vazia. */
+  .hotel__art {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: grid;
+    place-items: center;
+    border: 1px dashed var(--edge-lit);
+    border-radius: 12px;
+    background: #ffffff08;
+    color: var(--paper);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hotel__name {
+    /* Empurra a ação para o pé: com nomes de uma e de duas linhas, os botões
+       ficariam em alturas diferentes. */
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--paper);
+    text-wrap: balance;
+  }
+
+  .hotel__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    color: var(--gold-lift);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease);
+  }
+  .hotel__cta:hover {
+    background-image: linear-gradient(90deg, var(--gold) 0%, var(--gold-flare) 100%);
+    color: var(--navy);
+  }
+</style>
