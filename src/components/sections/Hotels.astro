@@ -10,11 +10,15 @@ const hoteis = [
   {
     nome: 'Comfort Suites Alphaville',
     foto: comfort,
-    link: 'https://atlantica.letsbook.com.br/reserva/selecao-de-quartos?checkin=2026-09-01&checkout=2026-09-02&adultos=2&idioma=pt-BR&moeda=BRL&consumer=gads_20940ff292344b118b3c8b71053ebf1b&codigoHotel=42',
+    cupom: 'ALPHA15',
+    desconto: '15% OFF',
+    link: 'http://atlantica.letsbook.com.br/reserva/link-publico?r=e7ee4f94d41f49a687068b56f3da973d&p=ALPHA15',
   },
   {
     nome: 'Blue Tree Premium Alphaville',
     foto: blueTree,
+    cupom: 'ALPHA12',
+    desconto: '12% OFF',
     link: 'https://book.omnibees.com/chain/986/hotel/4527?q=4527&lang=pt-BR&currencyId=16',
   },
   {
@@ -44,6 +48,12 @@ const hoteis = [
                  sizes="(max-width: 56rem) calc(100vw - 40px), 19rem" quality={68} />
         </div>
         <p class="hotel__name">{h.nome}</p>
+        {h.cupom && (
+          <p class="hotel__cupom">
+            <Icon name="coupon" size={16} />
+            <span>Cupom <b>{h.cupom}</b> · {h.desconto}</span>
+          </p>
+        )}
         <a class="hotel__cta" href={h.link}>
           Entrar em contato <Icon name="arrow" size={16} />
         </a>
@@ -100,8 +110,8 @@ const hoteis = [
   }
 
   .hotel__name {
-    /* Empurra a ação para o pé: com nomes de uma e de duas linhas, os botões
-       ficariam em alturas diferentes. */
+    /* Empurra a ação para o pé: com nomes de uma e de duas linhas, e com um
+       hotel sem cupom, os botões ficariam em alturas diferentes. */
     flex: 1;
     display: flex;
     align-items: center;
@@ -112,6 +122,21 @@ const hoteis = [
     color: var(--paper);
     text-wrap: balance;
   }
+
+  /* Verde claro: é o único ganho declarado do bloco, e ouro aqui competiria
+     com o botão logo abaixo. */
+  .hotel__cupom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.84rem;
+    line-height: 1.35;
+    color: #8ee6b0;
+    text-wrap: balance;
+  }
+  .hotel__cupom :global(svg) { flex: none; }
+  .hotel__cupom b { font-weight: 700; letter-spacing: 0.04em; }
 
   .hotel__cta {
     display: inline-flex;
