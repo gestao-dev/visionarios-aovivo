@@ -43,6 +43,7 @@ const ingressos = [
       'Assentos reservados na frente',
     ],
     destaque: true,
+    esgotado: true,
   },
 ];
 ---
@@ -80,21 +81,27 @@ const ingressos = [
         <p class="tk__price">
           <span class="tk__cur">R$</span>{t.preco}<span class="tk__cents">,{t.centavos}</span>
         </p>
-        <p class="tk__vagas">Vagas limitadas</p>
+        {t.esgotado ? (
+          <p class="tk__esgotado">Esgotado</p>
+        ) : (
+          <Fragment>
+            <p class="tk__vagas">Vagas limitadas</p>
 
-        <a class={`cta cta--wide ${t.destaque ? '' : 'cta--royal'}`} href={t.pagamento}>
-          Garantir 1 ingresso <Icon name="arrow" size={18} />
-        </a>
+            <a class={`cta cta--wide ${t.destaque ? '' : 'cta--royal'}`} href={t.pagamento}>
+              Garantir 1 ingresso <Icon name="arrow" size={18} />
+            </a>
 
-        <div class="tk__btns">
-          <a class="tk__btn2" href={whatsapp}>2 a 4 ingressos <span>15% OFF</span></a>
-          <a class="tk__btn2" href={whatsapp}>5+ ingressos <span>20% OFF</span></a>
-        </div>
+            <div class="tk__btns">
+              <a class="tk__btn2" href={whatsapp}>2 a 4 ingressos <span>15% OFF</span></a>
+              <a class="tk__btn2" href={whatsapp}>5+ ingressos <span>20% OFF</span></a>
+            </div>
 
-        <p class="tk__note">Grupos de 2+ ingressos: atendimento consultivo com o nosso time no WhatsApp.</p>
+            <p class="tk__note">Grupos de 2+ ingressos: atendimento consultivo com o nosso time no WhatsApp.</p>
 
-        <img class="tk__flags" src="/bandeiras-cartao.svg" alt="Bandeiras de cartão aceitas"
-             width="269" height="47" loading="lazy" decoding="async" />
+            <img class="tk__flags" src="/bandeiras-cartao.svg" alt="Bandeiras de cartão aceitas"
+                 width="269" height="47" loading="lazy" decoding="async" />
+          </Fragment>
+        )}
       </div>
     ))}
   </div>
@@ -222,6 +229,25 @@ const ingressos = [
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--gold-lift);
+  }
+
+  /* Tarja: faixa cheia de ponta a ponta do cartão, no lugar onde estava a
+     ação. Vermelho porque é impedimento, não escassez. */
+  .tk__esgotado {
+    display: block;
+    /* Sangra até as bordas e assenta no pé do cartão, acompanhando o raio
+       da caixa: sobrando faixa de fundo embaixo, a tarja lia como bloco
+       solto em vez de carimbo no cartão. */
+    margin: 1.1rem calc(clamp(1.6rem, 3vw, 2.2rem) * -1) calc(clamp(1.6rem, 3vw, 2.2rem) * -1);
+    border-radius: 0 0 19px 19px;
+    padding: 0.85rem 1rem;
+    background: #b3251f;
+    color: #fff1f0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
   }
 
   .tk .cta { display: flex; margin: 1.3rem auto 0; }
