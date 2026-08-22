@@ -132,9 +132,11 @@ const ingressos = [
        4.75rem, e um clamp com piso acima do teto trava o valor em 5.4rem
        na tela inteira, inclusive no desktop. */
     .tk__price { font-size: 5.4rem; }
-    /* Empilhado, o Gold vem primeiro: é a oferta que queremos que seja lida
-       antes, e no desktop ele já ocupa a coluna da direita. */
-    .tk--gold { order: -1; }
+    /* Empilhado, o ingresso à venda vem primeiro: com o Gold esgotado, abrir
+       a seção pelo cartão que não se pode comprar custa a rolagem inteira de
+       quem chegou pra decidir. Volte o `order: -1` para o Gold quando ele
+       voltar à venda. */
+    .tk--gold { order: 1; }
   }
 
   .tk {
