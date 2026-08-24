@@ -9,6 +9,10 @@ import ingressoGold from '../../assets/ingresso-gold.png';
 const whatsapp =
   'https://wa.me/5513981810880?text=Ol%C3%A1%2C%20vim%20do%20site%20do%20Vision%C3%A1rios%20ao%20vivo%20e%20quero%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20pacotes%20de%20ingressos%20com%20desconto.';
 
+// Mesmo grupo que o LeadModal usa como destino final da captura: com os dois
+// lotes esgotados, a lista de espera é a única ação que resta na seção.
+const grupoEspera = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
+
 const ingressos = [
   {
     nome: 'Royal',
@@ -26,6 +30,7 @@ const ingressos = [
       'Presskit exclusivo do evento',
     ],
     destaque: false,
+    esgotado: true,
   },
   {
     nome: 'Gold',
@@ -106,6 +111,13 @@ const ingressos = [
     ))}
   </div>
 
+  <div class="shell center espera">
+    <a class="cta cta--wide espera__cta" href={grupoEspera}>
+      <span class="espera__tag">Lote Zero esgotado</span>
+      <span class="espera__acao">Clique aqui para entrar na lista de espera</span>
+    </a>
+  </div>
+
 </section>
 
 <style>
@@ -132,10 +144,10 @@ const ingressos = [
        4.75rem, e um clamp com piso acima do teto trava o valor em 5.4rem
        na tela inteira, inclusive no desktop. */
     .tk__price { font-size: 5.4rem; }
-    /* Empilhado, o ingresso à venda vem primeiro: com o Gold esgotado, abrir
-       a seção pelo cartão que não se pode comprar custa a rolagem inteira de
-       quem chegou pra decidir. Volte o `order: -1` para o Gold quando ele
-       voltar à venda. */
+    /* Empilhado, mantém a ordem da fonte: Royal e depois Gold. Com os dois
+       esgotados não há mais "cartão à venda" pra puxar pra frente, e a ação
+       da seção passou pro botão de lista de espera, abaixo dos dois. Volte o
+       `order: -1` para o Gold quando ele voltar à venda. */
     .tk--gold { order: 1; }
   }
 
@@ -326,6 +338,31 @@ const ingressos = [
     text-align: center;
   }
   .tk__incl :global(svg) { color: var(--gold); flex: none; }
+
+  /* Com os dois cartões carimbados, a lista de espera passa a ser a ação
+     primária da seção: veste o ouro cheio do .cta, que o sistema reserva
+     justamente pra isso. */
+  .espera { margin-top: clamp(1.5rem, 3vw, 2.2rem); }
+  .espera__cta {
+    /* Duas linhas dentro do botão: o impedimento anuncia, a ação convida.
+       Numa linha só, os 58 caracteres em caixa alta estouram as 26rem do
+       .cta--wide e quebram sozinhos, sem hierarquia entre as duas metades. */
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-block: 0.95rem;
+    text-transform: none;
+    text-align: center;
+  }
+  .espera__tag {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    /* Mesmo navy do botão: a hierarquia entre as duas linhas sai do corpo
+       menor e da entreletra aberta, não de rebaixar a cor (DESIGN.md). */
+    color: var(--navy);
+  }
+  .espera__acao { font-size: clamp(0.98rem, 2vw, 1.06rem); font-weight: 700; }
 
   .g-center { width: 42rem; height: 26rem; top: 10%; left: 50%; transform: translateX(-50%); opacity: 0.3; }
 </style>
