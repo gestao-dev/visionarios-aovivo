@@ -9,18 +9,14 @@ import ingressoGold from '../../assets/ingresso-gold.png';
 const whatsapp =
   'https://wa.me/5513981810880?text=Ol%C3%A1%2C%20vim%20do%20site%20do%20Vision%C3%A1rios%20ao%20vivo%20e%20quero%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20pacotes%20de%20ingressos%20com%20desconto.';
 
-// Mesmo grupo que o LeadModal usa como destino final da captura: com os dois
-// lotes esgotados, a lista de espera é a única ação que resta na seção.
-const grupoEspera = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
-
 const ingressos = [
   {
     nome: 'Royal',
-    sub: 'Ingresso · Lote Zero',
+    sub: 'Ingresso · Primeiro Lote',
     arte: ingressoRoyal,
-    preco: '397',
+    preco: '497',
     centavos: '00',
-    pagamento: 'https://clkdmg.site/pay/lote-zero-vav',
+    pagamento: 'https://clkdmg.site/pay/lote-01-royal-01-ing',
     inclHead: 'O que está incluso',
     incl: [
       'Acesso aos 2 dias de evento',
@@ -30,15 +26,14 @@ const ingressos = [
       'Presskit exclusivo do evento',
     ],
     destaque: false,
-    esgotado: true,
   },
   {
     nome: 'Gold',
-    sub: 'Ingresso · Lote Zero · VIP',
+    sub: 'Ingresso · Primeiro Lote · VIP',
     arte: ingressoGold,
-    preco: '997',
+    preco: '1.497',
     centavos: '00',
-    pagamento: 'https://clkdmg.site/pay/lote-zero-gold',
+    pagamento: 'https://clkdmg.site/pay/lote-01-gold-01-ing',
     inclHead: 'Tudo do Royal, mais:',
     incl: [
       'Jantar exclusivo no dia anterior com Marcos e Viviane',
@@ -48,7 +43,6 @@ const ingressos = [
       'Assentos reservados na frente',
     ],
     destaque: true,
-    esgotado: true,
   },
 ];
 ---
@@ -60,7 +54,7 @@ const ingressos = [
     <p class="over fade" id="garanta">Garanta sua vaga</p>
     <h2 id="t-ing" class="rise">Escolha seu ingresso</h2>
     <p class="sec-lede measure center rise">
-      Preço de <span class="grad">Lote Zero</span>: o menor que esse evento vai ter. Vagas limitadas.
+      Preço do <span class="grad">Primeiro Lote</span>: o menor que esse evento vai ter. Vagas limitadas.
     </p>
   </div>
 
@@ -86,36 +80,23 @@ const ingressos = [
         <p class="tk__price">
           <span class="tk__cur">R$</span>{t.preco}<span class="tk__cents">,{t.centavos}</span>
         </p>
-        {t.esgotado ? (
-          <p class="tk__esgotado">Esgotado</p>
-        ) : (
-          <Fragment>
-            <p class="tk__vagas">Vagas limitadas</p>
+        <p class="tk__vagas">Vagas limitadas</p>
 
-            <a class={`cta cta--wide ${t.destaque ? '' : 'cta--royal'}`} href={t.pagamento}>
-              Garantir 1 ingresso <Icon name="arrow" size={18} />
-            </a>
+        <a class={`cta cta--wide ${t.destaque ? '' : 'cta--royal'}`} href={t.pagamento}>
+          Garantir 1 ingresso <Icon name="arrow" size={18} />
+        </a>
 
-            <div class="tk__btns">
-              <a class="tk__btn2" href={whatsapp}>2 a 4 ingressos <span>15% OFF</span></a>
-              <a class="tk__btn2" href={whatsapp}>5+ ingressos <span>20% OFF</span></a>
-            </div>
+        <div class="tk__btns">
+          <a class="tk__btn2" href={whatsapp}>2 a 4 ingressos <span>15% OFF</span></a>
+          <a class="tk__btn2" href={whatsapp}>5+ ingressos <span>20% OFF</span></a>
+        </div>
 
-            <p class="tk__note">Grupos de 2+ ingressos: atendimento consultivo com o nosso time no WhatsApp.</p>
+        <p class="tk__note">Grupos de 2+ ingressos: atendimento consultivo com o nosso time no WhatsApp.</p>
 
-            <img class="tk__flags" src="/bandeiras-cartao.svg" alt="Bandeiras de cartão aceitas"
-                 width="269" height="47" loading="lazy" decoding="async" />
-          </Fragment>
-        )}
+        <img class="tk__flags" src="/bandeiras-cartao.svg" alt="Bandeiras de cartão aceitas"
+             width="269" height="47" loading="lazy" decoding="async" />
       </div>
     ))}
-  </div>
-
-  <div class="shell center espera">
-    <a class="cta cta--wide espera__cta" href={grupoEspera}>
-      <span class="espera__tag">Lote Zero esgotado</span>
-      <span class="espera__acao">Clique aqui para entrar na lista de espera</span>
-    </a>
   </div>
 
 </section>
@@ -144,11 +125,9 @@ const ingressos = [
        4.75rem, e um clamp com piso acima do teto trava o valor em 5.4rem
        na tela inteira, inclusive no desktop. */
     .tk__price { font-size: 5.4rem; }
-    /* Empilhado, mantém a ordem da fonte: Royal e depois Gold. Com os dois
-       esgotados não há mais "cartão à venda" pra puxar pra frente, e a ação
-       da seção passou pro botão de lista de espera, abaixo dos dois. Volte o
-       `order: -1` para o Gold quando ele voltar à venda. */
-    .tk--gold { order: 1; }
+    /* Empilhado, o Gold vem primeiro: é a oferta que queremos que seja lida
+       antes, e no desktop ele já ocupa a coluna da direita. */
+    .tk--gold { order: -1; }
   }
 
   .tk {
@@ -245,25 +224,6 @@ const ingressos = [
     color: var(--gold-lift);
   }
 
-  /* Tarja: faixa cheia de ponta a ponta do cartão, no lugar onde estava a
-     ação. Vermelho porque é impedimento, não escassez. */
-  .tk__esgotado {
-    display: block;
-    /* Sangra até as bordas e assenta no pé do cartão, acompanhando o raio
-       da caixa: sobrando faixa de fundo embaixo, a tarja lia como bloco
-       solto em vez de carimbo no cartão. */
-    margin: 1.1rem calc(clamp(1.6rem, 3vw, 2.2rem) * -1) calc(clamp(1.6rem, 3vw, 2.2rem) * -1);
-    border-radius: 0 0 19px 19px;
-    padding: 0.85rem 1rem;
-    background: #b3251f;
-    color: #fff1f0;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    text-align: center;
-  }
-
   .tk .cta { display: flex; margin: 1.3rem auto 0; }
   /* Royal: o botão veste o azul da arte do próprio ingresso, com o realce
      claro que aparece no lettering "Royal". */
@@ -338,31 +298,6 @@ const ingressos = [
     text-align: center;
   }
   .tk__incl :global(svg) { color: var(--gold); flex: none; }
-
-  /* Com os dois cartões carimbados, a lista de espera passa a ser a ação
-     primária da seção: veste o ouro cheio do .cta, que o sistema reserva
-     justamente pra isso. */
-  .espera { margin-top: clamp(1.5rem, 3vw, 2.2rem); }
-  .espera__cta {
-    /* Duas linhas dentro do botão: o impedimento anuncia, a ação convida.
-       Numa linha só, os 58 caracteres em caixa alta estouram as 26rem do
-       .cta--wide e quebram sozinhos, sem hierarquia entre as duas metades. */
-    flex-direction: column;
-    gap: 0.25rem;
-    padding-block: 0.95rem;
-    text-transform: none;
-    text-align: center;
-  }
-  .espera__tag {
-    font-size: 0.74rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    /* Mesmo navy do botão: a hierarquia entre as duas linhas sai do corpo
-       menor e da entreletra aberta, não de rebaixar a cor (DESIGN.md). */
-    color: var(--navy);
-  }
-  .espera__acao { font-size: clamp(0.98rem, 2vw, 1.06rem); font-weight: 700; }
 
   .g-center { width: 42rem; height: 26rem; top: 10%; left: 50%; transform: translateX(-50%); opacity: 0.3; }
 </style>

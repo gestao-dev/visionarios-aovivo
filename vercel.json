@@ -1,7 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
-    { "source": "/", "destination": "/ingressos", "permanent": false },
-    { "source": "/vendas", "destination": "/ingressos", "permanent": false }
+    {
+      "source": "/",
+      "destination": "/lista",
+      "permanent": false
+    },
+    {
+      "source": "/vendas",
+      "destination": "/ingressos",
+      "permanent": false
+    }
   ]
 }

@@ -3,7 +3,7 @@
 // 95px, fundo preto a 58%, desfoque leve, filete dourado embaixo.
 // A ação é parametrizável: sem ctaHref, abre o modal de lista (captação);
 // com ctaHref, vira link direto (vendas leva pra #ingressos).
-const { ctaLabel = 'Entrar na lista do Lote Zero', ctaHref } = Astro.props;
+const { ctaLabel = 'Entrar na lista do Primeiro Lote', ctaHref } = Astro.props;
 ---
 
 <header class="bar">
@@ -122,7 +122,7 @@ const { ctaLabel = 'Entrar na lista do Lote Zero', ctaHref } = Astro.props;
 
 <script>
   // 29/10/2026, 09:00 no horário de Brasília.
-  // Um relógio só alimenta todo [data-u] da página: o do topo e o do Lote Zero.
+  // Um relógio só alimenta todo [data-u] da página: o do topo e o do Primeiro Lote.
   const alvo = new Date('2026-10-29T09:00:00-03:00').getTime();
   const campos = (u: string) => document.querySelectorAll<HTMLElement>(`[data-u="${u}"]`);
 

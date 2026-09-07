@@ -15,7 +15,7 @@ const ticketLargo = await getImage({ src: ticket, widths: [430, 858], format: 'w
 const ticketEstreito = await getImage({ src: ticketMobile, widths: [430, 700, 1024], format: 'webp', quality: 90 });
 ---
 
-<!-- ══ Lote Zero ══ -->
+<!-- ══ Primeiro Lote ══ -->
 <section class="eyebrow-free" aria-labelledby="t-vant">
   <span class="glow glow--gold g-center" aria-hidden="true"></span>
   <div class="shell center measure-wide">
@@ -31,7 +31,7 @@ const ticketEstreito = await getImage({ src: ticketMobile, widths: [430, 700, 10
                   srcset={ticketEstreito.srcSet.attribute} sizes="80vw" />
           <img src={ticketLargo.src} srcset={ticketLargo.srcSet.attribute} sizes="24rem"
                width={858} height={1462} loading="lazy" decoding="async"
-               alt="Ingresso Lote Zero do Visionários ao Vivo, com Viviane Araújo e Marcos Paulo" />
+               alt="Ingresso Primeiro Lote do Visionários ao Vivo, com Viviane Araújo e Marcos Paulo" />
         </picture>
       </div>
 
@@ -39,7 +39,7 @@ const ticketEstreito = await getImage({ src: ticketMobile, widths: [430, 700, 10
         <div class="lote__head stagger">
           <img class="lote__logo" src="/logo-visionarios-ao-vivo.svg"
                alt="Visionários ao Vivo" width="196" height="48" />
-          <span class="tag">Lote Zero</span>
+          <span class="tag">Primeiro Lote</span>
         </div>
 
         <ul class="perks stagger">
@@ -50,7 +50,7 @@ const ticketEstreito = await getImage({ src: ticketMobile, widths: [430, 700, 10
 
         <div class="lote__act rise">
           <button class="cta cta--wide" type="button" data-open-lead>
-            Quero o Lote Zero + bônus <Icon name="arrow" size={18} />
+            Quero o Primeiro Lote + bônus <Icon name="arrow" size={18} />
           </button>
 
           <div class="tick" role="timer" aria-live="off">
@@ -79,7 +79,7 @@ const ticketEstreito = await getImage({ src: ticketMobile, widths: [430, 700, 10
     color: var(--gold-flare);
   }
 
-  /* ── Lote Zero: o ingresso à esquerda, o argumento à direita ── */
+  /* ── Primeiro Lote: o ingresso à esquerda, o argumento à direita ── */
   .lote { margin-top: 3rem; max-width: 64rem; }
   .lote__frame {
     display: grid;

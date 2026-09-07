@@ -30,7 +30,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
          alt="Visionários ao Vivo" width="196" height="48" />
 
     <form id="lead-form" novalidate data-webhook={demo ? '' : webhook} data-demo={demo ? '1' : null} data-grupo={grupo}>
-      <p class="account account--center">Lista do Lote Zero</p>
+      <p class="account account--center">Lista do Primeiro Lote</p>
       <h2 id="lead-title">Garanta seu lugar na lista</h2>
       <p class="lede">
         Preencha e entre no grupo: <em>menor preço + bônus exclusivo</em>, antes de todo mundo.
@@ -58,7 +58,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
       </div>
 
       <button class="cta post" type="submit" data-submit>
-        <span data-label>Entrar na lista do Lote Zero</span>
+        <span data-label>Entrar na lista do Primeiro Lote</span>
       </button>
 
       <p class="fault fault--form" data-fault-form hidden></p>
@@ -69,7 +69,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
       <span class="seal" aria-hidden="true"><Icon name="check" size={26} /></span>
       <h2>Pronto, você está na lista!</h2>
       <p class="lede">
-        Falta <em>1 passo</em>: entrar no grupo de WhatsApp. É lá que o Lote Zero abre
+        Falta <em>1 passo</em>: entrar no grupo de WhatsApp. É lá que o Primeiro Lote abre
         primeiro e o bônus é liberado.
       </p>
       <a class="cta post" href={grupo} data-grupo-link>
@@ -387,7 +387,7 @@ const grupo = 'https://chat.whatsapp.com/BCamRxuJtST6SW8OSo4dMb';
       formFault.hidden = false;
       btn.removeAttribute('aria-busy');
       btn.disabled = false;
-      label.textContent = 'Entrar na lista do Lote Zero';
+      label.textContent = 'Entrar na lista do Primeiro Lote';
     }
   });
 </script>

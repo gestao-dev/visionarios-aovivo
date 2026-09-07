@@ -6,9 +6,9 @@ export default defineConfig({
   // A página nasceu em /vendas e chegou a ir ao ar com esse endereço: o
   // redirecionamento mantém de pé qualquer link já compartilhado.
   redirects: {
-    // A raiz era a página de captação para o grupo. Agora a porta de entrada
-    // é a venda; a captação continua de pé em /lista, para quem tiver o link.
-    '/': '/ingressos',
+    // A raiz volta a ser a captação: é o destino do tráfego pago. A venda
+    // fica em /ingressos. Precisa casar com o redirect do vercel.json.
+    '/': '/lista',
     '/vendas': '/ingressos',
   },
   build: { inlineStylesheets: 'always' },
