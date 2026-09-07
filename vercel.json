@@ -17,6 +17,11 @@
       "permanent": false
     },
     {
+      "source": "/lp/",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/lp/:path*",
       "destination": "/",
       "permanent": false
