@@ -10,6 +10,10 @@ export default defineConfig({
     // fica em /ingressos. Precisa casar com o redirect do vercel.json.
     '/': '/lista',
     '/vendas': '/ingressos',
+    // O /lp mora só no vercel.json, de propósito: a página é um arquivo
+    // estático em public/lp/, e um redirect aqui faria o Astro gerar um
+    // dist/lp/index.html que colide com ele — os dois disputam o mesmo
+    // caminho e quem sobrevive é indefinido.
   },
   build: { inlineStylesheets: 'always' },
   image: { responsiveStyles: true },
