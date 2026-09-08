@@ -12,7 +12,7 @@ const whatsapp =
   <div class="shell center">
     <h2 id="t-ajuda" class="rise">Ficou com alguma dúvida?</h2>
     <p class="help__lede rise">Clique no botão e fale com nosso time</p>
-    <a class="cta help__cta rise" href={whatsapp}>
+    <a class="cta cta--zap help__cta rise" href={whatsapp}>
       Falar com o time <Icon name="arrow" size={18} />
     </a>
   </div>
@@ -37,4 +37,16 @@ const whatsapp =
     font-size: clamp(1rem, 2vw, 1.1rem);
   }
   .help__cta { margin-top: 1.8rem; }
+
+  /* Verde do WhatsApp: o botão diz para onde leva antes de ser lido. O texto
+     vai em verde quase preto porque branco sobre #25d366 não alcança contraste
+     de leitura. O halo dourado do botão padrão dá lugar a um verde. */
+  .cta--zap {
+    background-color: #25d366;
+    background-image: linear-gradient(90deg, #25d366 0%, #4ae184 100%);
+    color: #04261a;
+    box-shadow:
+      0 calc(10px + var(--raise) * 8px) calc(30px + var(--raise) * 20px) #25d36640,
+      0 6px 18px #0000005c;
+  }
 </style>
