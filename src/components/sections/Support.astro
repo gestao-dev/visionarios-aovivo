@@ -1,0 +1,40 @@
+---
+import Icon from '../Icon.astro';
+
+// Última porta antes do rodapé: quem não comprou e não achou a resposta no
+// FAQ sai da página com uma pergunta na cabeça. Aqui ela vira conversa.
+const whatsapp =
+  'https://wa.me/5513981810880?text=Ol%C3%A1%2C%20vim%20da%20p%C3%A1gina%20e%20tenho%20d%C3%BAvidas%20sobre%20o%20evento%20Vision%C3%A1rios%20ao%20Vivo.';
+---
+
+<!-- ══ Falar com o time ══ -->
+<section class="help" aria-labelledby="t-ajuda">
+  <div class="shell center">
+    <h2 id="t-ajuda" class="rise">Ficou com alguma dúvida?</h2>
+    <p class="help__lede rise">Clique no botão e fale com nosso time</p>
+    <a class="cta help__cta rise" href={whatsapp}>
+      Falar com o time <Icon name="arrow" size={18} />
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Bloco curto, respiro menor que o das dobras de conteúdo: é um pós-escrito
+     do fecho, não uma seção que disputa com ele. */
+  .help { padding-block: clamp(3rem, 6vw, 4.5rem); }
+
+  .help h2 {
+    font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: -0.03em;
+    color: var(--paper);
+    text-wrap: balance;
+  }
+  .help__lede {
+    margin-top: 0.7rem;
+    color: var(--paper);
+    font-size: clamp(1rem, 2vw, 1.1rem);
+  }
+  .help__cta { margin-top: 1.8rem; }
+</style>
