@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
+import LeadModal from '../components/LeadModal.astro';
 import Bands from '../components/Bands.astro';
 import Dock from '../components/Dock.astro';
 import Hero from '../components/sections/Hero.astro';
@@ -8,23 +9,14 @@ import Wall from '../components/sections/Wall.astro';
 import Method from '../components/sections/Method.astro';
 import Speakers from '../components/sections/Speakers.astro';
 import Qualify from '../components/sections/Qualify.astro';
-import Venue from '../components/sections/Venue.astro';
-import Tickets from '../components/sections/Tickets.astro';
-import Hotels from '../components/sections/Hotels.astro';
-import Guarantee from '../components/sections/Guarantee.astro';
-import Faq from '../components/sections/Faq.astro';
+import LoteZero from '../components/sections/LoteZero.astro';
 import Close from '../components/sections/Close.astro';
-import Support from '../components/sections/Support.astro';
-
-const title = 'Visionários ao Vivo 2026 — Ingressos Primeiro Lote';
-const description =
-  '2 dias presenciais para o dono de escritório contábil reinventar o negócio. Garanta seu ingresso no Primeiro Lote, o menor preço do evento.';
 ---
 
-<Base title={title} description={description}>
-  <Header ctaLabel="Garantir meu ingresso" ctaHref="#ingressos" />
+<Base>
+  <Header />
 
-  <Hero ctaLabel="Garantir meu ingresso" ctaHref="#ingressos">
+  <Hero ctaLabel="Entrar na lista do Primeiro Lote">
     <Fragment slot="title">Sua nova visão da contabilidade <span class="hand">começa agora.</span></Fragment>
     <Fragment slot="sub">
       Dois dias de implementação mão na massa para o dono de escritório contábil
@@ -39,40 +31,33 @@ const description =
     <Method />
     <Speakers />
     <Qualify />
-    <Venue />
-    <Tickets />
-    <Guarantee />
-    <Hotels />
-    <Faq />
+    <LoteZero />
 
-    <Close
-      eyebrow="Última chamada"
-      ctaLabel="Garantir meu ingresso"
-      ctaHref="#ingressos"
-    >
+    <Close ctaLabel="Entrar na lista do Primeiro Lote" titleNowrap>
       <Fragment slot="title">
-        O <span class="hand">Primeiro Lote</span> é o menor preço<br class="turn" />
-        que esse evento vai ter.
+        Você pode entrar em 2027 igual.<br />
+        <span class="hand">Ou atravessar o muro agora.</span>
       </Fragment>
       <Fragment slot="lede">
-        Quando essas vagas acabarem, o valor sobe e não volta.<br />
-        Garanta o seu agora, pelo preço de quem chegou primeiro.
+        Entre na lista do Primeiro Lote e seja o primeiro a garantir sua vaga na 1ª edição<br class="turn" />
+        do Visionários ao Vivo, pelo menor preço, com bônus exclusivo.
       </Fragment>
     </Close>
-
-    <Support />
 
     <footer class="foot">
       <div class="shell fade">Visionários ao Vivo 2026 · Contadores Visionários</div>
     </footer>
   </div>
 
-  <Dock ctaLabel="Garantir ingresso" ctaHref="#ingressos" />
+  <Dock />
+  <LeadModal />
 </Base>
 
 <style>
   /* A hero termina em preto; a dobra seguinte nasce nesse mesmo preto e só
-     então caminha para o azul da página. */
+     então caminha para o azul da página. Sem isso fica a emenda visível.
+     A arte da abertura termina na própria cor da página, então aqui não há
+     transição a fazer. */
   .tail { background: var(--ground); }
 
   .turn { display: none; }

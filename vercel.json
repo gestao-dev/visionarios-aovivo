@@ -2,13 +2,13 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/lista",
+      "source": "/ingressos",
       "destination": "/",
       "permanent": false
     },
     {
       "source": "/vendas",
-      "destination": "/ingressos",
+      "destination": "/",
       "permanent": false
     },
     {
