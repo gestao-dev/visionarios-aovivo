@@ -253,12 +253,17 @@ const perfis = ['Sou dono', 'Sou sócio', 'Sou CLT', 'Outra opção'];
     // Quem já preencheu não preenche de novo: o segundo clique segue direto.
     // Sem isso, quem captura pelo CTA do topo e depois escolhe o ingresso
     // levaria o mesmo formulário duas vezes na mesma visita.
+    //
+    // sessionStorage, e não localStorage: a marca morre quando a pessoa fecha
+    // o navegador. Permanente, quem preencheu uma vez nunca mais via o
+    // formulário — inclusive quem não comprou e voltou semanas depois, que é
+    // justamente quem vale recapturar.
     const MARCA = 'vav:precheck';
     const jaCapturou = () => {
-      try { return localStorage.getItem(MARCA) === '1'; } catch { return false; }
+      try { return sessionStorage.getItem(MARCA) === '1'; } catch { return false; }
     };
     const marcar = () => {
-      try { localStorage.setItem(MARCA, '1'); } catch { /* modo privado */ }
+      try { sessionStorage.setItem(MARCA, '1'); } catch { /* modo privado */ }
     };
 
     let destino = '';
