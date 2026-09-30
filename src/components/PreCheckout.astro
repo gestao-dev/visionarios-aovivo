@@ -1,0 +1,432 @@
+---
+// Captura antes do checkout. Os CTAs da página continuam sendo âncoras e
+// links normais no HTML: este componente intercepta o clique por seletor, em
+// vez de trocar o markup dos componentes compartilhados. Sem JS, ou se um
+// seletor deixar de casar, o botão volta a levar direto ao checkout — falha
+// aberta, porque numa página de venda barrar a compra é pior que perder o
+// lead.
+const webhook =
+  import.meta.env.PUBLIC_LEAD_WEBHOOK ||
+  'https://webhook.contadoresvisionarios.com.br/webhook/dab41c5b-26ab-493a-b749-22a56763a0a4';
+
+const demo = import.meta.env.PUBLIC_LEAD_DEMO === '1';
+
+const faturamentos = [
+  'De 0 até R$ 10 mil',
+  'De R$ 11 mil a R$ 20 mil',
+  'De R$ 21 mil a R$ 50 mil',
+  'De R$ 51 mil a R$ 100 mil',
+  'De R$ 101 mil a R$ 200 mil',
+  'Acima de R$ 200 mil',
+];
+
+const perfis = ['Sou dono', 'Sou sócio', 'Sou CLT', 'Outra opção'];
+---
+
+<div class="veil" id="precheck" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="precheck-title" tabindex="-1">
+    <button class="shut" type="button" data-close aria-label="Fechar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="m6 6 12 12M18 6 6 18" />
+      </svg>
+    </button>
+
+    <img class="sheet__mark" src="/logo-visionarios-ao-vivo.svg"
+         alt="Visionários ao Vivo" width="196" height="48" />
+
+    <form id="precheck-form" novalidate
+          data-webhook={demo ? '' : webhook} data-demo={demo ? '1' : null}>
+      <p class="account account--center" data-lote>Último Lote</p>
+      <h2 id="precheck-title">Falta só um passo</h2>
+      <p class="lede">
+        Preencha para seguir ao pagamento. Leva <em>menos de um minuto</em>.
+      </p>
+
+      <div class="field">
+        <label for="f-pc-nome">Nome completo</label>
+        <input id="f-pc-nome" name="nome" type="text" autocomplete="name"
+               placeholder="Seu nome e sobrenome" required />
+        <p class="fault" data-fault-for="nome" hidden>Informe seu nome.</p>
+      </div>
+
+      <div class="field">
+        <label for="f-pc-email">E-mail</label>
+        <input id="f-pc-email" name="email" type="email" autocomplete="email" inputmode="email"
+               placeholder="voce@escritorio.com.br" required />
+        <p class="fault" data-fault-for="email" hidden>Informe um e-mail válido.</p>
+      </div>
+
+      <div class="field">
+        <label for="f-pc-tel">WhatsApp (com DDD)</label>
+        <input id="f-pc-tel" name="telefone" type="tel" autocomplete="tel" inputmode="tel"
+               placeholder="(11) 99999-9999" required />
+        <p class="fault" data-fault-for="telefone" hidden>Informe seu WhatsApp com DDD.</p>
+      </div>
+
+      <div class="field">
+        <label for="f-pc-fat">Qual é o faturamento médio mensal do seu escritório?</label>
+        <select id="f-pc-fat" name="faturamento">
+          <option value="">Selecione</option>
+          {faturamentos.map((f) => <option value={f}>{f}</option>)}
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="f-pc-perfil">Você é dono do escritório?</label>
+        <select id="f-pc-perfil" name="perfil">
+          <option value="">Selecione</option>
+          {perfis.map((p) => <option value={p}>{p}</option>)}
+        </select>
+      </div>
+
+      <button class="cta post" type="submit" data-submit>
+        <span data-label>Ir para o pagamento</span>
+      </button>
+
+      <p class="fault fault--form" data-fault-form hidden></p>
+      <p class="fine">Seus dados são usados apenas para o seu ingresso e para falar do evento.</p>
+    </form>
+  </div>
+</div>
+
+<style>
+  .veil {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    padding: 1.25rem;
+    background: #00010799;
+    backdrop-filter: blur(6px) saturate(0.7);
+    overflow-y: auto;
+  }
+  .veil[hidden] { display: none; }
+
+  .sheet:focus-visible { outline: none; }
+  .sheet {
+    position: relative;
+    width: min(100%, 34rem);
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    background: #02132b;
+    border: 1px solid var(--edge-lit);
+    border-radius: 14px;
+    box-shadow: 0 40px 90px -20px #000000d9;
+    animation: sheet-in 0.5s var(--ease) both;
+  }
+  @keyframes sheet-in {
+    from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  }
+  .sheet::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .shut {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--edge-lit);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--paper);
+    cursor: pointer;
+    transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .shut:hover { border-color: var(--gold); background: #d7b3560d; }
+
+  .sheet__mark {
+    display: block;
+    height: 2.1rem;
+    width: auto;
+    margin: 0 auto 1.4rem;
+  }
+
+  .account {
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-flare);
+  }
+  .account--center { text-align: center; }
+
+  h2 {
+    margin: 0.5rem 0 0.6rem;
+    font-size: clamp(1.45rem, 3.4vw, 1.85rem);
+    line-height: 1.15;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .lede {
+    margin: 0 auto 1.6rem;
+    max-width: 30ch;
+    color: var(--paper);
+    font-size: 0.95rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .lede em { color: var(--gold-lift); font-style: normal; font-weight: 600; }
+
+  .field { margin-bottom: 1.15rem; }
+  .field label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--paper);
+  }
+  .field input,
+  .field select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--edge-lit);
+    border-radius: 8px;
+    background: #00010799;
+    color: var(--paper);
+    /* 16px trava o zoom automático do iOS ao focar o campo. */
+    font: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+  .field input::placeholder { color: #f0f0f066; }
+  .field input:focus-visible,
+  .field select:focus-visible {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px #d7b35626;
+  }
+  .field input[aria-invalid='true'] { border-color: #c2564b; }
+
+  /* A seta nativa some no fundo escuro em parte dos navegadores: desenhada
+     aqui, ela existe igual em todos, e o padding à direita guarda o espaço. */
+  .field select {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+      linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+    background-position: calc(100% - 1.15rem) 1.25rem, calc(100% - 0.85rem) 1.25rem;
+    background-size: 0.3rem 0.3rem, 0.3rem 0.3rem;
+    background-repeat: no-repeat;
+  }
+  .field select option { background: #02132b; color: var(--paper); }
+
+  .fault {
+    margin-top: 0.4rem;
+    color: #e08b80;
+    font-size: 0.82rem;
+  }
+  .fault--form { text-align: center; margin-top: 0.9rem; }
+
+  .post { display: flex; width: 100%; margin-top: 0.4rem; }
+  .post[aria-busy='true'] { opacity: 0.65; cursor: progress; }
+
+  .fine {
+    margin-top: 1rem;
+    color: var(--paper);
+    font-size: 0.78rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+</style>
+
+<script>
+  const veil = document.getElementById('precheck');
+  const sheet = veil?.querySelector('.sheet') as HTMLElement | null;
+  const form = document.getElementById('precheck-form') as HTMLFormElement | null;
+  if (veil && sheet && form) {
+    const btn = form.querySelector('[data-submit]') as HTMLButtonElement;
+    const label = form.querySelector('[data-label]') as HTMLElement;
+    const formFault = form.querySelector('[data-fault-form]') as HTMLElement;
+    const loteEl = form.querySelector('[data-lote]') as HTMLElement;
+
+    // Quem já preencheu não preenche de novo: o segundo clique segue direto.
+    // Sem isso, quem captura pelo CTA do topo e depois escolhe o ingresso
+    // levaria o mesmo formulário duas vezes na mesma visita.
+    const MARCA = 'vav:precheck';
+    const jaCapturou = () => {
+      try { return localStorage.getItem(MARCA) === '1'; } catch { return false; }
+    };
+    const marcar = () => {
+      try { localStorage.setItem(MARCA, '1'); } catch { /* modo privado */ }
+    };
+
+    let destino = '';
+    let restoreTo: HTMLElement | null = null;
+
+    const focusables = () =>
+      Array.from(
+        sheet.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, select, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => el.offsetParent !== null);
+
+    function open(trigger: HTMLElement, href: string, lote: string) {
+      destino = href;
+      restoreTo = trigger;
+      loteEl.textContent = lote;
+      veil!.hidden = false;
+      document.body.style.overflow = 'hidden';
+      if (matchMedia('(pointer: coarse)').matches) {
+        sheet!.focus();
+      } else {
+        focusables()[1]?.focus();
+      }
+    }
+
+    function close() {
+      veil!.hidden = true;
+      document.body.style.overflow = '';
+      restoreTo?.focus();
+    }
+
+    function seguir() {
+      if (!destino) { close(); return; }
+      if (destino.startsWith('#')) {
+        close();
+        document.querySelector(destino)?.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      window.location.href = destino;
+    }
+
+    // ── Quais botões capturam ──
+    // Âncoras que levam à grade de ingressos (topo, hero, fecho, dock) e os
+    // dois botões de compra dentro dos cartões. Os de 2 a 4 e 5+ ingressos
+    // seguem direto ao WhatsApp: ali a qualificação acontece na conversa.
+    const gatilhos = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(
+        'a[href="#ingressos"], .tk a.cta[href^="https://clkdmg.site"]'
+      )
+    );
+
+    gatilhos.forEach((el) => {
+      el.addEventListener('click', (e) => {
+        if (jaCapturou()) return;
+        e.preventDefault();
+        const cartao = el.closest('.tk');
+        const nome = cartao?.querySelector('.tk__incl')
+          ? (cartao.className.includes('tk--gold') ? 'Ingresso Gold' : 'Ingresso Royal')
+          : 'Último Lote';
+        open(el, el.getAttribute('href') || '', nome);
+      });
+    });
+
+    veil.addEventListener('click', (e) => { if (e.target === veil) close(); });
+    sheet.querySelector('[data-close]')?.addEventListener('click', close);
+
+    document.addEventListener('keydown', (e) => {
+      if (veil!.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'Tab') {
+        const items = focusables();
+        if (!items.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    const rules: Record<string, (v: string) => boolean> = {
+      nome: (v) => v.trim().length >= 2,
+      email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
+      telefone: (v) => v.replace(/\D/g, '').length >= 10,
+    };
+
+    function check(input: HTMLInputElement) {
+      const ok = rules[input.name]?.(input.value) ?? true;
+      const fault = form!.querySelector<HTMLElement>(`[data-fault-for="${input.name}"]`);
+      input.setAttribute('aria-invalid', String(!ok));
+      if (fault) fault.hidden = ok;
+      return ok;
+    }
+
+    form.querySelectorAll('input').forEach((input) => {
+      input.addEventListener('blur', () => check(input as HTMLInputElement));
+      input.addEventListener('input', () => {
+        if ((input as HTMLInputElement).getAttribute('aria-invalid') === 'true') {
+          check(input as HTMLInputElement);
+        }
+      });
+    });
+
+    const tel = form.querySelector('#f-pc-tel') as HTMLInputElement;
+    tel.addEventListener('input', () => {
+      const d = tel.value.replace(/\D/g, '').slice(0, 11);
+      tel.value = d.length <= 10
+        ? d.replace(/(\d{0,2})(\d{0,4})(\d{0,4})/, (_, a, b, c) =>
+            [a && `(${a}`, a.length === 2 ? ') ' : '', b, c && `-${c}`].filter(Boolean).join(''))
+        : d.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formFault.hidden = true;
+
+      const inputs = Array.from(form!.querySelectorAll('input')) as HTMLInputElement[];
+      const bad = inputs.filter((i) => !check(i));
+      if (bad.length) { bad[0].focus(); return; }
+
+      const valor = (n: string) =>
+        ((form!.elements.namedItem(n) as HTMLInputElement | HTMLSelectElement)?.value || '').trim();
+
+      const corpo = {
+        // Normalizados na origem: o CRM casa contato por e-mail, e
+        // "Ana@X.com" e "ana@x.com" viram duas fichas da mesma pessoa.
+        nome: valor('nome').replace(/\s+/g, ' '),
+        email: valor('email').toLowerCase(),
+        telefone: valor('telefone'),
+        faturamento: valor('faturamento'),
+        perfil: valor('perfil'),
+        ingresso: loteEl.textContent || '',
+        checkout: destino.startsWith('#') ? '' : destino,
+        origem: 'pre-checkout',
+        tag: 'visionarios-ao-vivo',
+        pipe: 'eventos',
+        url: window.location.href,
+      };
+
+      // Demonstração: nada sai do navegador, e a pessoa vê o fluxo inteiro.
+      if (form!.dataset.demo === '1') { marcar(); seguir(); return; }
+
+      const endpoint = form!.dataset.webhook;
+      if (!endpoint) { marcar(); seguir(); return; }
+
+      btn.setAttribute('aria-busy', 'true');
+      btn.disabled = true;
+      label.textContent = 'Enviando…';
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(corpo),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        marcar();
+        label.textContent = 'Redirecionando…';
+        seguir();
+      } catch {
+        // O webhook fora do ar não pode segurar a venda: o lead se perde, a
+        // compra não. Um segundo clique no botão segue direto ao checkout.
+        formFault.textContent = 'Não conseguimos salvar seus dados. Clique de novo para seguir ao pagamento.';
+        formFault.hidden = false;
+        marcar();
+        btn.removeAttribute('aria-busy');
+        btn.disabled = false;
+        label.textContent = 'Ir para o pagamento';
+      }
+    });
+  }
+</script>
