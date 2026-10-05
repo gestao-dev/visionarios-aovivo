@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro';
+
+// Respiro com ação, para o miolo da página não ficar sete blocos sem nada
+// para clicar. É âncora para #ingressos de propósito: o PreCheckout já
+// intercepta esse destino, então a faixa captura o lead sem saber disso.
+const { label = 'Garantir meu ingresso', nota } = Astro.props;
+---
+
+<div class="cta-band">
+  <div class="shell center">
+    <a class="cta cta--wide rise" href="#ingressos">
+      {label} <Icon name="arrow" size={18} />
+    </a>
+    {/* `cta-band` e não `band`: o Bands.astro já usa `.band` na esteira
+        rolante do topo, e dois donos para o mesmo nome confunde depois. */}
+    {nota && <p class="cta-band__note fade">{nota}</p>}
+  </div>
+</div>
+
+<style>
+  /* Faixa, não seção: o padding de seção do projeto abriria um vão do tamanho
+     de um bloco só para caber um botão. */
+  .cta-band { padding-block: clamp(1.5rem, 4vw, 2.75rem); }
+  .cta-band .cta { display: inline-flex; }
+  .cta-band__note {
+    margin-top: 0.9rem;
+    color: var(--paper);
+    font-size: 0.85rem;
+    text-wrap: balance;
+  }
+</style>
