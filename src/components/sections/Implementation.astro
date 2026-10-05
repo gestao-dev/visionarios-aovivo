@@ -1,0 +1,278 @@
+---
+import { Image } from 'astro:assets';
+import processos from '../../assets/processos-lista.jpg';
+import funil from '../../assets/crm-funil.jpg';
+import planos from '../../assets/material-planos.jpg';
+import cargo from '../../assets/material-cargo.jpg';
+import fechamento from '../../assets/material-fechamento.jpg';
+import instagram from '../../assets/material-instagram.jpg';
+
+const materiais = [
+  { img: planos, land: true, pil: 'Vendas', titulo: 'Apresentação de planos',
+    texto: 'Como mostrar o preço sem guerra de honorário.',
+    alt: 'Apresentação de planos da Soluzzi' },
+  { img: cargo, pil: 'Estrutura', titulo: 'Descritivo de cargo',
+    texto: 'Para contratar certo e cobrar com base no que está escrito.',
+    alt: 'Descritivo de cargo do consultor comercial' },
+  { img: fechamento, pil: 'Gestão', titulo: 'Fechamento do mês e metas',
+    texto: 'A rotina de virada de mês com os números do time.',
+    alt: 'Rotina de fechamento do mês e metas do time comercial' },
+];
+---
+
+<!-- ══ Implementação ══ -->
+<section class="impl" id="implementacao" aria-labelledby="t-impl">
+  <div class="shell">
+    <h2 id="t-impl" class="rise">
+      Nada de palestra motivacional. <span class="hand">Implementação na prática.</span>
+    </h2>
+
+    <div class="feat">
+      <div class="shot from-l">
+        <div class="win">
+          <div class="bar"><i></i><i></i><i></i><span>Gestão de Conhecimento / Processos</span></div>
+          {/* Qualidade acima do padrão do site: é uma captura de tela cheia de
+              texto miúdo, e no preset normal as linhas da tabela viram borrão. */}
+          <Image src={processos} alt="Lista de processos documentados da Soluzzi, com código, status e departamento"
+                 widths={[680, 1320]} sizes="(max-width: 51rem) 90vw, 41rem" quality={92} />
+        </div>
+      </div>
+      <div class="txt from-r">
+        <div class="pil">Processos</div>
+        <h3>Cada tarefa do escritório escrita, com código, dono e departamento.</h3>
+        <p>É assim que a equipe para de perguntar tudo para você. O processo está escrito, e quem chega novo aprende sozinho.</p>
+        <ul>
+          <li>Instruções de trabalho do comercial, financeiro e onboarding</li>
+          <li>Onboarding do cliente passo a passo, do contrato ao primeiro mês</li>
+          <li>Base de conhecimento que não depende da sua cabeça</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="feat rev">
+      <div class="shot from-r">
+        <div class="win">
+          <div class="bar"><i></i><i></i><i></i><span>CRM / Funil Inbound</span></div>
+          <Image src={funil} alt="Funil comercial da Soluzzi no CRM, do lead recebido ao negócio fechado"
+                 widths={[680, 1320]} sizes="(max-width: 51rem) 90vw, 41rem" quality={92} />
+        </div>
+      </div>
+      <div class="txt from-l">
+        <div class="pil">Vendas</div>
+        <h3>Um funil onde você enxerga cada cliente que está para entrar.</h3>
+        <p>Cliente novo deixa de depender de indicação e de sorte. Cada lead tem etapa, origem e responsável.</p>
+        <ul>
+          <li>Do lead recebido ao negócio fechado, sem perder ninguém no caminho</li>
+          <li>Origem de cada lead à vista: site, quiz, indicação</li>
+          <li>Passagem de bastão do comercial para o operacional</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mat-h rise">
+      <h3>E os materiais que fazem isso rodar</h3>
+      <p>Modelos reais, para você adaptar com a sua marca.</p>
+    </div>
+
+    <div class="grid stagger">
+      {materiais.map((m) => (
+        <div class="mat">
+          <div class={`vis ${m.land ? 'land' : ''}`}>
+            <Image class="sheet" src={m.img} alt={m.alt}
+                   widths={[360, 720]} sizes="16rem" quality={92} />
+          </div>
+          <div class="pil">{m.pil}</div>
+          <h4>{m.titulo}</h4>
+          <p>{m.texto}</p>
+        </div>
+      ))}
+      <div class="mat">
+        <div class="vis">
+          <div class="phone">
+            <Image src={instagram} alt="Perfil da Soluzzi no Instagram"
+                   widths={[180, 360]} sizes="11rem" quality={90} />
+          </div>
+        </div>
+        <div class="pil">Marketing</div>
+        <h4>Instagram que traz cliente</h4>
+        <p>O posicionamento que a Soluzzi usa para atrair o cliente certo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Dois tons que o sistema não tem nome para: a superfície dos cartões de
+     material e o filete que os contorna. O resto sai dos tokens globais. */
+  .impl {
+    --mat-face: #0a2a5c;
+    --mat-line: #1b3d78;
+    background:
+      radial-gradient(900px 500px at 50% 0%, #d7b35612, transparent 70%),
+      var(--ground);
+  }
+
+  .impl h2 {
+    max-width: 54rem;
+    margin-inline: auto;
+    font-size: clamp(1.9rem, 4.2vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .feat {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+    margin-top: clamp(3rem, 6vw, 5.6rem);
+  }
+  .feat.rev { grid-template-columns: 1fr 1.35fr; }
+  .feat.rev .shot { order: 2; }
+
+  .pil {
+    font-size: 0.81rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .feat h3 {
+    margin-top: 0.6rem;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .feat p { margin-top: 0.9rem; font-size: 1.06rem; line-height: 1.6; color: var(--paper); }
+  .feat ul { list-style: none; display: grid; gap: 0.75rem; margin-top: 1.4rem; }
+  .feat li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--paper);
+  }
+  .feat li::before {
+    content: '';
+    flex: 0 0 1.25rem;
+    height: 1.25rem;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: var(--gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='%23041E42' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 1.25rem no-repeat;
+  }
+
+  /* Janela de navegador: a moldura é o que diz "isto é um sistema de verdade". */
+  .win {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #ffffff24;
+    box-shadow: 0 40px 80px -30px #000000b3, 0 0 0 6px #ffffff08;
+  }
+  .win .bar {
+    display: flex;
+    align-items: center;
+    gap: 0.44rem;
+    height: 2.1rem;
+    padding-inline: 0.875rem;
+    background: #e9ecf2;
+  }
+  .win .bar i { width: 0.69rem; height: 0.69rem; border-radius: 50%; background: #c9ced8; }
+  .win .bar i:nth-child(1) { background: #ff6159; }
+  .win .bar i:nth-child(2) { background: #ffbd2e; }
+  .win .bar i:nth-child(3) { background: #28c941; }
+  .win .bar span {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 21rem;
+    height: 1.25rem;
+    margin-left: 0.75rem;
+    padding-inline: 0.625rem;
+    border-radius: 6px;
+    background: #fff;
+    color: #7b8494;
+    font-size: 0.69rem;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .win :global(img) { width: 100%; height: auto; }
+
+  .mat-h { text-align: center; margin-top: clamp(4rem, 8vw, 7.5rem); }
+  .mat-h h3 { font-size: clamp(1.5rem, 2.8vw, 2.13rem); font-weight: 700; letter-spacing: -0.02em; }
+  .mat-h p { margin-top: 0.6rem; font-size: 1.06rem; color: var(--paper); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+    margin-top: 2.75rem;
+  }
+  /* `.mat` e não `.card`: o projeto já tem um `.card` global, e duas regras
+     com o mesmo nome disputando a mesma caixa é confusão garantida depois. */
+  .mat {
+    display: flex;
+    flex-direction: column;
+    padding: 1.4rem 1.4rem 1.5rem;
+    border: 1px solid var(--mat-line);
+    border-radius: 18px;
+    background: linear-gradient(180deg, var(--mat-face), #072049);
+  }
+  .mat .vis {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 15.6rem;
+    border-radius: 12px;
+    background: var(--ground-deep);
+    overflow: hidden;
+  }
+  .mat .vis :global(.sheet) {
+    width: 74%;
+    /* `height:auto` é obrigatório: o <Image> do Astro escreve width e height
+       no HTML, e sem isto a altura fica presa no atributo enquanto a largura
+       vira 74% — o documento chega esticado na vertical. */
+    height: auto;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -10px 40px #00000073;
+    transform: translateY(18px) rotate(-2deg);
+    transition: transform 0.35s var(--ease);
+  }
+  .mat:hover .vis :global(.sheet) { transform: translateY(6px) rotate(0); }
+  .mat .vis.land { align-items: center; }
+  .mat .vis.land :global(.sheet) { width: 90%; border-radius: 6px; transform: rotate(-2deg); }
+  .mat:hover .vis.land :global(.sheet) { transform: rotate(0) scale(1.03); }
+  .phone {
+    width: 52%;
+    border: 5px solid #0b0f18;
+    border-radius: 22px;
+    overflow: hidden;
+    transform: translateY(30px);
+    box-shadow: 0 -10px 40px #00000073;
+    transition: transform 0.35s var(--ease);
+  }
+  .phone :global(img) { width: 100%; height: auto; }
+  .mat:hover .phone { transform: translateY(14px); }
+  .mat .pil { margin-top: 1.25rem; }
+  .mat h4 { margin-top: 0.4rem; font-size: 1.13rem; font-weight: 700; line-height: 1.3; }
+  .mat p { margin-top: 0.5rem; font-size: 0.91rem; line-height: 1.55; color: var(--paper); }
+
+  @media (max-width: 61rem) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 51rem) {
+    .feat, .feat.rev { grid-template-columns: 1fr; gap: 1.9rem; }
+    .feat.rev .shot { order: 0; }
+  }
+  @media (max-width: 32rem) {
+    .grid { grid-template-columns: 1fr; }
+    .mat .vis { height: 14.4rem; }
+    .win .bar span { display: none; }
+  }
+</style>
