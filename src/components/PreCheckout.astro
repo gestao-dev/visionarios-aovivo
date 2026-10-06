@@ -396,9 +396,13 @@ const perfis = ['Sou dono', 'Sou sócio', 'Sou CLT', 'Outra opção'];
         perfil: valor('perfil'),
         ingresso: loteEl.textContent || '',
         checkout: destino.startsWith('#') ? '' : destino,
+        // Dois sentidos de "origem", e por isso dois campos. `origem` diz
+        // qual formulário do site gerou o lead, e é o que separa este fluxo
+        // do da lista de espera, que chega no mesmo webhook. `clint_origem`
+        // é o grupo da Clint onde o card nasce, escrito como está lá.
         origem: 'pre-checkout',
+        clint_origem: 'VISIONÁRIOS AO VIVO',
         tag: 'visionarios-ao-vivo',
-        pipe: 'eventos',
         url: window.location.href,
       };
 
