@@ -4,12 +4,14 @@ import cardViviane from '../../assets/card-viviane.png';
 import cardMarcos from '../../assets/card-marcos.png';
 import cardGabriel from '../../assets/card-gabriel.png';
 import cardFatte from '../../assets/card-fatte.png';
+import cardLuis from '../../assets/card-luis.png';
 
 const elenco = [
   { img: cardViviane,    alt: 'Viviane Araújo, fundadora da Soluzzi e mentora' },
   { img: cardMarcos,     alt: 'Marcos Paulo, Contadores Visionários' },
   { img: cardGabriel,    alt: 'Gabriel Rabelo, fundador e CEO da Contabilidade Facilitada' },
   { img: cardFatte,      alt: 'Fatte Santos, idealizadora da eFattos Contabilidade' },
+  { img: cardLuis,       alt: 'Luis Ferreira, estratégia de IA e construção dos sistemas' },
 ];
 ---
 
@@ -28,8 +30,8 @@ const elenco = [
   <ul class="shell cast stagger">
     {elenco.map((e) => (
       <li class="cast__card">
-        <Image src={e.img} alt={e.alt} widths={[320, 619]}
-               sizes="(max-width: 46rem) calc(100vw - 40px), (max-width: 62rem) 45vw, 17rem"
+        <Image src={e.img} alt={e.alt} widths={[390, 780]}
+               sizes="(max-width: 46rem) calc(100vw - 40px), (max-width: 62rem) 45vw, 24rem"
                quality={88} />
       </li>
     ))}
@@ -51,12 +53,22 @@ const elenco = [
   @media (min-width: 44rem) { .turn { display: inline; } }
 
   /* ── Elenco: cada card é uma peça fechada (nó 2742:6835) ── */
+  /* Cinco palestrantes: 3 em cima, 2 centralizados embaixo. Em quatro colunas
+     o quinto cairia sozinho encostado na esquerda. Seis colunas com cada card
+     ocupando duas resolvem as duas linhas, e o deslocamento de uma coluna nos
+     dois últimos é o que os centraliza. */
   .cast {
+    /* O vão vira variável porque a conta que centraliza o card ímpar em duas
+       colunas precisa descontá-lo. */
+    --cast-gap: clamp(0.42rem, 0.9vw, 0.8rem);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(0.42rem, 0.9vw, 0.8rem);
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--cast-gap);
     margin-top: clamp(1.7rem, 3.4vw, 2.6rem);
   }
+  .cast__card { grid-column: span 2; }
+  .cast__card:nth-child(4) { grid-column: 2 / span 2; }
+  .cast__card:nth-child(5) { grid-column: 4 / span 2; }
   /* Sem borda: o PNG já traz o canto arredondado e a moldura desenhada. */
   .cast__card {
     line-height: 0;
@@ -74,14 +86,29 @@ const elenco = [
     object-fit: cover;
   }
 
+  /* Abaixo daqui volta a ser uma grade comum: sem desfazer o `grid-column`
+     das seis colunas, os dois últimos cards continuariam presos às faixas
+     centrais e deixariam buracos. */
   @media (max-width: 62rem) {
     .cast { grid-template-columns: repeat(2, 1fr); }
+    .cast__card,
+    .cast__card:nth-child(4) { grid-column: auto; }
+    /* Cinco em duas colunas sobra um: ele atravessa as duas faixas, mas
+       guarda a largura de um card e fica no meio, em vez de encostado. */
+    .cast__card:nth-child(5) {
+      grid-column: 1 / -1;
+      width: calc((100% - var(--cast-gap)) / 2);
+      margin-inline: auto;
+    }
   }
   /* No celular, um por vez: em 2x2 cada card fica com 170px e o nome cravado
      na arte sai ilegível. */
   @media (max-width: 46rem) {
     .cast { grid-template-columns: 1fr; gap: 1rem; }
-    .cast__card { width: 100%; max-width: 380px; margin-inline: auto; }
+    /* Desfaz a meia largura do quinto card: a regra de duas colunas acima
+       é mais específica e, sem isto, só ele sairia menor no celular. */
+    .cast__card,
+    .cast__card:nth-child(5) { width: 100%; max-width: 380px; margin-inline: auto; }
   }
 
   /* Nota sob os palestrantes: sem ícone, duas linhas, quebra ditada. */
